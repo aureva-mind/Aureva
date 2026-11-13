@@ -839,7 +839,6 @@ elif menu == t["nav_account"]:
     st.markdown(f"### {t['account_title']}")
     st.markdown(t["account_desc"])
     
-    # Formulaire de mise à jour du profil avec bouton dédié
     with st.form("profile_form"):
         name_input = st.text_input("Prénom", value=user.first_name)
         email_input = st.text_input("Email", value=user.email)
@@ -867,7 +866,6 @@ elif menu == t["nav_account"]:
 
     st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
     
-    # Bouton de résiliation de l'abonnement
     if st.button(t["cancel_sub"]):
         user.is_premium = False
         db.commit()
