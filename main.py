@@ -1,8 +1,7 @@
 import streamlit as st
 import sqlalchemy
-from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime, select
+from sqlalchemy.orm import declarative_base, sessionmaker
 import datetime
 import plotly.graph_objects as go
 
@@ -96,7 +95,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --- 2. BASE DE DONNÉES SQLITE AVEC AUTO-GUÉRISON DE SCHÉMA ---
+# --- 2. BASE DE DONNÉES SQLITE (COMPATIBLE SQLALCHEMY 2.0) ---
 Base = declarative_base()
 engine = create_engine('sqlite:///dreams.db', connect_args={'check_same_thread': False})
 SessionLocal = sessionmaker(bind=engine)
@@ -119,13 +118,11 @@ class DreamRecord(Base):
     interpretation = Column(String)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
 
-# Initialisation sécurisée de la base de données avec réinitialisation automatique en cas de décalage de schéma
-db = None
+# Initialisation et auto-réparation de la base de données
 try:
     db = SessionLocal()
-    user = db.query(User).first()
+    user = db.scalars(select(User)).first()
 except Exception:
-    # Si la structure de la table est obsolète, on recrée proprement
     Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
     db = SessionLocal()
@@ -133,7 +130,8 @@ except Exception:
 
 Base.metadata.create_all(bind=engine)
 
-user = db.query(User).first()
+db = SessionLocal()
+user = db.scalars(select(User)).first()
 if not user:
     user = User(first_name="Thomas", email="thomas@example.com", is_premium=False, dreams_count=0)
     db.add(user)
@@ -270,12 +268,11 @@ translations = {
     "日本語": {
         "welcome": "ようこそ", "nav_analyze": "✨ 分析", "nav_journal": "📖 ジャーナル", "nav_stats": "📊 統計", "nav_terms": "📜 利用規約", "nav_account": "📝 アカウント",
         "analysis_title": "✨ 新しい夢の分析", "dream_title": "夢のタイトル", "dream_emotion": "主な感情", "dream_lucidity": "明晰度レベル (1-5)",
-        "dream_desc": "夢の詳細を記述してください...", "btn_analyze": "AIで夢を分析する", "success_msg": "✨ 夢の分析が正常に完了しました！",
-        "interpretation_title": "深い解釈：", "empty_desc_warn": "分析する前に夢の説明を入力してください。",
+        "dream_desc": "夢の詳細を記述してください...", "btn_analyze": "AIで夢を分析する",
+        "success_msg": "✨ 夢の分析が正常に完了しました！", "interpretation_title": "深い解釈：", "empty_desc_warn": "分析する前に夢の説明を入力してください。",
         "journal_title": "📖 夢のジャーナル", "journal_desc": "夢の分析履歴一覧。", "no_dreams": "記録された夢はまだありません。",
         "lucidity_label": "明晰度", "story_label": "ストーリー", "stats_title": "📊 統計とステータス", "stats_desc": "活動状況をリアルタイムで追跡。",
-        "total_dreams": "分析された夢の総数",
-        "status_premium": "⭐ ステータス：無制限サブスク有効", "status_free": "🌿 ステータス：無料アカウント",
+        "total_dreams": "分析された夢の総数", "status_premium": "⭐ ステータス：無制限サブスク有効", "status_free": "🌿 ステータス：無料アカウント",
         "account_title": "📝 アカウント管理", "account_desc": "個人情報とプランの管理。",
         "terms_title": "📜 利用規約", "terms_text": "Aureva Mind 利用規約。",
         "member_space": "⚙️ メンバーエリア", "cancel_sub": "❌ 定期購入をキャンセル", "manage_account": "📝 アカウント",
@@ -288,8 +285,7 @@ translations = {
         "interpretation_title": "تفسير عميق لـ", "empty_desc_warn": "الرجاء إدخال وصف الحلم قبل التحليل.",
         "journal_title": "📖 سجل الأحلام", "journal_desc": "تاريخ تحليلات الأحلام الكامل.", "no_dreams": "لا توجد أحلام مسجلة حتى الآن.",
         "lucidity_label": "مستوى الوعي", "story_label": "القصة", "stats_title": "📊 الإحصائيات والحالة", "stats_desc": "تتبع نشاط أحلامك في الوقت الفعلي.",
-        "total_dreams": "إجمالي الأحلام المحللة",
-        "status_premium": "⭐ الحالة: اشتراك غير محدود نشط", "status_free": "🌿 الحالة: حساب مجاني",
+        "total_dreams": "إجمالي الأحلام المحللة", "status_premium": "⭐ الحالة: اشتراك غير محدود نشط", "status_free": "🌿 الحالة: حساب مجاني",
         "account_title": "📝 إدارة الحساب", "account_desc": "إدارة معلوماتك الشخصية.",
         "terms_title": "📜 الشروط والأحكام", "terms_text": "شروط خدمة Aureva Mind.",
         "member_space": "⚙️ مساحة الأعضاء", "cancel_sub": "❌ إلغاء الاشتراك", "manage_account": "📝 الحساب",
@@ -473,7 +469,7 @@ if menu == t["nav_analyze"]:
 elif menu == t["nav_journal"]:
     st.markdown(f"### {t['journal_title']}")
     st.markdown(t["journal_desc"])
-    dreams = db.query(DreamRecord).all()
+    dreams = db.scalars(select(DreamRecord)).all()
     if not dreams:
         st.info(t["no_dreams"])
     else:
@@ -499,7 +495,7 @@ elif menu == t["nav_terms"]:
 
 elif menu == t["nav_account"]:
     st.markdown(f"### {t['account_title']}")
-    st.markdown(t["account_desc"])
+    st.markdown(t['account_desc'])
     
     with st.form("profile_form"):
         name_input = st.text_input("Prénom", value=user.first_name)
