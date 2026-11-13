@@ -132,7 +132,7 @@ fig.update_layout(
 
   st.plotly_chart(fig, use_container_width=True)
 
-  st.markdown(
+st.markdown(
       f"""
         <div style="
             background: linear-gradient(135deg, #1e1b4b 0%, #17153b 100%);
