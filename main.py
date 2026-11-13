@@ -244,7 +244,7 @@ translations = {
         "welcome": "欢迎", "nav_analyze": "✨ 分析梦境", "nav_journal": "📖 梦境日记", "nav_stats": "📊 统计", "nav_terms": "📜 条款", "nav_account": "📝 账户",
         "analysis_title": "✨ 新的梦境分析", "dream_title": "梦境标题", "dream_emotion": "主要情绪", "dream_lucidity": "清明程度 (1-5)",
         "dream_desc": "详细描述你的梦境...", "btn_analyze": "使用AI分析我的梦境", "success_msg": "✨ 梦境分析成功完成！",
-        "interpretation_title": "深度解析：", "empty_desc_warn": "请在分析前输入梦境描述.",
+        "interpretation_title": "深度解析：", "empty_desc_warn": "请在分析前输入梦境描述。",
         "journal_title": "📖 梦境日志", "journal_desc": "查看您完整的梦境分析历史。", "no_dreams": "暂无记录的梦境。",
         "lucidity_label": "清明度", "story_label": "故事", "stats_title": "📊 统计与状态", "stats_desc": "实时追踪您的梦境活动。",
         "total_dreams": "分析总数", "status_premium": "⭐ 状态：无限期订阅已激活", "status_free": "🌿 状态：免费账户",
@@ -273,7 +273,8 @@ translations = {
         "interpretation_title": "تفسير عميق لـ", "empty_desc_warn": "الرجاء إدخال وصف الحلم قبل التحليل.",
         "journal_title": "📖 سجل الأحلام", "journal_desc": "تاريخ تحليلات الأحلام الكامل.", "no_dreams": "لا توجد أحلام مسجلة حتى الآن.",
         "lucidity_label": "مستوى الوعي", "story_label": "القصة", "stats_title": "📊 الإحصائيات والحالة", "stats_desc": "تتبع نشاط أحلامك في الوقت الفعلي.",
-        "total_dreams": "إجمالي الأحلام المحللة", "status_premium": "⭐ الحالة: اشتراك غير محدود نشط", "status_free": "🌿 الحالة: حساب مجاني",
+        "total_dreams": "إجمالي الأحلام المحللة",
+        "status_premium": "⭐ الحالة: اشتراك غير محدود نشط", "status_free": "🌿 الحالة: حساب مجاني",
         "account_title": "📝 إدارة الحساب", "account_desc": "إدارة معلوماتك الشخصية.",
         "terms_title": "📜 الشروط والأحكام", "terms_text": "شروط خدمة Aureva Mind.",
         "member_space": "⚙️ مساحة الأعضاء", "cancel_sub": "❌ إلغاء الاشتراك", "manage_account": "📝 الحساب",
@@ -395,17 +396,22 @@ def render_lunar_observatory():
         ">
             <h4 style="margin: 0 0 8px 0; color: #818cf8; font-size: 1.1rem;">🔮 Clé Psychologique du Jour</h4>
             <p style="margin: 0 0 10px 0; font-size: 0.95rem; line-height: 1.5;"><b>Résonance onirique :</b> {signification}</p>
+            <p style="margin: 0; font-style: italic; font-size: 0.85rem; color: #a5b4fc;">
+            « En psychanalyse, la lune agit comme un miroir grossissant des profondeurs. Noter ton rêve sous cette influence permet de relier ton vécu intime aux grandes marées de l'inconscient. »
+            </p>
         </div>
         """,
         unsafe_allow_html=True,
     )
 
 def generate_ai_interpretation(title, emotion, lucidity, description):
+    """Moteur d'interprétation onirique profond par IA."""
     return f"""
     ### 🔮 Analyse & Interprétation Profonde (IA Aureva Mind)
-    * **Résonance Émotionnelle :** L'émotion de **{emotion}** liée à « *{title}* » met en lumière des dynamiques inconscientes clés.
-    * **Indice de Lucidité ({lucidity}/5) :** Reflète votre niveau de prise de conscience onirique.
-    * **Interprétation :** Le subconscient intègre ici des vécus profonds nécessitant une attention bienveillante.
+    * **Résonance Émotionnelle :** L'émotion dominante de **{emotion}** associée à votre titre « *{title}* » met en lumière des enjeux psychologiques sous-jacents en phase de décantation.
+    * **Indice de Lucidité ({lucidity}/5) :** Votre degré de conscience onirique révèle une connexion directe avec vos structures inconscientes.
+    * **Clé Symbolique :** Le récit partagé (« *{description[:80]}...* ») dépeint un paysage intérieur où l'esprit cherche à intégrer des éléments refoulés ou des intuitions nouvelles.
+    * **Piste d'Évolution :** Observez comment ce songe fait écho à vos aspirations ou tensions de ces derniers jours pour retrouver un équilibre harmonieux.
     """
 
 # --- 5. NAVIGATION & BARRE LATÉRALE ---
@@ -435,7 +441,13 @@ if menu == t["nav_analyze"]:
             user.dreams_count += 1
             db.commit()
             ai_interpretation = generate_ai_interpretation(title, emotion, lucidity, description)
-            new_dream = DreamRecord(title=title, emotion=emotion, lucidity=lucidity, description=description, interpretation=ai_interpretation)
+            new_dream = DreamRecord(
+                title=title, 
+                emotion=emotion, 
+                lucidity=lucidity, 
+                description=description, 
+                interpretation=ai_interpretation
+            )
             db.add(new_dream)
             db.commit()
             st.success(t["success_msg"])
@@ -451,9 +463,9 @@ elif menu == t["nav_journal"]:
         st.info(t["no_dreams"])
     else:
         for d in reversed(dreams):
-            with st.expander(f"✨ {d.title or 'Rêve sans titre'} ({d.emotion})"):
+            with st.expander(f"✨ {d.title or 'Rêve sans titre'} ({d.emotion}) - {d.created_at.strftime('%d/%m/%Y') if d.created_at else ''}"):
                 st.write(f"**{t['lucidity_label']} :** {d.lucidity}/5")
-                st.write(f"**{d.description}**")
+                st.write(f"**{t['story_label']} :** {d.description}")
                 if d.interpretation:
                     st.markdown(d.interpretation, unsafe_allow_html=True)
 
@@ -468,7 +480,7 @@ elif menu == t["nav_stats"]:
 
 elif menu == t["nav_terms"]:
     st.markdown(f"### {t['terms_title']}")
-    st.markdown(t["terms_text"])
+    st.markdown(f"<div style='background: #161b22; padding: 20px; border-radius: 10px; border: 1px solid #30363d;'>{t['terms_text']}</div>", unsafe_allow_html=True)
 
 elif menu == t["nav_account"]:
     st.markdown(f"### {t['account_title']}")
@@ -483,20 +495,25 @@ elif menu == t["nav_account"]:
             user.email = email_input
             db.commit()
             st.success("Profil mis à jour avec succès !")
+
+    st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
+    st.markdown("### 💳 Boutons d'Abonnement & Passerelle")
     
     col1, col2 = st.columns(2)
     with col1:
         if st.button(t["pack_btn"]):
             user.is_premium = True
             db.commit()
-            st.success("Pack 15 rêves activé !")
+            st.success("Paiement validé ! Pack 15 rêves activé avec succès.")
     with col2:
         if st.button(t["unlim_btn"]):
             user.is_premium = True
             db.commit()
-            st.success("Abonnement Illimité activé !")
+            st.success("Paiement validé ! Abonnement Illimité activé avec succès.")
+
+    st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
     
     if st.button(t["cancel_sub"]):
         user.is_premium = False
         db.commit()
-        st.warning("Abonnement résilié.")
+        st.warning("Votre abonnement a bien été résilié.")
