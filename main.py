@@ -349,7 +349,7 @@ with tab3:
     st.success("⭐ Statut : Abonnement Annuel Illimité Actif")
   else:
     st.info("🌿 Statut : Compte Gratuit")
-      import streamlit as st
+      
 
 # --- NAVIGATION DANS LA BARRE LATÉRALE ---
 st.sidebar.title("Navigation")
