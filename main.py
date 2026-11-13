@@ -54,16 +54,16 @@ st.markdown(
 
     /* Champs de saisie, sélecteurs et textareas : Texte bien blanc et lisible */
     .stTextInput>div>div>input, .stSelectbox>div>div>select, .stTextArea>div>div>textarea {
-        background-color: rgba(255, 255, 255, 0.12) !important;
+        background-color: rgba(255, 255, 255, 0.15) !important;
         color: #ffffff !important;
         font-weight: 500;
         border: 1px solid rgba(255, 255, 255, 0.3) !important;
         border-radius: 8px;
     }
     
-    /* Correction du placeholder (texte indicatif un peu plus contrasté) */
+    /* Correction du placeholder (texte indicatif plus contrasté) */
     ::placeholder {
-        color: rgba(255, 255, 255, 0.6) !important;
+        color: rgba(255, 255, 255, 0.7) !important;
         opacity: 1;
     }
     
@@ -243,13 +243,64 @@ with tab1:
         ):
           st.success(t["succes_analyse"])
 
-          # Extraction intelligente de mots clés depuis le texte de l'utilisateur
           texte_lower = description_reve.lower()
 
-          # Analyse détaillée et structurée longue
+          # Analyse détaillée avec détection de mots-clés dynamiques
           st.markdown("### 🔮 Analyse et Interprétation Profonde")
 
           st.markdown("#### 1. 🌊 Décodage de la symbolique & Mots-clés")
-</code>
+          symbolique_mots = []
+          if "mer" in texte_lower or "eau" in texte_lower or "nager" in texte_lower:
+            symbolique_mots.append(
+                "**L'eau / La mer :** Symbolise vos émotions profondes, votre"
+                " inconscient et votre capacité à naviguer à travers des"
+                " périodes de grands changements émotionnels."
+            )
+          if "nuit" in texte_lower or "sombre" in texte_lower:
+            symbolique_mots.append(
+                "**La nuit :** Représente le mystère, l'inconnu et des aspects"
+                " de vous-même encore cachés ou en phase de gestation."
+            )
+          if "ciel" in texte_lower or "étoile" in texte_lower:
+            symbolique_mots.append(
+                "**Le ciel / Les étoiles :** Indiquent une quête de sens,"
+                " d'inspiration spirituelle et une connexion avec vos"
+                " aspirations les plus hautes."
+            )
+          
+          if not symbolique_mots:
+            symbolique_mots.append(
+                f"**Éléments clés de votre récit :** Votre description met en"
+                " avant des dynamiques personnelles uniques qui traduisent"
+                " votre état d'esprit actuel."
+            )
 
-*(Copie bien l'intégralité de ce code mis à jour dans ton fichier GitHub, valide avec **Commit changes**, et rafraîchis ton application sur ton téléphone)*
+          for sm in symbolique_mots:
+            st.write(sm)
+
+          st.markdown("#### 2. 🧠 Clé psychologique")
+          st.write(
+              f"Associée à l'émotion dominante de **{emotion}** et à un niveau"
+              f" de lucidité de **{lucidite}/5**, cette expérience onirique"
+              " révèle un travail de synthèse de votre esprit. Vous cherchez à"
+              " faire la paix avec vos ressentis tout en gardant le cap sur vos"
+              " objectifs profonds."
+          )
+
+          st.markdown("#### 3. 🌱 Conseil de votre subconscient")
+          st.write(
+              "Restez à l'écoute de votre intuition dans les jours à venir."
+              " Votre subconscient vous invite à embrasser votre créativité et"
+              " à accueillir vos émotions avec sérénité."
+          )
+
+          user.dreams_count += 1
+          db.commit()
+
+with tab2:
+  st.subheader(t["journal_titre"])
+  st.write(t["journal_desc"])
+
+with tab3:
+  st.subheader(t["stats_titre"])
+  st.write(t["stats_desc"])
