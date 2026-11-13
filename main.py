@@ -91,7 +91,7 @@ Base = declarative_base()
 class User(Base):
   __tablename__ = "users"
   id = Column(Integer, primary_key=True, index=True)
-  first_name = Column(String, default="Thomas")
+  first_name = Column(String, default="Voyageur")
   is_premium = Column(Boolean, default=False)
   dreams_count = Column(Integer, default=0)
 
@@ -113,13 +113,20 @@ except Exception as e:
 db = SessionLocal()
 user = db.query(User).first()
 if not user:
-  user = User(first_name="Thomas", is_premium=False, dreams_count=0)
+  user = User(first_name="Voyageur", is_premium=False, dreams_count=0)
   db.add(user)
   db.commit()
   db.refresh(user)
 
-# --- BARRE LATÉRALE : SÉLECTEUR DE LANGUE ---
+# --- BARRE LATÉRALE : PRÉNOM & SÉLECTEUR DE LANGUE ---
 with st.sidebar:
+  st.markdown("### 👤 Mon Profil")
+  nouveau_prenom = st.text_input("Votre prénom", value=user.first_name)
+  if nouveau_prenom != user.first_name:
+    user.first_name = nouveau_prenom
+    db.commit()
+
+  st.markdown("---")
   st.markdown("### 🌐 Langue / Language")
   langue = st.selectbox(
       "Choisissez votre langue",
@@ -131,7 +138,7 @@ with st.sidebar:
 # Dictionnaires de traduction de l'interface
 textes = {
     "🇫🇷 Français": {
-        "titre": "🌙 Bonjour Thomas",
+        "titre": f"🌙 Bonjour {user.first_name}",
         "intro": (
             "Explorez les profondeurs de votre subconscient à travers une"
             " analyse onirique détaillée et guidée."
@@ -140,7 +147,8 @@ textes = {
         "tab2": "📜 Journal Intime",
         "tab3": "📊 Statistiques",
         "limite": (
-            "⚠️ Thomas, vous avez atteint votre limite de 3 rêves gratuits."
+            f"⚠️ {user.first_name}, vous avez atteint votre limite de 3 rêves"
+            " gratuits."
         ),
         "choix_offre": (
             "Choisissez l'une de nos offres ci-dessous pour continuer à"
@@ -164,7 +172,7 @@ textes = {
         ),
     },
     "🇬🇧 English": {
-        "titre": "🌙 Hello Thomas",
+        "titre": f"🌙 Hello {user.first_name}",
         "intro": (
             "Explore the depths of your subconscious through detailed"
             " AI-guided dream analysis."
@@ -172,7 +180,10 @@ textes = {
         "tab1": "✨ New Dream",
         "tab2": "📜 Dream Diary",
         "tab3": "📊 Statistics",
-        "limite": "⚠️ Thomas, you have reached your limit of 3 free dreams.",
+        "limite": (
+            f"⚠️ {user.first_name}, you have reached your limit of 3 free"
+            " dreams."
+        ),
         "choix_offre": (
             "Choose one of our offers below to continue exploring your dreams"
             " without limits:"
