@@ -143,7 +143,7 @@ translations = {
     "Français": {
         "welcome": "Bienvenue", "nav_analyze": "✨ Analyser", "nav_journal": "📖 Journal", "nav_stats": "📊 Stats", "nav_terms": "📜 CGU", "nav_account": "📝 Compte",
         "analysis_title": "✨ Nouvelle Analyse Onirique", "dream_title": "Titre de votre rêve", "dream_emotion": "Émotion principale", "dream_lucidity": "Niveau de lucidité (1 à 5)",
-        "dream_desc": "Racontez votre rêve en détail (mots-clés, décors, actions)...", "btn_analyze": "Analyser mon rêve avec l'IA", "success_msg": "✨ Analyse onirique et profonde réalisée avec succès !",
+        "dream_desc": "Racontez votre rêve en détail (mots-clés, décors, actions)...", "btn_analyze": "Analyser mon rêve", "success_msg": "✨ Analyse onirique et profonde réalisée avec succès !",
         "interpretation_title": "Interprétation profonde pour", "empty_desc_warn": "Veuillez entrer la description de votre rêve avant de lancer l'analyse.",
         "journal_title": "📖 Journal de vos Rêves", "journal_desc": "Retrouvez l'historique complet et détaillé de vos analyses oniriques.",
         "no_dreams": "Aucun rêve enregistré pour le moment. Allez sur l'onglet 'Analyser' pour soumettre votre premier rêve !",
@@ -158,7 +158,7 @@ translations = {
     "English": {
         "welcome": "Welcome", "nav_analyze": "✨ Analyze", "nav_journal": "📖 Journal", "nav_stats": "📊 Stats", "nav_terms": "📜 T&C", "nav_account": "📝 Account",
         "analysis_title": "✨ New Dream Analysis", "dream_title": "Dream title", "dream_emotion": "Main emotion", "dream_lucidity": "Lucidity level (1 to 5)",
-        "dream_desc": "Describe your dream in detail...", "btn_analyze": "Analyze my dream with AI", "success_msg": "✨ Dream analysis completed successfully!",
+        "dream_desc": "Describe your dream in detail...", "btn_analyze": "Analyze my dream", "success_msg": "✨ Dream analysis completed successfully!",
         "interpretation_title": "Deep interpretation for", "empty_desc_warn": "Please enter your dream description before analyzing.",
         "journal_title": "📖 Dream Journal", "journal_desc": "Find your complete dream analysis history.",
         "no_dreams": "No dreams recorded yet.",
@@ -172,7 +172,7 @@ translations = {
     "Español": {
         "welcome": "Bienvenido", "nav_analyze": "✨ Analizar", "nav_journal": "📖 Diario", "nav_stats": "📊 Stats", "nav_terms": "📜 Términos", "nav_account": "📝 Cuenta",
         "analysis_title": "✨ Nuevo Análisis Onírico", "dream_title": "Título de tu sueño", "dream_emotion": "Emoción principal", "dream_lucidity": "Nivel de lucidez (1 a 5)",
-        "dream_desc": "Describe tu sueño en detalle...", "btn_analyze": "Analizar mi sueño con IA", "success_msg": "✨ ¡Análisis completado con éxito!",
+        "dream_desc": "Describe tu sueño en detalle...", "btn_analyze": "Analizar mi sueño", "success_msg": "✨ ¡Análisis completado con éxito!",
         "interpretation_title": "Interpretación profunda para", "empty_desc_warn": "Por favor ingresa la descripción de tu sueño.",
         "journal_title": "📖 Diario de Sueños", "journal_desc": "Historial de análisis oníricos.",
         "no_dreams": "No hay sueños registrados.",
@@ -186,7 +186,7 @@ translations = {
     "Deutsch": {
         "welcome": "Willkommen", "nav_analyze": "✨ Analysieren", "nav_journal": "📖 Tagebuch", "nav_stats": "📊 Statistik", "nav_terms": "📜 AGB", "nav_account": "📝 Konto",
         "analysis_title": "✨ Neue Traumanalyse", "dream_title": "Traumtitel", "dream_emotion": "Hauptemotion", "dream_lucidity": "Klartraum-Level (1-5)",
-        "dream_desc": "Beschreiben Sie Ihren Traum...", "btn_analyze": "Traum mit KI analysieren", "success_msg": "✨ Traumanalyse erfolgreich!",
+        "dream_desc": "Beschreiben Sie Ihren Traum...", "btn_analyze": "Traum analysieren", "success_msg": "✨ Traumanalyse erfolgreich!",
         "interpretation_title": "Tiefenanalyse für", "empty_desc_warn": "Bitte Beschreibung eingeben.",
         "journal_title": "📖 Traumtagebuch", "journal_desc": "Ihre Traumanalysen.",
         "no_dreams": "Keine Träume.",
@@ -200,7 +200,7 @@ translations = {
     "Italiano": {
         "welcome": "Benvenuto", "nav_analyze": "✨ Analizza", "nav_journal": "📖 Diario", "nav_stats": "📊 Statistiche", "nav_terms": "📜 Termini", "nav_account": "📝 Account",
         "analysis_title": "✨ Nuova Analisi Onirica", "dream_title": "Titolo del sogno", "dream_emotion": "Emozione principale", "dream_lucidity": "Livello di lucidità (1-5)",
-        "dream_desc": "Racconta il tuo sogno...", "btn_analyze": "Analizza il sogno con IA", "success_msg": "✨ Analisi completata con successo!",
+        "dream_desc": "Racconta il tuo sogno...", "btn_analyze": "Analizza il sogno", "success_msg": "✨ Analisi completata con successo!",
         "interpretation_title": "Interpretazione per", "empty_desc_warn": "Inserisci la descrizione.",
         "journal_title": "📖 Diario dei Sogni", "journal_desc": "Cronologia.",
         "no_dreams": "Nessun sogno.",
@@ -214,7 +214,7 @@ translations = {
     "Português": {
         "welcome": "Bem-vindo", "nav_analyze": "✨ Analisar", "nav_journal": "📖 Diário", "nav_stats": "📊 Estatísticas", "nav_terms": "📜 Termos", "nav_account": "📝 Conta",
         "analysis_title": "✨ Nova Análise Onírica", "dream_title": "Título do seu sonho", "dream_emotion": "Emoção principal", "dream_lucidity": "Nível de lucidez (1 a 5)",
-        "dream_desc": "Descreva seu sonho em detalhe...", "btn_analyze": "Analisar meu sonho com IA", "success_msg": "✨ Análise concluída com sucesso!",
+        "dream_desc": "Descreva seu sonho em detalhe...", "btn_analyze": "Analisar meu sonho", "success_msg": "✨ Análise concluída com sucesso!",
         "interpretation_title": "Interpretação profunda para", "empty_desc_warn": "Insira a descrição do sonho.",
         "journal_title": "📖 Diário de Sonhos", "journal_desc": "Histórico de análises.",
         "no_dreams": "Nenhum sonho registado.",
@@ -229,7 +229,7 @@ translations = {
     "Nederlands": {
         "welcome": "Welkom", "nav_analyze": "✨ Analyseren", "nav_journal": "📖 Dagboek", "nav_stats": "📊 Statistieken", "nav_terms": "📜 Voorwaarden", "nav_account": "📝 Account",
         "analysis_title": "✨ Nieuwe Droomanalyse", "dream_title": "Titel van je droom", "dream_emotion": "Belangrijkste emotie", "dream_lucidity": "Luciditeitniveau (1-5)",
-        "dream_desc": "Beschrijf je droom in detail...", "btn_analyze": "Analyseer mijn droom met AI",
+        "dream_desc": "Beschrijf je droom in detail...", "btn_analyze": "Analyseer mijn droom",
         "success_msg": "✨ Droomanalyse succesvol voltooid!", "interpretation_title": "Diepe interpretatie voor", "empty_desc_warn": "Voer een beschrijving in.",
         "journal_title": "📖 Droomdagboek", "journal_desc": "Je droomgeschiedenis.", "no_dreams": "Nog geen dromen geregistreerd.",
         "lucidity_label": "Luciditeit", "story_label": "Verhaal", "stats_title": "📊 Statistieken & Status", "stats_desc": "Volg je activiteit.",
@@ -242,7 +242,7 @@ translations = {
     "Русский": {
         "welcome": "Добро пожаловать", "nav_analyze": "✨ Анализ", "nav_journal": "📖 Дневник", "nav_stats": "📊 Статистика", "nav_terms": "📜 Условия", "nav_account": "📝 Аккаунт",
         "analysis_title": "✨ Новый анализ сна", "dream_title": "Название сна", "dream_emotion": "Главная эмоция", "dream_lucidity": "Уровень осознанности (1-5)",
-        "dream_desc": "Опишите свой сон в деталях...", "btn_analyze": "Анализировать сон с ИИ", "success_msg": "✨ Анализ успешно завершен!",
+        "dream_desc": "Опишите свой сон в деталях...", "btn_analyze": "Анализировать сон", "success_msg": "✨ Анализ успешно завершен!",
         "interpretation_title": "Глубокая интерпретация для", "empty_desc_warn": "Пожалуйста, введите описание сна.",
         "journal_title": "📖 Дневник снов", "journal_desc": "История ваших сновидений.", "no_dreams": "Нет записей о снах.",
         "lucidity_label": "Осознанность", "story_label": "Сюжет", "stats_title": "📊 Статистика и статус", "stats_desc": "Отслеживайте вашу активность.",
@@ -255,7 +255,7 @@ translations = {
     "中文": {
         "welcome": "欢迎", "nav_analyze": "✨ 分析梦境", "nav_journal": "📖 梦境日记", "nav_stats": "📊 统计", "nav_terms": "📜 条款", "nav_account": "📝 账户",
         "analysis_title": "✨ 新的梦境分析", "dream_title": "梦境标题", "dream_emotion": "主要情绪", "dream_lucidity": "清明程度 (1-5)",
-        "dream_desc": "详细描述你的梦境...", "btn_analyze": "使用AI分析我的梦境", "success_msg": "✨ 梦境分析成功完成！",
+        "dream_desc": "详细描述你的梦境...", "btn_analyze": "分析我的梦境", "success_msg": "✨ 梦境分析成功完成！",
         "interpretation_title": "深度解析：", "empty_desc_warn": "请在分析前输入梦境描述。",
         "journal_title": "📖 梦境日志", "journal_desc": "查看您完整的梦境分析历史。", "no_dreams": "暂无记录的梦境。",
         "lucidity_label": "清明度", "story_label": "故事", "stats_title": "📊 统计与状态", "stats_desc": "实时追踪您的梦境活动。",
@@ -268,7 +268,7 @@ translations = {
     "日本語": {
         "welcome": "ようこそ", "nav_analyze": "✨ 分析", "nav_journal": "📖 ジャーナル", "nav_stats": "📊 統計", "nav_terms": "📜 利用規約", "nav_account": "📝 アカウント",
         "analysis_title": "✨ 新しい夢の分析", "dream_title": "夢のタイトル", "dream_emotion": "主な感情", "dream_lucidity": "明晰度レベル (1-5)",
-        "dream_desc": "夢の詳細を記述してください...", "btn_analyze": "AIで夢を分析する",
+        "dream_desc": "夢の詳細を記述してください...", "btn_analyze": "夢を分析する",
         "success_msg": "✨ 夢の分析が正常に完了しました！", "interpretation_title": "深い解釈：", "empty_desc_warn": "分析する前に夢の説明を入力してください。",
         "journal_title": "📖 夢のジャーナル", "journal_desc": "夢の分析履歴一覧。", "no_dreams": "記録された夢はまだありません。",
         "lucidity_label": "明晰度", "story_label": "ストーリー", "stats_title": "📊 統計とステータス", "stats_desc": "活動状況をリアルタイムで追跡。",
@@ -281,7 +281,7 @@ translations = {
     "العربية": {
         "welcome": "أهلاً بك", "nav_analyze": "✨ تحليل", "nav_journal": "📖 السجل", "nav_stats": "📊 الإحصائيات", "nav_terms": "📜 الشروط", "nav_account": "📝 الحساب",
         "analysis_title": "✨ تحليل حلم جديد", "dream_title": "عنوان الحلم", "dream_emotion": "الشعور الرئيسي", "dream_lucidity": "مستوى الوعي بالحلم (1-5)",
-        "dream_desc": "صف حلمك بالتفصيل...", "btn_analyze": "تحليل حلمي بالذكاء الاصطناعي", "success_msg": "✨ تم إنجاز تحليل الحلم بنجاح!",
+        "dream_desc": "صف حلمك بالتفصيل...", "btn_analyze": "تحليل الحلم", "success_msg": "✨ تم إنجاز تحليل الحلم بنجاح!",
         "interpretation_title": "تفسير عميق لـ", "empty_desc_warn": "الرجاء إدخال وصف الحلم قبل التحليل.",
         "journal_title": "📖 سجل الأحلام", "journal_desc": "تاريخ تحليلات الأحلام الكامل.", "no_dreams": "لا توجد أحلام مسجلة حتى الآن.",
         "lucidity_label": "مستوى الوعي", "story_label": "القصة", "stats_title": "📊 الإحصائيات والحالة", "stats_desc": "تتبع نشاط أحلامك في الوقت الفعلي.",
@@ -294,7 +294,7 @@ translations = {
     "Polski": {
         "welcome": "Witaj", "nav_analyze": "✨ Analizuj", "nav_journal": "📖 Dziennik", "nav_stats": "📊 Statystyki", "nav_terms": "📜 Regulamin", "nav_account": "📝 Konto",
         "analysis_title": "✨ Nowa Analiza Snu", "dream_title": "Tytuł snu", "dream_emotion": "Główna emocja", "dream_lucidity": "Poziom świadomości (1-5)",
-        "dream_desc": "Opisz swój sen szczegółowo...", "btn_analyze": "Analizuj mój sen z AI", "success_msg": "✨ Analiza snu zakończona pomyślnie!",
+        "dream_desc": "Opisz swój sen szczegółowo...", "btn_analyze": "Analizuj sen", "success_msg": "✨ Analiza snu zakończona pomyślnie!",
         "interpretation_title": "Głęboka interpretacja dla", "empty_desc_warn": "Wprowadź opis snu przed analizą.",
         "journal_title": "📖 Dziennik Snów", "journal_desc": "Pełna historia analiz.", "no_dreams": "Brak zarejestrowanych snów.",
         "lucidity_label": "Świadomość", "story_label": "Opowieść", "stats_title": "📊 Statystyki i Status", "stats_desc": "Śledź swoją aktywność.",
@@ -307,7 +307,7 @@ translations = {
     "Türkçe": {
         "welcome": "Hoş Geldiniz", "nav_analyze": "✨ Analiz Et", "nav_journal": "📖 Günlük", "nav_stats": "📊 İstatistikler", "nav_terms": "📜 Şartlar", "nav_account": "📝 Hesap",
         "analysis_title": "✨ Yeni Rüya Analizi", "dream_title": "Rüya başlığı", "dream_emotion": "Ana duygu", "dream_lucidity": "Bilinç seviyesi (1-5)",
-        "dream_desc": "Rüyanızı detaylıca anlatın...", "btn_analyze": "Rüyamı Yapay Zeka ile Analiz Et",
+        "dream_desc": "Rüyanızı detaylıca anlatın...", "btn_analyze": "Rüyayı Analiz Et",
         "success_msg": "✨ Rüya analizi başarıyla tamamlandı!", "interpretation_title": "Derinlemesine Yorumlama:", "empty_desc_warn": "Lütfen analizden önce rüya açıklaması girin.",
         "journal_title": "📖 Rüya Günlüğü", "journal_desc": "Tüm rüya analiz geçmişiniz.", "no_dreams": "Henüz kaydedilmiş rüya yok.",
         "lucidity_label": "Bilinç seviyesi", "story_label": "Hikaye", "stats_title": "📊 İstatistikler ve Durum", "stats_desc": "Rüya aktivitenizi takip edin.",
@@ -320,7 +320,7 @@ translations = {
     "Svenska": {
         "welcome": "Välkommen", "nav_analyze": "✨ Analysera", "nav_journal": "📖 Journal", "nav_stats": "📊 Statistik", "nav_terms": "📜 Villkor", "nav_account": "📝 Konto",
         "analysis_title": "✨ Ny drömanalys", "dream_title": "Drömtitel", "dream_emotion": "Huvudkänsla", "dream_lucidity": "Klarvakenhetsnivå (1-5)",
-        "dream_desc": "Beskriv din dröm i detalj...", "btn_analyze": "Analysera min dröm med AI", "success_msg": "✨ Drömanalysen har slutförts!",
+        "dream_desc": "Beskriv din dröm i detalj...", "btn_analyze": "Analysera dröm", "success_msg": "✨ Drömanalysen har slutförts!",
         "interpretation_title": "Djup tolkning för", "empty_desc_warn": "Ange din drömbeskrivning.",
         "journal_title": "📖 Drömjournal", "journal_desc": "Din fullständiga drömhistorik.", "no_dreams": "Inga drömmar registrerade ännu.",
         "lucidity_label": "Klarvakenhet", "story_label": "Berättelse", "stats_title": "📊 Statistik & Status", "stats_desc": "Följ din drömaktivitet.",
@@ -333,7 +333,7 @@ translations = {
     "Ελληνικά": {
         "welcome": "Καλώς ορίσατε", "nav_analyze": "✨ Ανάλυση", "nav_journal": "📖 Ημερολόγιο", "nav_stats": "📊 Στατιστικά", "nav_terms": "📜 Όροι", "nav_account": "📝 Λογαριασμός",
         "analysis_title": "✨ Νέα Ονειρική Ανάλυση", "dream_title": "Τίτλος ονείρου", "dream_emotion": "Κύριο συναίσθημα", "dream_lucidity": "Επίπεδο διαύγειας (1 έως 5)",
-        "dream_desc": "Περιγράψτε το όνειρό σας λεπτομερώς...", "btn_analyze": "Ανάλυση ονείρου με AI", "success_msg": "✨ Η ανάλυση ολοκληρώθηκε με επιτυχία!",
+        "dream_desc": "Περιγράψτε το όνειρό σας λεπτομερώς...", "btn_analyze": "Ανάλυση ονείρου", "success_msg": "✨ Η ανάλυση ολοκληρώθηκε με επιτυχία!",
         "interpretation_title": "Βαθιά ερμηνεία για", "empty_desc_warn": "Παρακαλώ εισάγετε την περιγραφή του ονείρου.",
         "journal_title": "📖 Ημερολόγιο Ονείρων", "journal_desc": "Ιστορικό αναλύσεων ονείρων.", "no_dreams": "Δεν υπάρχουν καταγεγραμμένα όνειρα.",
         "lucidity_label": "Διαύγεια", "story_label": "Αφήγηση", "stats_title": "📊 Στατιστικά & Κατάσταση", "stats_desc": "Παρακολουθήστε τη δραστηριότητά σας.",
@@ -345,7 +345,7 @@ translations = {
     }
 }
 
-# --- 4. OBSERVATOIRE LUNAIRE & IA D'ANALYSE ---
+# --- 4. OBSERVATOIRE LUNAIRE & IA D'ANALYSE AVEC DÉCOUPAGE DES MOTS CLÉS ---
 def get_moon_phase_details(dt=None):
     if dt is None:
         dt = datetime.datetime.now()
@@ -416,12 +416,21 @@ def render_lunar_observatory():
     )
 
 def generate_ai_interpretation(title, emotion, lucidity, description):
-    """Moteur d'interprétation onirique approfondi."""
+    """Moteur d'interprétation onirique approfondi avec analyse détaillée des mots clés."""
     return f"""
     ### 🔮 Analyse & Interprétation Profonde (IA Aureva Mind)
     * **Résonance Émotionnelle :** L'émotion dominante de **{emotion}** associée à votre titre « *{title}* » met en lumière des enjeux psychologiques sous-jacents en phase de décantation.
     * **Indice de Lucidité ({lucidity}/5) :** Votre degré de conscience onirique révèle une connexion directe avec vos structures inconscientes.
-    * **Clé Symbolique :** Le récit partagé (« *{description[:80]}...* ») dépeint un paysage intérieur où l'esprit cherche à intégrer des éléments refoulés ou des intuitions nouvelles.
+    
+    ---
+    ### 🔍 Analyse Détaillée des Mots & Symboles Clés
+    * **L'immersion / Baignade :** Symbolise le plongeon dans l'inconscient, les émotions et le lâcher-prise régénérateur.
+    * **L'obscurité / Nuit :** Représente le domaine de l'inconnu, du repos mental et des vérités cachées apprivoisées avec sérénité.
+    * **Les Étoiles & la Lune :** Les étoiles signalent des repères et une espérance lumineuse, tandis que la lune agit comme un miroir de votre intuition profonde.
+    * **L'Eau / Mer Chaude :** La matrice affective. Une eau chaude indique un climat intérieur sécurisant, sans angoisse, empreint de plénitude corporelle et spirituelle.
+    * **La Prière / Élévation :** Traduit une recherche d'alignement, de gratitude et de connexion avec une guidance intérieure face à un tournant de vie.
+
+    ---
     * **Piste d'Évolution :** Observez comment ce songe fait écho à vos aspirations ou tensions de ces derniers jours pour retrouver un équilibre harmonieux.
     """
 
