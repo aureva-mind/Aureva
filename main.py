@@ -4,18 +4,33 @@ from sqlalchemy import create_engine, Column, Integer, String, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# --- 1. CONFIGURATION DE LA PAGE & DESIGN NUIT ÉTOILÉE ---
+# --- 1. CONFIGURATION DE LA PAGE & DESIGN NUIT ÉTOILÉE AVEC ÉTOILES ---
 st.set_page_config(
     page_title="Aureva Mind - Analyse de Rêves",
     page_icon="🌙",
     layout="wide"
 )
 
-# Style CSS : Nuit étoilée pour l'app et texte NOIR dans les boîtes de résultats/alertes
+# Style CSS avec un ciel étoilé généré en arrière-plan et texte noir pour les boîtes
 st.markdown("""
     <style>
     .stApp {
-        background: linear-gradient(to bottom, #090a0f, #1b1e3b, #090a0f) !important;
+        background: 
+            radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+            radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0,0,0,0)),
+            radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0,0,0,0)),
+            radial-gradient(2px 2px at 160px 120px, #ffd700, rgba(0,0,0,0)),
+            radial-gradient(1px 1px at 200px 200px, #ffffff, rgba(0,0,0,0)),
+            radial-gradient(2px 2px at 300px 80px, #ffffff, rgba(0,0,0,0)),
+            radial-gradient(2px 2px at 450px 150px, #ffd700, rgba(0,0,0,0)),
+            radial-gradient(1px 1px at 500px 300px, #ffffff, rgba(0,0,0,0)),
+            radial-gradient(2px 2px at 650px 70px, #ffffff, rgba(0,0,0,0)),
+            radial-gradient(1.5px 1.5px at 750px 220px, #ffd700, rgba(0,0,0,0)),
+            radial-gradient(2px 2px at 850px 120px, #ffffff, rgba(0,0,0,0)),
+            radial-gradient(1px 1px at 950px 280px, #ffffff, rgba(0,0,0,0)),
+            linear-gradient(to bottom, #05070f, #1b1e3b, #05070f) !important;
+        background-repeat: repeat;
+        background-size: 500px 500px;
         color: #f1f5f9 !important;
     }
     section[data-testid="stSidebar"] {
@@ -29,7 +44,6 @@ st.markdown("""
         background-color: #161b22 !important;
         border: 1px solid #30363d !important;
     }
-    /* Boîtes de succès, infos et alertes avec fond clair et ÉCRITURE NOIRE */
     div[data-baseweb="notification"], .stAlert {
         background-color: #f8fafc !important;
         color: #0f111a !important;
@@ -367,7 +381,6 @@ with st.sidebar:
 if page == t["nav_space"]:
     st.title(f"Bienvenue, {user.first_name} 🌙")
     
-    # Onglets renommés proprement (plus de "Analyse IA")
     tab1, tab2, tab3 = st.tabs(["✨ Analyser", "📖 Journal", "📊 Statistiques"])
     
     with tab1:
@@ -389,20 +402,25 @@ if page == t["nav_space"]:
                 user.dreams_count += 1
                 db.commit()
 
-                # Ces blocs s'afficheront désormais avec un fond clair et une écriture noire bien lisible
                 st.success("✨ Analyse onirique réalisée avec succès !")
                 st.markdown(f"### 🌌 Interprétation profonde pour {user.first_name}")
                 
-                if dream_emotion == "Joie":
-                    analyse_texte = "Ce rêve traduit une libération émotionnelle positive et une grande harmonie intérieure. Votre subconscient célèbre une réussite ou un apaisement récent."
-                elif dream_emotion == "Peur":
-                    analyse_texte = "L'apparition de cette peur dans votre songe met en lumière un défi ou une transition que vous affrontez actuellement. C'est l'occasion de libérer des tensions accumulées."
-                elif dream_emotion == "Mystère":
-                    analyse_texte = "Ce rêve cache des symboles profonds liés à votre intuition. Votre esprit cherche à résoudre une énigme ou explore des dimensions inconscientes."
-                else:
-                    analyse_texte = f"Dominé par l'émotion de **{dream_emotion}**, ce rêve révèle un besoin d'expression et d'écoute de vos aspirations intimes."
+                analyse_globale = f"""
+**1. Clé Émotionnelle & Ressenti Global**
+Dominé par l'émotion de **{dream_emotion}**, ce songe reflète un état psychologique en pleine effervescence. Votre esprit cherche à extérioriser un trop-plein d'énergie ou à faire face à une incertitude actuelle.
 
-                st.info(f"{analyse_texte}\n\n*Niveau de lucidité estimé à {dream_lucidity}/5 :* {'Vous aviez un bon contrôle de vos actions oniriques.' if dream_lucidity >= 3 else 'Votre rêve était principalement guidé par le flux de votre inconscient.'}")
+**2. Exploration Symbolique du Récit**
+* *Votre description :* « {dream_desc} »
+* *Décryptage de l'inconscient :* Les éléments de ce songe agissent comme des miroirs de votre vie éveillée. Ils traduisent des aspirations profondes, des blocages inconscients ou des dynamiques relationnelles que vous gérez au quotidien. Ce décor onirique met en lumière votre besoin fondamental de trouver un équilibre face aux choix qui s'offrent à vous.
+
+**3. Niveau de Lucidité ({dream_lucidity}/5)**
+{'• **Contrôle élevé :** Vous possédez une belle conscience de vos mécanismes intérieurs, ce qui vous permet d’agir activement sur vos émotions.' if dream_lucidity >= 3 else '• **Immersion profonde :** Votre esprit s\'est totalement laissé porter par le courant onirique, révélant des intuitions brutes et authentiques.'}
+
+**4. Conseil Bien-être & Croissance Personnelle**
+Prenez un moment pour respirer et intégrer les enseignements de ce rêve. L'écoute de vos songes est une passerelle directe vers une meilleure sérénité au quotidien.
+                """
+
+                st.info(analyse_globale)
             else:
                 st.warning("Veuillez entrer la description de votre rêve avant de lancer l'analyse.")
 
