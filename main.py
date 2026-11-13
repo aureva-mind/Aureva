@@ -123,7 +123,7 @@ fig = go.Figure(
       )
   )
 
-      fig.update_layout(
+  fig.update_layout(
       paper_bgcolor="rgba(0,0,0,0)",
       plot_bgcolor="rgba(0,0,0,0)",
       font={"color": "#e0e7ff"},
