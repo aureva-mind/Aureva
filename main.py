@@ -163,7 +163,7 @@ st.set_page_config(
     page_icon="🌙",
     layout="wide"
 )
-render_lunar_observatory
+render_lunar_observatory()
 
 # Style CSS : Ciel étoilé dynamique, champs sombres avec texte blanc, et boutons Stripe corrigés
 st.markdown("""
