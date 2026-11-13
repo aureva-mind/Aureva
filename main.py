@@ -11,7 +11,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# Style CSS renforcé pour imposer la nuit étoilée et une lisibilité parfaite
+# Style CSS renforcé pour corriger la lisibilité des boîtes et imposer la nuit étoilée
 st.markdown("""
     <style>
     .stApp {
@@ -28,6 +28,15 @@ st.markdown("""
         color: #ffffff !important;
         background-color: #161b22 !important;
         border: 1px solid #30363d !important;
+    }
+    /* Correction pour que le texte dans les st.success et st.info soit lisible sur fond sombre */
+    div[data-baseweb="notification"], .stAlert {
+        background-color: #161b22 !important;
+        color: #f1f5f9 !important;
+        border: 1px solid #30363d !important;
+    }
+    .stAlert p {
+        color: #f1f5f9 !important;
     }
     .stButton>button {
         background: linear-gradient(to right, #4f46e5, #9333ea) !important;
@@ -369,10 +378,8 @@ if page == t["nav_space"]:
         dream_lucidity = st.slider("Niveau de lucidité (1 à 5)", 1, 5, 2)
         dream_desc = st.text_area("Racontez votre rêve en détail...")
 
-        # Bouton EXACTEMENT nommé comme demandé
         if st.button(t["btn_analyze"]):
             if dream_desc.strip():
-                # Enregistrement dans la base de données
                 nouveau_reve = DreamRecord(
                     title=dream_title if dream_title else "Rêve sans titre",
                     emotion=dream_emotion,
@@ -383,7 +390,6 @@ if page == t["nav_space"]:
                 user.dreams_count += 1
                 db.commit()
 
-                # Analyse détaillée affichée à l'écran
                 st.success("✨ Analyse onirique réalisée avec succès !")
                 st.markdown(f"### 🌌 Interprétation profonde pour {user.first_name}")
                 
