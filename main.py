@@ -5,6 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import datetime
 import plotly.graph_objects as go
+
 def get_moon_phase_details(dt=None):
   """Calcule la phase lunaire et renvoie son nom, sa progression et sa signification."""
   if dt is None:
@@ -91,11 +92,6 @@ def get_moon_phase_details(dt=None):
 
 
 def render_lunar_observatory():
-  phase_val, phase_nom, signification = get_moon_phase_details()
-st.markdown("### 🌙 Observatoire de la Synchronodicité Lunaire")
-st.markdown(f"#### 🌙 Cycle Actuel : {phase_nom}")
-st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
-def render_lunar_observatory():
     phase_val, phase_nom, signification = get_moon_phase_details()
     st.markdown("### 🌙 Observatoire de la Synchronodicité Lunaire")
     st.markdown(f"#### 🌙 Cycle Actuel : {phase_nom}")
@@ -124,17 +120,9 @@ def render_lunar_observatory():
         margin=dict(t=20, b=10, l=20, r=20),
     )
     st.plotly_chart(fig, use_container_width=True)
-      paper_bgcolor="rgba(0,0,0,0)",
-      plot_bgcolor="rgba(0,0,0,0)",
-      font={"color": "#e0e7ff"},
-      height=220,
-      margin=dict(t=20, b=10, l=20, r=20),
-  )
 
-st.plotly_chart(fig, use_container_width=True)
-
-st.markdown(
-      f"""
+    st.markdown(
+        f"""
         <div style="
             background: linear-gradient(135deg, #1e1b4b 0%, #17153b 100%);
             border: 1px solid #4338ca;
@@ -152,8 +140,9 @@ st.markdown(
             </p>
         </div>
         """,
-      unsafe_allow_html=True,
-  )
+        unsafe_allow_html=True,
+    )
+
 # --- 1. CONFIGURATION DE LA PAGE & DESIGN NUIT ÉTOILÉE ---
 st.set_page_config(
     page_title="Aureva Mind - Analyse de Rêves",
@@ -478,364 +467,16 @@ Les analyses oniriques fournies par Aureva Mind ont une vocation de développeme
         "stats_title": "📊 Statistiche e Stato",
         "stats_desc": "Monitora l'attività.",
         "total_dreams": "Sogni totali",
-        "status_premium": "⭐ Abbonamento Attivo",
+        "status_premium": "⭐ Abbonamento Illimitato Attivo",
         "status_free": "🌿 Account Gratuito",
-        "account_title": "📝 Gestione Account",
-        "account_desc": "Gestisci il tuo profilo.",
+        "account_title": "📝 Registrazione e Gestione Account",
+        "account_desc": "Gestisci le tue informazioni.",
         "terms_title": "📜 Termini e Condizioni",
-        "terms_text": "Termini di servizio.",
-        "member_space": "⚙️ Area",
-        "cancel_sub": "❌ Annulla",
+        "terms_text": "Termini di servizio di Aureva Mind.",
+        "member_space": "⚙️ Area Membri",
+        "cancel_sub": "❌ Annulla abbonamento",
         "manage_account": "📝 Account",
-        "pack_btn": "✨ Pacchetto 15 Sogni (4,99 €)",
-        "unlim_btn": "🚀 Illimitato (12 €/mese)"
-    },
-    "Português": {
-        "welcome": "Bem-vindo",
-        "nav_analyze": "✨ Analisar",
-        "nav_journal": "📖 Diário",
-        "nav_stats": "📊 Stats",
-        "nav_terms": "📜 Termos",
-        "nav_account": "📝 Conta",
-        "analysis_title": "✨ Nova Análise Onírica",
-        "dream_title": "Título do sonho",
-        "dream_emotion": "Emoção principal",
-        "dream_lucidity": "Nível de lucidez",
-        "dream_desc": "Descreva seu sonho...",
-        "btn_analyze": "Analisar sonho",
-        "success_msg": "✨ Análise concluída!",
-        "interpretation_title": "Interpretação para",
-        "empty_desc_warn": "Insira a descrição.",
-        "journal_title": "📖 Diário de Sonhos",
-        "journal_desc": "Histórico.",
-        "no_dreams": "Nenhum sonho.",
-        "lucidity_label": "Lucidez",
-        "story_label": "Relato",
-        "stats_title": "📊 Estatísticas",
-        "stats_desc": "Acompanhe sua atividade.",
-        "total_dreams": "Total de sonhos",
-        "status_premium": "⭐ Assinatura Ativa",
-        "status_free": "🌿 Conta Gratuita",
-        "account_title": "📝 Gerenciamento de Conta",
-        "account_desc": "Gerencie seus dados.",
-        "terms_title": "📜 Termos e Condições",
-        "terms_text": "Termos de uso.",
-        "member_space": "⚙️ Membros",
-        "cancel_sub": "❌ Cancelar",
-        "manage_account": "📝 Conta",
-        "pack_btn": "✨ Pacote 15 Sonhos (€4,99)",
-        "unlim_btn": "🚀 Ilimitado (€12/mês)"
-    },
-    "Nederlands": {
-        "welcome": "Welkom",
-        "nav_analyze": "✨ Analyse",
-        "nav_journal": "📖 Dagboek",
-        "nav_stats": "📊 Stats",
-        "nav_terms": "📜 Voorwaarden",
-        "nav_account": "📝 Account",
-        "analysis_title": "✨ Nieuwe Droomanalyse",
-        "dream_title": "Droomtitel",
-        "dream_emotion": "Belangrijkste emotie",
-        "dream_lucidity": "Luciditeit",
-        "dream_desc": "Beschrijf je droom...",
-        "btn_analyze": "Analyseer droom",
-        "success_msg": "✨ Analyse voltooid!",
-        "interpretation_title": "Interpretatie voor",
-        "empty_desc_warn": "Vul beschrijving in.",
-        "journal_title": "📖 Droomdagboek",
-        "journal_desc": "Geschiedenis.",
-        "no_dreams": "Geen dromen.",
-        "lucidity_label": "Luciditeit",
-        "story_label": "Verhaal",
-        "stats_title": "📊 Statistieken",
-        "stats_desc": "Volg je activiteit.",
-        "total_dreams": "Totaal dromen",
-        "status_premium": "⭐ Abonnement Actief",
-        "status_free": "🌿 Gratis Account",
-        "account_title": "📝 Accountbeheer",
-        "account_desc": "Beheer je account.",
-        "terms_title": "📜 Algemene Voorwaarden",
-        "terms_text": "Voorwaarden.",
-        "member_space": "⚙️ Ruimte",
-        "cancel_sub": "❌ Opzeggen",
-        "manage_account": "📝 Account",
-        "pack_btn": "✨ 15 Dromen Pakket (€4,99)",
-        "unlim_btn": "🚀 Onbeperkt (€12/maand)"
-    },
-    "Polski": {
-        "welcome": "Witaj",
-        "nav_analyze": "✨ Analizuj",
-        "nav_journal": "📖 Dziennik",
-        "nav_stats": "📊 Statystyki",
-        "nav_terms": "📜 Regulamin",
-        "nav_account": "📝 Konto",
-        "analysis_title": "✨ Nowa Analiza Snu",
-        "dream_title": "Tytuł snu",
-        "dream_emotion": "Główna emocja",
-        "dream_lucidity": "Poziom świadomości",
-        "dream_desc": "Opisz sen...",
-        "btn_analyze": "Analizuj sen",
-        "success_msg": "✨ Analiza zakończona!",
-        "interpretation_title": "Interpretacja dla",
-        "empty_desc_warn": "Wpisz opis.",
-        "journal_title": "📖 Dziennik Snów",
-        "journal_desc": "Historia.",
-        "no_dreams": "Brak snów.",
-        "lucidity_label": "Świadomość",
-        "story_label": "Opis",
-        "stats_title": "📊 Statystyki",
-        "stats_desc": "Śledź aktywność.",
-        "total_dreams": "Suma snów",
-        "status_premium": "⭐ Subskrypcja aktywna",
-        "status_free": "🌿 Konto darmowe",
-        "account_title": "📝 Zarządzanie Kontem",
-        "account_desc": "Zarządzaj swoim profilem.",
-        "terms_title": "📜 Regulamin",
-        "terms_text": "Regulamin serwisu.",
-        "member_space": "⚙️ Strefa",
-        "cancel_sub": "❌ Anuluj",
-        "manage_account": "📝 Konto",
-        "pack_btn": "✨ Pakiet 15 Snów (4,99 €)",
-        "unlim_btn": "🚀 Nieograniczony (12 €/miesiąc)"
-    },
-    "Русский": {
-        "welcome": "Добро пожаловать",
-        "nav_analyze": "✨ Анализ",
-        "nav_journal": "📖 Дневник",
-        "nav_stats": "📊 Статистика",
-        "nav_terms": "📜 Условия",
-        "nav_account": "📝 Аккаунт",
-        "analysis_title": "✨ Новый Анализ Сна",
-        "dream_title": "Название сна",
-        "dream_emotion": "Эмоция",
-        "dream_lucidity": "Осознанность",
-        "dream_desc": "Опишите сон...",
-        "btn_analyze": "Анализировать сон",
-        "success_msg": "✨ Успешно!",
-        "interpretation_title": "Толкование для",
-        "empty_desc_warn": "Введите описание.",
-        "journal_title": "📖 Дневник снов",
-        "journal_desc": "История.",
-        "no_dreams": "Нет снов.",
-        "lucidity_label": "Осознанность",
-        "story_label": "Сон",
-        "stats_title": "📊 Статистика",
-        "stats_desc": "Активность.",
-        "total_dreams": "Всего снов",
-        "status_premium": "⭐ Подписка активна",
-        "status_free": "🌿 Бесплатный аккаунт",
-        "account_title": "📝 Управление Аккаунтом",
-        "account_desc": "Управление профилем.",
-        "terms_title": "📜 Условия",
-        "terms_text": "Условия использования.",
-        "member_space": "⚙️ Кабинет",
-        "cancel_sub": "❌ Отменить",
-        "manage_account": "📝 Аккаунт",
-        "pack_btn": "✨ Пакет 15 снов (4,99 €)",
-        "unlim_btn": "🚀 Безлимит (12 €/месяц)"
-    },
-    "日本語": {
-        "welcome": "ようこそ",
-        "nav_analyze": "✨ 分析",
-        "nav_journal": "📖 ジャーナル",
-        "nav_stats": "📊 統計",
-        "nav_terms": "📜 規約",
-        "nav_account": "📝 アカウント",
-        "analysis_title": "✨ 新しい夢の分析",
-        "dream_title": "夢のタイトル",
-        "dream_emotion": "主な感情",
-        "dream_lucidity": "明晰性",
-        "dream_desc": "夢の詳細...",
-        "btn_analyze": "夢を分析",
-        "success_msg": "✨ 分析完了！",
-        "interpretation_title": "解釈",
-        "empty_desc_warn": "説明を入力してください。",
-        "journal_title": "📖 夢のジャーナル",
-        "journal_desc": "履歴。",
-        "no_dreams": "記録なし。",
-        "lucidity_label": "明晰性",
-        "story_label": "内容",
-        "stats_title": "📊 統計",
-        "stats_desc": "活動の追跡。",
-        "total_dreams": "夢の総数",
-        "status_premium": "⭐ プレミアム有効",
-        "status_free": "🌿 無料アカウント",
-        "account_title": "📝 アカウント管理",
-        "account_desc": "プロフィールの管理。",
-        "terms_title": "📜 利用規約",
-        "terms_text": "利用規約。",
-        "member_space": "⚙️ スペース",
-        "cancel_sub": "❌ 解約",
-        "manage_account": "📝 アカウント",
-        "pack_btn": "✨ 15夢パック (4.99 €)",
-        "unlim_btn": "🚀 無制限 (12 €/月)"
+        "pack_btn": "✨ Pack 15 Sogni (€4.99)",
+        "unlim_btn": "🚀 Illimitato (€12/mese)"
     }
 }
-
-# --- 4. BARRE LATÉRALE (PROFIL & LANGUE) ---
-with st.sidebar:
-    st.markdown("### 👤 Mon Profil")
-    nouveau_prenom = st.text_input("Votre prénom", value=user.first_name)
-    if nouveau_prenom != user.first_name:
-        user.first_name = nouveau_prenom
-        db.commit()
-
-    st.markdown("---")
-    st.markdown("🌍 **Langue / Language**")
-    langue = st.selectbox(
-        "Choisissez votre langue", 
-        ["Français", "English", "Español", "Deutsch", "Italiano", "Português", "Nederlands", "Polski", "Русский", "日本語"],
-        label_visibility="collapsed"
-    )
-    t = translations[langue]
-
-    st.markdown("---")
-    st.subheader(t["member_space"])
-    if user.is_premium:
-        if st.button(t["cancel_sub"]):
-            user.is_premium = False
-            db.commit()
-            st.rerun()
-    else:
-        st.info("💡 Mode gratuit actif.")
-
-# --- 5. EN-TÊTE ---
-st.title(f"Aureva Mind — {t['welcome']}, {user.first_name} 🌙")
-render_lunar_observatory
-# --- 6. VRAI MENU HORIZONTAL PAR ONGLETS (RESPONSIVE & ADAPTÉ MOBILE) ---
-tab_analyze, tab_journal, tab_stats, tab_terms, tab_account = st.tabs([
-    t["nav_analyze"], 
-    t["nav_journal"], 
-    t["nav_stats"], 
-    t["nav_terms"],
-    t["nav_account"]
-])
-
-# --- 7. ONGLET : ANALyser ---
-with tab_analyze:
-    st.subheader(t["analysis_title"])
-    dream_title = st.text_input(t["dream_title"])
-    dream_emotion = st.selectbox(t["dream_emotion"], ["Joie", "Peur", "Tristesse", "Mystère", "Aventure", "Autre"])
-    dream_lucidity = st.slider(t["dream_lucidity"], 1, 5, 2)
-    dream_desc = st.text_area(t["dream_desc"])
-
-    if st.button(t["btn_analyze"]):
-        if dream_desc.strip():
-            nouveau_reve = DreamRecord(
-                title=dream_title if dream_title else "Rêve sans titre",
-                emotion=dream_emotion,
-                lucidity=dream_lucidity,
-                description=dream_desc
-            )
-            db.add(nouveau_reve)
-            user.dreams_count += 1
-            db.commit()
-
-            st.success(t["success_msg"])
-            st.markdown(f"### 🌌 {t['interpretation_title']} {user.first_name}")
-            
-            desc_lower = dream_desc.lower()
-            symboles_analyses = []
-            
-            if any(w in desc_lower for w in ["eau", "mer", "océan", "inondation", "nager", "pluie", "rivière"]):
-                symboles_analyses.append("🌊 **L'élément aquatique :** L'eau présente dans votre récit symbolise la profondeur de vos flux émotionnels et la manière dont vous gérez vos submersions intérieures.")
-            if any(w in desc_lower for w in ["maison", "salon", "chambre", "porte", "fenêtre", "appartement", "toit"]):
-                symboles_analyses.append("🏠 **Le décor architectural (Foyer) :** Révèle la structure intime de votre personnalité et la façon dont vous délimitez votre espace personnel et émotionnel.")
-            if any(w in desc_lower for w in ["peur", "courir", "fuir", "danger", "poursuite", "cri"]):
-                symboles_analyses.append("⚡ **La tension dynamique :** Met en lumière un défi en suspens dans votre vie éveillée qui réclame votre attention et un lâcher-prise salutaire.")
-            if any(w in desc_lower for w in ["voler", "ciel", "hauteur", "chuter", "tomber", "monte"]):
-                symboles_analyses.append("🕊️ **L'axe vertical (Élévation / Chute) :** Traduit votre quête inconsciente de liberté, de prise de recul ou, à l'inverse, une sensation temporaire de perte de repères.")
-            
-            if not symboles_analyses:
-                symboles_analyses.append("🔍 **Analyse lexicale contextuelle :** Chaque tournure de phrase de votre récit cartographie avec précision vos aspirations actuelles et vos forces inconscientes.")
-            
-            bloc_symboles = "\n\n".join(symboles_analyses)
-
-            analyse_approfondie = f"""
-**1. Clé Émotionnelle & Fréquence de Fond**
-Dominé par l'émotion de **{dream_emotion}**, ce songe agit comme un miroir puissant de votre équilibre psychologique actuel. Votre subconscient convertit vos tensions et désirs en une mise en scène hautement symbolique.
-
-**2. Exploration Symbolique Détaillée (Mot par Mot)**
-* *Votre récit intégral :* « {dream_desc} »
-* *Décryptage approfondi :* 
-{bloc_symboles}
-L'agencement de ces mots dans votre description démontre une recherche active de résolution intérieure face aux questionnements qui traversent votre quotidien.
-
-**3. Niveau de Lucidité ({dream_lucidity}/5)**
-{'• **Conscience active :** Vous possédez une perception affûtée de vos mécanismes oniriques, ce qui dénote une excellente aptitude à reprendre le contrôle de vos choix de vie.' if dream_lucidity >= 3 else '• **Immersion intuitive profonde :** Votre esprit s\'est totalement abandonné au flux inconscient, captant des vérités et des intuitions brutes d\'une grande authenticité.'}
-
-**4. Conseil Bien-être & Croissance Personnelle**
-Accordez-vous un instant de calme pour assimiler ces messages. L'exploration de vos rêves est l'outil le plus direct pour cultiver une sérénité durable au quotidien.
-            """
-            st.info(analyse_approfondie)
-        else:
-            st.warning(t["empty_desc_warn"])
-
-# --- 8. ONGLET : JOURNAL ---
-with tab_journal:
-    st.subheader(t["journal_title"])
-    st.write(t["journal_desc"])
-    st.markdown("---")
-
-    tous_les_reves = db.query(DreamRecord).all()
-    if not tous_les_reves:
-        st.info(t["no_dreams"])
-    else:
-        for reve in reversed(tous_les_reves):
-            with st.expander(f"🌙 {reve.title} — ({reve.emotion})"):
-                st.write(f"**{t['lucidity_label']} :** {reve.lucidity}/5")
-                st.write(f"**{t['story_label']} :** {reve.description}")
-
-# --- 9. ONGLET : STATISTIQUES ---
-with tab_stats:
-    st.subheader(t["stats_title"])
-    st.write(t["stats_desc"])
-    st.markdown("---")
-    st.metric(label=t["total_dreams"], value=user.dreams_count)
-    if user.is_premium:
-        st.success(t["status_premium"])
-    else:
-        st.info(t["status_free"])
-
-# --- 10. ONGLET : CONDITIONS GÉNÉRALES ---
-with tab_terms:
-    st.subheader(t["terms_title"])
-    st.markdown("---")
-    st.markdown(t["terms_text"])
-
-# --- 11. ONGLET : COMPTE & INSCRIPTION ---
-with tab_account:
-    st.subheader(t["account_title"])
-    st.write(t["account_desc"])
-    st.markdown("---")
-    
-    nouveau_prenom_tab = st.text_input("Modifier votre prénom", value=user.first_name, key="account_name_input")
-    if nouveau_prenom_tab != user.first_name:
-        user.first_name = nouveau_prenom_tab
-        db.commit()
-        st.success("Prénom mis à jour avec succès !")
-
-    st.markdown("---")
-    if user.is_premium:
-        st.success("⭐ Vous bénéficiez actuellement de l'abonnement Illimité.")
-        if st.button("❌ Résilier mon abonnement"):
-            user.is_premium = False
-            db.commit()
-            st.rerun()
-    else:
-        st.info("🌿 Vous utilisez actuellement le compte gratuit.")
-        if st.button("✨ Activer / Passer au compte membre"):
-            user.is_premium = True
-            db.commit()
-            st.success("Compte membre activé avec succès !")
-            st.rerun()
-
-# --- 12. BOUTONS STRIPE PERMANENTS EN BAS DE PAGE ---
-st.markdown("---")
-st.markdown("### 🌙 Aureva Mind Premium")
-st.write(translations[langue]["pack_btn"].split(" (")[0] + " & " + translations[langue]["unlim_btn"].split(" (")[0])
-col1, col2 = st.columns(2)
-with col1:
-    st.link_button(translations[langue]["pack_btn"], "https://buy.stripe.com/9B68wQ9el5I21L1djxaIM00", use_container_width=True)
-with col2:
-    st.link_button(translations[langue]["unlim_btn"], "https://buy.stripe.com/fZu14o4Y53zUcpFenBaIM01", use_container_width=True)
