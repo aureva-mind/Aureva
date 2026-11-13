@@ -19,7 +19,7 @@ st.markdown(
         color: #e0e1dd;
     }
     
-    /* Titres et textes */
+    /* Titres et textes généraux */
     h1, h2, h3, p, label, .stMarkdown {
         color: #f8f9fa !important;
     }
@@ -52,19 +52,20 @@ st.markdown(
         box-shadow: 0 6px 20px rgba(56, 176, 0, 0.6) !important;
     }
 
-    /* Champs de saisie, sélecteurs et textareas : Texte bien blanc et lisible */
-    .stTextInput>div>div>input, .stSelectbox>div>div>select, .stTextArea>div>div>textarea {
-        background-color: rgba(255, 255, 255, 0.15) !important;
-        color: #ffffff !important;
-        font-weight: 500;
-        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    /* Champs de saisie et textareas : Fond clair et TEXTE NOIR */
+    .stTextInput input, .stTextArea textarea, .stSelectbox select {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        font-weight: 600;
+        border: 1px solid #ced4da !important;
         border-radius: 8px;
     }
     
-    /* Correction du placeholder (texte indicatif plus contrasté) */
-    ::placeholder {
-        color: rgba(255, 255, 255, 0.7) !important;
-        opacity: 1;
+    /* Couleur du texte indicatif (placeholder) en gris foncé */
+    input::placeholder, textarea::placeholder, 
+    ::-webkit-input-placeholder, :-ms-input-placeholder {
+        color: #6c757d !important;
+        opacity: 1 !important;
     }
     
     /* Cartes d'alerte / info */
@@ -93,6 +94,15 @@ class User(Base):
   first_name = Column(String, default="Thomas")
   is_premium = Column(Boolean, default=False)
   dreams_count = Column(Integer, default=0)
+
+
+class DreamRecord(Base):
+  __tablename__ = "dream_records"
+  id = Column(Integer, primary_key=True, index=True)
+  title = Column(String)
+  emotion = Column(String)
+  lucidity = Column(Integer)
+  description = Column(String)
 
 
 try:
@@ -267,7 +277,7 @@ with tab1:
                 " d'inspiration spirituelle et une connexion avec vos"
                 " aspirations les plus hautes."
             )
-          
+
           if not symbolique_mots:
             symbolique_mots.append(
                 f"**Éléments clés de votre récit :** Votre description met en"
@@ -294,13 +304,37 @@ with tab1:
               " à accueillir vos émotions avec sérénité."
           )
 
+          # Enregistrement dans la base de données (Journal Intime)
+          nouveau_reve = DreamRecord(
+              title=titre_reve if titre_reve else "Rêve sans titre",
+              emotion=emotion,
+              lucidity=lucidite,
+              description=description_reve,
+          )
+          db.add(nouveau_reve)
           user.dreams_count += 1
           db.commit()
 
 with tab2:
   st.subheader(t["journal_titre"])
   st.write(t["journal_desc"])
+  st.markdown("---")
+
+  tous_les_reves = db.query(DreamRecord).all()
+  if not tous_les_reves:
+    st.info("Aucun rêve enregistré pour le moment. Analysez votre premier rêve !")
+  else:
+    for reve in reversed(tous_les_reves):
+      with st.expander(f"🌙 {reve.title} — ({reve.emotion})"):
+        st.write(f"**Niveau de lucidité :** {reve.lucidity}/5")
+        st.write(f"**Récit :** {reve.description}")
 
 with tab3:
   st.subheader(t["stats_titre"])
   st.write(t["stats_desc"])
+  st.markdown("---")
+  st.metric(label="Total de rêves analysés", value=user.dreams_count)
+  if user.is_premium:
+    st.success("⭐ Statut : Abonnement Annuel Illimité Actif")
+  else:
+    st.info("🌿 Statut : Compte Gratuit")
