@@ -193,6 +193,9 @@ st.markdown("""
     h1, h2, h3, p, label, span, div {
         color: #f1f5f9 !important;
     }
+    h1, h2, h3 {
+    text-shadow: 0 2px 12px rgba(129, 140, 248, 0.4);
+}
     /* Champs de saisie et textareas en mode sombre avec texte blanc */
     .stTextInput input, .stTextArea textarea {
         color: #ffffff !important;
