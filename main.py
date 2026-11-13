@@ -5,7 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import datetime
 import plotly.graph_objects as go
-def get_moon_phase_details(dt=None):
+def get_moon_phase_details(dt=None):.
   """Calcule la phase lunaire et renvoie son nom, sa progression et sa signification."""
   if dt is None:
     dt = datetime.datetime.now()
@@ -96,8 +96,7 @@ def render_lunar_observatory():
   st.markdown("### 🌌 Observatoire de la Synchronicité Lunaire")
 st.markdown(f"#### 🌙 Cycle Actuel : {phase_nom}")
 st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
-fig=go.Figure(
-      go.Indicator(
+fig = go.Figure(
           mode="gauge+number",
           value=phase_val * 100,
           
