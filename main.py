@@ -4,7 +4,8 @@ from sqlalchemy import create_engine, Column, Integer, String, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import datetime
-import plotly.graph_objects as godef get_moon_phase_details(dt=None):
+import plotly.graph_objects as go
+def get_moon_phase_details(dt=None):
   """Calcule la phase lunaire et renvoie son nom, sa progression et sa signification."""
   if dt is None:
     dt = datetime.datetime.now()
