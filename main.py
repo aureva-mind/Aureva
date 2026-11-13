@@ -11,7 +11,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# Style CSS : Ciel étoilé dynamique, menu pro et lisibilité parfaite
+# Style CSS : Ciel étoilé dynamique, champs sombres avec texte blanc, et menus déroulants corrigés
 st.markdown("""
     <style>
     .stApp {
@@ -39,11 +39,36 @@ st.markdown("""
     h1, h2, h3, p, label, span, div {
         color: #f1f5f9 !important;
     }
-    .stTextInput input, .stTextArea textarea, .stSelectbox div[data-baseweb="select"] {
+    /* Champs de saisie et textareas en mode sombre avec texte blanc */
+    .stTextInput input, .stTextArea textarea {
         color: #ffffff !important;
         background-color: #161b22 !important;
         border: 1px solid #30363d !important;
     }
+    /* Sélecteur (selectbox) en mode sombre */
+    .stSelectbox [data-baseweb="select"] {
+        background-color: #161b22 !important;
+        color: #ffffff !important;
+        border: 1px solid #30363d !important;
+    }
+    .stSelectbox [data-baseweb="select"] * {
+        color: #ffffff !important;
+        background-color: #161b22 !important;
+    }
+    /* Listes déroulantes (popovers / listbox) en mode sombre */
+    div[data-baseweb="popover"], div[data-baseweb="menu"], ul[role="listbox"], div[role="listbox"] {
+        background-color: #161b22 !important;
+        color: #ffffff !important;
+    }
+    div[data-baseweb="popover"] *, div[data-baseweb="menu"] *, ul[role="listbox"] *, div[role="listbox"] * {
+        color: #ffffff !important;
+        background-color: #161b22 !important;
+    }
+    div[data-baseweb="popover"] li[role="option"]:hover, div[data-baseweb="menu"] div[role="option"]:hover {
+        background-color: #30363d !important;
+        color: #ffffff !important;
+    }
+    /* Boîtes de résultats / alertes avec fond clair et écriture noire lisible */
     div[data-baseweb="notification"], .stAlert {
         background-color: #f8fafc !important;
         color: #0f111a !important;
@@ -457,31 +482,19 @@ with st.sidebar:
         if st.button(t["manage_account"]):
             st.info("Mode inscription / connexion actif.")
 
-# --- 5. EN-TÊTE & MENU HORIZONTAL PROFESSIONNEL ---
+# --- 5. EN-TÊTE ---
 st.title(f"Aureva Mind — {t['welcome']}, {user.first_name} 🌙")
 
-selected_tab = st.radio(
-    "Menu de navigation",
-    [t["nav_analyze"], t["nav_journal"], t["nav_stats"], t["nav_terms"]],
-    horizontal=True,
-    label_visibility="collapsed"
-)
+# --- 6. VRAI MENU HORIZONTAL PAR ONGLETS (FIN DES RADIO BOUTONS AVEC POINTS Ronds) ---
+tab_analyze, tab_journal, tab_stats, tab_terms = st.tabs([
+    t["nav_analyze"], 
+    t["nav_journal"], 
+    t["nav_stats"], 
+    t["nav_terms"]
+])
 
-st.markdown("---")
-
-# --- 6. FOOTER STRIPE PERMANENT SUR TOUTES LES PAGES ---
-def render_permanent_stripe_footer(t):
-    st.markdown("---")
-    st.markdown("### 🌙 Aureva Mind Premium")
-    st.write(t["pack_btn"].split(" (")[0] + " & " + t["unlim_btn"].split(" (")[0])
-    col1, col2 = st.columns(2)
-    with col1:
-        st.link_button(t["pack_btn"], "https://buy.stripe.com/9B68wQ9el5I21L1djxaIM00", use_container_width=True)
-    with col2:
-        st.link_button(t["unlim_btn"], "https://buy.stripe.com/fZu14o4Y53zUcpFenBaIM01", use_container_width=True)
-
-# --- 7. CONTENU DES PAGES ---
-if selected_tab == t["nav_analyze"]:
+# --- 7. CONTENU DE L'ONGLET : ANALYSER ---
+with tab_analyze:
     st.subheader(t["analysis_title"])
     dream_title = st.text_input(t["dream_title"])
     dream_emotion = st.selectbox(t["dream_emotion"], ["Joie", "Peur", "Tristesse", "Mystère", "Aventure", "Autre"])
@@ -521,7 +534,8 @@ Prenez un moment pour intégrer les enseignements de ce rêve. L'écoute réguli
         else:
             st.warning(t["empty_desc_warn"])
 
-elif selected_tab == t["nav_journal"]:
+# --- 8. CONTENU DE L'ONGLET : JOURNAL ---
+with tab_journal:
     st.subheader(t["journal_title"])
     st.write(t["journal_desc"])
     st.markdown("---")
@@ -535,7 +549,8 @@ elif selected_tab == t["nav_journal"]:
                 st.write(f"**{t['lucidity_label']} :** {reve.lucidity}/5")
                 st.write(f"**{t['story_label']} :** {reve.description}")
 
-elif selected_tab == t["nav_stats"]:
+# --- 9. CONTENU DE L'ONGLET : STATISTIQUES ---
+with tab_stats:
     st.subheader(t["stats_title"])
     st.write(t["stats_desc"])
     st.markdown("---")
@@ -545,10 +560,18 @@ elif selected_tab == t["nav_stats"]:
     else:
         st.info(t["status_free"])
 
-elif selected_tab == t["nav_terms"]:
+# --- 10. CONTENU DE L'ONGLET : CONDITIONS GÉNÉRALES ---
+with tab_terms:
     st.subheader(t["terms_title"])
     st.markdown("---")
     st.markdown(t["terms_text"])
 
-# --- 8. AFFICHAGE DES BOUTONS STRIPE EN BAS DE PAGE ---
-render_permanent_stripe_footer(t)
+# --- 11. BOUTONS STRIPE PERMANENTS EN BAS DE PAGE ---
+st.markdown("---")
+st.markdown("### 🌙 Aureva Mind Premium")
+st.write(translations[langue]["pack_btn"].split(" (")[0] + " & " + translations[langue]["unlim_btn"].split(" (")[0])
+col1, col2 = st.columns(2)
+with col1:
+    st.link_button(translations[langue]["pack_btn"], "https://buy.stripe.com/9B68wQ9el5I21L1djxaIM00", use_container_width=True)
+with col2:
+    st.link_button(translations[langue]["unlim_btn"], "https://buy.stripe.com/fZu14o4Y53zUcpFenBaIM01", use_container_width=True)
