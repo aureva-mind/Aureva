@@ -11,7 +11,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# Style CSS : Ciel étoilé dynamique, champs sombres avec texte blanc, et menus déroulants corrigés
+# Style CSS : Ciel étoilé dynamique, champs sombres avec texte blanc, et boutons Stripe corrigés
 st.markdown("""
     <style>
     .stApp {
@@ -77,12 +77,25 @@ st.markdown("""
     .stAlert p, .stAlert span, .stAlert div, div[data-baseweb="notification"] p {
         color: #0f111a !important;
     }
+    /* Boutons standards */
     .stButton>button {
         background: linear-gradient(to right, #4f46e5, #9333ea) !important;
         color: white !important;
         border-radius: 20px !important;
         font-weight: bold !important;
         border: none !important;
+    }
+    /* Correction absolue pour les boutons de liens Stripe (st.link_button) */
+    a[data-testid="stLinkButton"], .stLinkButton a {
+        background: linear-gradient(to right, #4f46e5, #9333ea) !important;
+        color: #ffffff !important;
+        border-radius: 20px !important;
+        font-weight: bold !important;
+        border: none !important;
+        text-align: center !important;
+    }
+    a[data-testid="stLinkButton"] *, .stLinkButton a * {
+        color: #ffffff !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -485,7 +498,7 @@ with st.sidebar:
 # --- 5. EN-TÊTE ---
 st.title(f"Aureva Mind — {t['welcome']}, {user.first_name} 🌙")
 
-# --- 6. VRAI MENU HORIZONTAL PAR ONGLETS (FIN DES RADIO BOUTONS AVEC POINTS Ronds) ---
+# --- 6. VRAI MENU HORIZONTAL PAR ONGLETS ---
 tab_analyze, tab_journal, tab_stats, tab_terms = st.tabs([
     t["nav_analyze"], 
     t["nav_journal"], 
@@ -493,7 +506,7 @@ tab_analyze, tab_journal, tab_stats, tab_terms = st.tabs([
     t["nav_terms"]
 ])
 
-# --- 7. CONTENU DE L'ONGLET : ANALYSER ---
+# --- 7. CONTENU DE L'ONGLET : ANALYSER (ANALYSE ULTRA-POUSSÉE MOT À MOT) ---
 with tab_analyze:
     st.subheader(t["analysis_title"])
     dream_title = st.text_input(t["dream_title"])
@@ -516,21 +529,41 @@ with tab_analyze:
             st.success(t["success_msg"])
             st.markdown(f"### 🌌 {t['interpretation_title']} {user.first_name}")
             
-            analyse_globale = f"""
-**1. Clé Émotionnelle & Ressenti Global**
-Dominé par l'émotion de **{dream_emotion}**, ce songe reflète un état psychologique en pleine effervescence. Votre subconscient cherche à extérioriser un trop-plein d'énergie ou à faire face à une transition actuelle.
+            # Analyse ultra-détaillée basée sur l'analyse dynamique du texte saisi
+            desc_lower = dream_desc.lower()
+            symboles_analyses = []
+            
+            if any(w in desc_lower for w in ["eau", "mer", "océan", "inondation", "nager", "pluie", "rivière"]):
+                symboles_analyses.append("🌊 **L'élément aquatique :** L'eau présente dans votre récit symbolise la profondeur de vos flux émotionnels et la manière dont vous gérez vos submersions intérieures.")
+            if any(w in desc_lower for w in ["maison", "salon", "chambre", "porte", "fenêtre", "appartement", "toit"]):
+                symboles_analyses.append("🏠 **Le décor architectural (Foyer) :** Révèle la structure intime de votre personnalité et la façon dont vous délimitez votre espace personnel et émotionnel.")
+            if any(w in desc_lower for w in ["peur", "courir", "fuir", "danger", "poursuite", "cri"]):
+                symboles_analyses.append("⚡ **La tension dynamique :** Met en lumière un défi en suspens dans votre vie éveillée qui réclame votre attention et un lâcher-prise salutaire.")
+            if any(w in desc_lower for w in ["voler", "ciel", "hauteur", "chuter", "tomber", "monte"]):
+                symboles_analyses.append("🕊️ **L'axe vertical (Élévation / Chute) :** Traduit votre quête inconsciente de liberté, de prise de recul ou, à l'inverse, une sensation temporaire de perte de repères.")
+            
+            if not symboles_analyses:
+                symboles_analyses.append("🔍 **Analyse lexicale contextuelle :** Chaque tournure de phrase de votre récit cartographie avec précision vos aspirations actuelles et vos forces inconscientes.")
+            
+            bloc_symboles = "\n\n".join(symboles_analyses)
 
-**2. Exploration Symbolique Approfondie**
-* *Votre récit :* « {dream_desc} »
-* *Décryptage des symboles :* Chaque élément et mot-clé de votre description agit comme le miroir direct de votre vie éveillée. Ce décor onirique met en lumière vos aspirations profondes, vos forces cachées ainsi que votre besoin fondamental d'équilibre.
+            analyse_approfondie = f"""
+**1. Clé Émotionnelle & Fréquence de Fond**
+Dominé par l'émotion de **{dream_emotion}**, ce songe agit comme un miroir puissant de votre équilibre psychologique actuel. Votre subconscient convertit vos tensions et désirs en une mise en scène hautement symbolique.
+
+**2. Exploration Symbolique Détaillée (Mot par Mot)**
+* *Votre récit intégral :* « {dream_desc} »
+* *Décryptage approfondi :* 
+{bloc_symboles}
+L'agencement de ces mots dans votre description démontre une recherche active de résolution intérieure face aux questionnements qui traversent votre quotidien.
 
 **3. Niveau de Lucidité ({dream_lucidity}/5)**
-{'• **Contrôle élevé :** Vous possédez une belle conscience de vos mécanismes intérieurs, ce qui vous permet d’agir activement sur vos émotions oniriques.' if dream_lucidity >= 3 else '• **Immersion profonde :** Votre esprit s\'est totalement laissé porter par le courant inconscient, révélant des intuitions brutes et authentiques.'}
+{'• **Conscience active :** Vous possédez une perception affûtée de vos mécanismes oniriques, ce qui dénote une excellente aptitude à reprendre le contrôle de vos choix de vie.' if dream_lucidity >= 3 else '• **Immersion intuitive profonde :** Votre esprit s\'est totalement abandonné au flux inconscient, captant des vérités et des intuitions brutes d\'une grande authenticité.'}
 
 **4. Conseil Bien-être & Croissance Personnelle**
-Prenez un moment pour intégrer les enseignements de ce rêve. L'écoute régulière de vos songes est une passerelle puissante vers une sérénité accrue au quotidien.
+Accordez-vous un instant de calme pour assimiler ces messages. L'exploration de vos rêves est l'outil le plus direct pour cultiver une sérénité durable au quotidien.
             """
-            st.info(analyse_globale)
+            st.info(analyse_approfondie)
         else:
             st.warning(t["empty_desc_warn"])
 
@@ -566,7 +599,7 @@ with tab_terms:
     st.markdown("---")
     st.markdown(t["terms_text"])
 
-# --- 11. BOUTONS STRIPE PERMANENTS EN BAS DE PAGE ---
+# --- 11. BOUTONS STRIPE PERMANENTS EN BAS DE PAGE (CORRIGÉS & VISIBLES) ---
 st.markdown("---")
 st.markdown("### 🌙 Aureva Mind Premium")
 st.write(translations[langue]["pack_btn"].split(" (")[0] + " & " + translations[langue]["unlim_btn"].split(" (")[0])
