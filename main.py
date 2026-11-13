@@ -3,7 +3,160 @@ import sqlalchemy
 from sqlalchemy import create_engine, Column, Integer, String, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+import datetime
+import plotly.graph_objects as godef get_moon_phase_details(dt=None):
+  """Calcule la phase lunaire et renvoie son nom, sa progression et sa signification."""
+  if dt is None:
+    dt = datetime.datetime.now()
 
+  known_new_moon = datetime.datetime(2000, 1, 6, 18, 14)
+  diff = dt - known_new_moon
+  days = diff.total_seconds() / 86400
+  cycles = days / 29.5305877057
+  phase = cycles - int(cycles)  # Entre 0.0 et 1.0
+
+  if phase < 0.03 or phase > 0.97:
+    return (
+        phase,
+        "Nouvelle Lune 🌑",
+        (
+            "Intériorité profonde, silence du mental et semence des futurs"
+            " projets oniriques."
+        ),
+    )
+  elif phase < 0.22:
+    return (
+        phase,
+        "Premier Croissant 🌒",
+        (
+            "Émergence de l'impulsion. Les rêves commencent à formuler des"
+            " intentions claires."
+        ),
+    )
+  elif phase < 0.28:
+    return (
+        phase,
+        "Premier Quartier 🌓",
+        (
+            "Tension créatrice. Le subconscient reflète des choix conscients à"
+            " opérer."
+        ),
+    )
+  elif phase < 0.47:
+    return (
+        phase,
+        "Gibbeuse Croissante 🌔",
+        (
+            "Affinement de l'intuition. L'esprit se prépare à une révélation"
+            " majeure."
+        ),
+    )
+  elif phase < 0.53:
+    return (
+        phase,
+        "Pleine Lune 🌕",
+        (
+            "Apogée onirique ! Émotions, visions intenses et clarté à leur"
+            " paroxysme."
+        ),
+    )
+  elif phase < 0.72:
+    return (
+        phase,
+        "Gibbeuse Décroissante 🌖",
+        (
+            "Temps d'intégration, de recul et d'analyse des messages perçus ces"
+            " derniers jours."
+        ),
+    )
+  elif phase < 0.78:
+    return (
+        phase,
+        "Dernier Quartier 🌗",
+        (
+            "Phase de lâcher-prise. Nettoyage des vieux schémas psychologiques"
+            " encombrants."
+        ),
+    )
+  else:
+    return (
+        phase,
+        "Dernier Croissant 🌘",
+        (
+            "Apaisement et repos de l'esprit avant l'amorce d'un nouveau"
+            " cycle."
+        ),
+    )
+
+
+def render_lunar_observatory():
+  phase_val, phase_nom, signification = get_moon_phase_details()
+
+  st.markdown("### 🌌 Observatoire de la Synchronicité Lunaire")
+
+  fig = go.Figure(
+      go.Indicator(
+          mode="gauge+number",
+          value=phase_val * 100,
+          title={
+              "text": f"Cycle Actuel : {phase_nom}",
+              "font": {"color": "#e0e7ff", "size": 16, "family": "sans-serif"},
+          },
+          number={
+              "suffix": "%",
+              "font": {"color": "#818cf8", "size": 28, "weight": "bold"},
+          },
+          gauge={
+              "axis": {
+                  "range": [0, 100],
+                  "tickcolor": "#818cf8",
+                  "tickfont": {"color": "#c7d2fe"},
+              },
+              "bar": {"color": "#6366f1"},
+              "bgcolor": "#0f172a",
+              "borderwidth": 2,
+              "bordercolor": "#4338ca",
+              "steps": [
+                  {"range": [0, 25], "color": "#1e1b4b"},
+                  {"range": [25, 50], "color": "#312e81"},
+                  {"range": [50, 75], "color": "#3730a3"},
+                  {"range": [75, 100], "color": "#4338ca"},
+              ],
+          },
+      )
+  )
+
+  fig.update_layout(
+      paper_bgcolor="rgba(0,0,0,0)",
+      plot_bgcolor="rgba(0,0,0,0)",
+      font={"color": "#e0e7ff"},
+      height=220,
+      margin=dict(t=20, b=10, l=20, r=20),
+  )
+
+  st.plotly_chart(fig, use_container_width=True)
+
+  st.markdown(
+      f"""
+        <div style="
+            background: linear-gradient(135deg, #1e1b4b 0%, #17153b 100%);
+            border: 1px solid #4338ca;
+            border-radius: 14px;
+            padding: 18px;
+            color: #e0e7ff;
+            margin-top: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        ">
+            <h4 style="margin: 0 0 8px 0; color: #818cf8; font-size: 1.1rem;">🔮 Clé Psychologique du Jour</h4>
+            <p style="margin: 0 0 10px 0; font-size: 0.95rem; line-height: 1.5;"><b>Résonance onirique :</b> {signification}</p>
+            <p style="margin: 0; font-style: italic; font-size: 0.85rem; color: #a5b4fc;">
+            « En psychanalyse, la lune agit comme un miroir grossissant des profondeurs. Noter ton rêve sous cette influence permet de relier ton vécu intime aux grandes marées de l'inconscient. »
+            </p>
+        </div>
+        """,
+      unsafe_allow_html=True,
+  )
 # --- 1. CONFIGURATION DE LA PAGE & DESIGN NUIT ÉTOILÉE ---
 st.set_page_config(
     page_title="Aureva Mind - Analyse de Rêves",
@@ -547,7 +700,7 @@ with st.sidebar:
 
 # --- 5. EN-TÊTE ---
 st.title(f"Aureva Mind — {t['welcome']}, {user.first_name} 🌙")
-
+render_lunar_observatory
 # --- 6. VRAI MENU HORIZONTAL PAR ONGLETS (RESPONSIVE & ADAPTÉ MOBILE) ---
 tab_analyze, tab_journal, tab_stats, tab_terms, tab_account = st.tabs([
     t["nav_analyze"], 
