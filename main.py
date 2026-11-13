@@ -85,7 +85,7 @@ st.markdown("""
         font-weight: bold !important;
         border: none !important;
     }
-    /* Correction absolue pour les boutons de liens Stripe (st.link_button) */
+    /* Boutons de liens Stripe (st.link_button) */
     a[data-testid="stLinkButton"], .stLinkButton a {
         background: linear-gradient(to right, #4f46e5, #9333ea) !important;
         color: #ffffff !important;
@@ -133,14 +133,15 @@ if not user:
     db.commit()
     db.refresh(user)
 
-# --- 3. DICTIONNAIRE MULTILANGUE COMPLET (10 LANGUES) ---
+# --- 3. DICTIONNAIRE MULTILANGUE ---
 translations = {
     "Français": {
         "welcome": "Bienvenue",
-        "nav_analyze": "✨ Analyser un rêve",
+        "nav_analyze": "✨ Analyser",
         "nav_journal": "📖 Journal",
-        "nav_stats": "📊 Statistiques",
-        "nav_terms": "📜 Conditions Générales",
+        "nav_stats": "📊 Stats",
+        "nav_terms": "📜 CGU",
+        "nav_account": "📝 Compte",
         "analysis_title": "✨ Nouvelle Analyse Onirique",
         "dream_title": "Titre de votre rêve",
         "dream_emotion": "Émotion principale",
@@ -160,20 +161,44 @@ translations = {
         "total_dreams": "Total de rêves analysés",
         "status_premium": "⭐ Statut : Abonnement Illimité Actif",
         "status_free": "🌿 Statut : Compte Gratuit",
-        "terms_title": "📜 Conditions Générales d'Utilisation et de Vente",
-        "terms_text": "### 1. Objet\nLes présentes conditions générales régissent l'utilisation du service **Aureva Mind**.\n\n### 2. Services et Tarifs\n* **Pack 15 rêves** : 4,99 € (paiement unique)\n* **Abonnement Illimité** : 12,00 € / mois (résiliable à tout moment depuis l'espace membre)\n\n### 3. Propriété intellectuelle\nTous les contenus, analyses et visuels de l'application sont protégés.",
+        "account_title": "📝 Espace Inscription & Gestion du Compte",
+        "account_desc": "Gérez vos informations personnelles, votre abonnement et vos accès premium.",
+        "terms_title": "📜 Conditions Générales d'Utilisation et de Vente (CGU / CGV)",
+        "terms_text": """
+### 1. Objet et Champ d'Application
+Les présentes Conditions Générales d'Utilisation et de Vente (CGU/CGV) régissent l'accès et l'utilisation de la plateforme **Aureva Mind**, service numérique d'analyse et d'interprétation onirique. En utilisant l'application, l'utilisateur accepte sans réserve les présentes conditions.
+
+### 2. Description des Services & Tarifs
+Aureva Mind propose des services d'analyse psychologique et symbolique des rêves :
+* **Pack 15 rêves** : Facturé 4,99 € (paiement unique, accès à 15 analyses détaillées).
+* **Abonnement Illimité** : Facturé 12,00 € / mois (accès illimité aux analyses et fonctionnalités premium, sans engagement de durée).
+
+### 3. Modalités de Paiement Sécurisé
+Tous les paiements sont traités de manière sécurisée par notre partenaire financier **Stripe**. Aucune donnée bancaire sensible n'est stockée sur nos serveurs. L'accès aux services payants est effectif immédiatement après validation du paiement.
+
+### 4. Résiliation et Remboursement
+* **Abonnement** : L'abonnement mensuel est résiliable à tout moment directement depuis l'espace membre ou en contactant le support. La résiliation prend effet à la fin de la période de facturation en cours.
+* **Droit de rétractation** : Conformément à la législation en vigueur sur les contenus numériques fournis sur support immatériel, l'exécution du service commence dès la validation de la commande, ce pour quoi l'utilisateur renonce expressément à son droit de rétractation après la première analyse réalisée.
+
+### 5. Propriété Intellectuelle
+L'ensemble des éléments, textes, algorithmes d'interprétation, codes sources et graphismes composant **Aureva Mind** sont protégés par le droit de la propriété intellectuelle. Toute reproduction ou exploitation non autorisée est strictement interdite.
+
+### 6. Limitation de Responsabilité & Nature des Analyses
+Les analyses oniriques fournies par Aureva Mind ont une vocation de développement personnel, de bien-être et de divertissement. Elles ne constituent en aucun cas un diagnostic médical, psychiatrique ou une thérapie clinique.
+        """,
         "member_space": "⚙️ Espace Membre",
         "cancel_sub": "❌ Résilier l'abonnement",
-        "manage_account": "📝 S'inscrire / Gérer mon compte",
+        "manage_account": "📝 Inscription & Compte",
         "pack_btn": "✨ Pack 15 rêves (4,99 €)",
         "unlim_btn": "🚀 Illimité (12 €/mois)"
     },
     "English": {
         "welcome": "Welcome",
-        "nav_analyze": "✨ Analyze Dream",
+        "nav_analyze": "✨ Analyze",
         "nav_journal": "📖 Journal",
-        "nav_stats": "📊 Statistics",
-        "nav_terms": "📜 Terms & Conditions",
+        "nav_stats": "📊 Stats",
+        "nav_terms": "📜 T&C",
+        "nav_account": "📝 Account",
         "analysis_title": "✨ New Dream Analysis",
         "dream_title": "Dream title",
         "dream_emotion": "Main emotion",
@@ -193,275 +218,301 @@ translations = {
         "total_dreams": "Total analyzed dreams",
         "status_premium": "⭐ Status: Unlimited Subscription Active",
         "status_free": "🌿 Status: Free Account",
-        "terms_title": "📜 Terms and Conditions of Use and Sale",
-        "terms_text": "### 1. Object\nThese general conditions govern the use of the **Aureva Mind** service.\n\n### 2. Services and Pricing\n* **15 Dreams Pack**: €4.99 (one-time)\n* **Unlimited Subscription**: €12.00 / month",
+        "account_title": "📝 Registration & Account Management",
+        "account_desc": "Manage your personal info, subscription and premium access.",
+        "terms_title": "📜 Terms and Conditions of Use and Sale (T&C)",
+        "terms_text": "General terms and conditions of Aureva Mind.",
         "member_space": "⚙️ Member Space",
         "cancel_sub": "❌ Cancel subscription",
-        "manage_account": "📝 Register / Manage account",
+        "manage_account": "📝 Register / Account",
         "pack_btn": "✨ 15 Dreams Pack (€4.99)",
         "unlim_btn": "🚀 Unlimited (€12/month)"
     },
     "Español": {
         "welcome": "Bienvenido",
-        "nav_analyze": "✨ Analizar sueño",
+        "nav_analyze": "✨ Analizar",
         "nav_journal": "📖 Diario",
-        "nav_stats": "📊 Estadísticas",
+        "nav_stats": "📊 Stats",
         "nav_terms": "📜 Términos",
+        "nav_account": "📝 Cuenta",
         "analysis_title": "✨ Nuevo Análisis Onírico",
         "dream_title": "Título de tu sueño",
         "dream_emotion": "Emoción principal",
         "dream_lucidity": "Nivel de lucidez (1 a 5)",
         "dream_desc": "Describe tu sueño en detalle...",
         "btn_analyze": "Analizar mi sueño",
-        "success_msg": "✨ ¡Análisis completado con éxito!",
+        "success_msg": "✨ ¡Análisis completado!",
         "interpretation_title": "Interpretación profunda para",
-        "empty_desc_warn": "Por favor ingresa la descripción de tu sueño.",
+        "empty_desc_warn": "Por favor ingresa la descripción.",
         "journal_title": "📖 Diario de Sueños",
-        "journal_desc": "Encuentra el historial de tus análisis.",
+        "journal_desc": "Historial de análisis.",
         "no_dreams": "No hay sueños registrados.",
-        "lucidity_label": "Nivel de lucidez",
+        "lucidity_label": "Lucidez",
         "story_label": "Relato",
         "stats_title": "📊 Estadísticas y Estado",
-        "stats_desc": "Sigue tu actividad onírica.",
-        "total_dreams": "Total de sueños analizados",
-        "status_premium": "⭐ Estado: Suscripción Ilimitada Activa",
-        "status_free": "🌿 Estado: Cuenta Gratuita",
+        "stats_desc": "Sigue tu actividad.",
+        "total_dreams": "Total de sueños",
+        "status_premium": "⭐ Suscripción Ilimitada Activa",
+        "status_free": "🌿 Cuenta Gratuita",
+        "account_title": "📝 Registro y Cuenta",
+        "account_desc": "Gestiona tu cuenta y suscripción.",
         "terms_title": "📜 Términos y Condiciones",
-        "terms_text": "Condiciones generales del servicio Aureva Mind.",
-        "member_space": "⚙️ Zona de Miembros",
-        "cancel_sub": "❌ Cancelar suscripción",
-        "manage_account": "📝 Registrarse",
+        "terms_text": "Términos del servicio.",
+        "member_space": "⚙️ Miembros",
+        "cancel_sub": "❌ Cancelar",
+        "manage_account": "📝 Cuenta",
         "pack_btn": "✨ Pack 15 sueños (4,99 €)",
         "unlim_btn": "🚀 Ilimitado (12 €/mes)"
     },
     "Deutsch": {
         "welcome": "Willkommen",
-        "nav_analyze": "✨ Traum analysieren",
+        "nav_analyze": "✨ Analysieren",
         "nav_journal": "📖 Tagebuch",
         "nav_stats": "📊 Statistik",
         "nav_terms": "📜 AGB",
+        "nav_account": "📝 Konto",
         "analysis_title": "✨ Neue Traumanalyse",
         "dream_title": "Traumtitel",
         "dream_emotion": "Hauptemotion",
         "dream_lucidity": "Klartraum-Level (1-5)",
         "dream_desc": "Beschreiben Sie Ihren Traum...",
-        "btn_analyze": "Meinen Traum analysieren",
-        "success_msg": "✨ Traumanalyse erfolgreich abgeschlossen!",
+        "btn_analyze": "Traum analysieren",
+        "success_msg": "✨ Traumanalyse erfolgreich!",
         "interpretation_title": "Tiefenanalyse für",
-        "empty_desc_warn": "Bitte geben Sie eine Beschreibung ein.",
+        "empty_desc_warn": "Bitte Beschreibung eingeben.",
         "journal_title": "📖 Traumtagebuch",
-        "journal_desc": "Ihre Traumanalysen im Überblick.",
-        "no_dreams": "Noch keine Träume gespeichert.",
+        "journal_desc": "Ihre Traumanalysen.",
+        "no_dreams": "Keine Träume.",
         "lucidity_label": "Klartraum-Level",
         "story_label": "Erzählung",
         "stats_title": "📊 Statistik & Status",
-        "stats_desc": "Verfolgen Sie Ihre Traumaktivität.",
-        "total_dreams": "Analysierte Träume gesamt",
-        "status_premium": "⭐ Status: Unbegrenztes Abo aktiv",
-        "status_free": "🌿 Status: Kostenloses Konto",
-        "terms_title": "📜 Allgemeine Geschäftsbedingungen",
+        "stats_desc": "Aktivität verfolgen.",
+        "total_dreams": "Träume gesamt",
+        "status_premium": "⭐ Abo aktiv",
+        "status_free": "🌿 Kostenloses Konto",
+        "account_title": "📝 Kontoverwaltung",
+        "account_desc": "Verwalten Sie Ihr Konto.",
+        "terms_title": "📜 AGB",
         "terms_text": "AGB von Aureva Mind.",
-        "member_space": "⚙️ Mitgliedsbereich",
-        "cancel_sub": "❌ Abonnement kündigen",
-        "manage_account": "📝 Registrieren",
+        "member_space": "⚙️ Bereich",
+        "cancel_sub": "❌ Kündigen",
+        "manage_account": "📝 Konto",
         "pack_btn": "✨ 15 Träume-Paket (4,99 €)",
         "unlim_btn": "🚀 Unbegrenzt (12 €/Monat)"
     },
     "Italiano": {
         "welcome": "Benvenuto",
-        "nav_analyze": "✨ Analizza sogno",
+        "nav_analyze": "✨ Analizza",
         "nav_journal": "📖 Diario",
         "nav_stats": "📊 Statistiche",
         "nav_terms": "📜 Termini",
+        "nav_account": "📝 Account",
         "analysis_title": "✨ Nuova Analisi Onirica",
         "dream_title": "Titolo del sogno",
         "dream_emotion": "Emozione principale",
         "dream_lucidity": "Livello di lucidità (1-5)",
-        "dream_desc": "Racconta il tuo sogno in dettaglio...",
-        "btn_analyze": "Analizza il mio sogno",
-        "success_msg": "✨ Analisi completata con successo!",
-        "interpretation_title": "Interpretazione profonda per",
-        "empty_desc_warn": "Inserisci la descrizione del sogno.",
+        "dream_desc": "Racconta il tuo sogno...",
+        "btn_analyze": "Analizza il sogno",
+        "success_msg": "✨ Analisi completata!",
+        "interpretation_title": "Interpretazione per",
+        "empty_desc_warn": "Inserisci la descrizione.",
         "journal_title": "📖 Diario dei Sogni",
-        "journal_desc": "Cronologia delle tue analisi.",
-        "no_dreams": "Nessun sogno registrato.",
-        "lucidity_label": "Livello di lucidità",
+        "journal_desc": "Cronologia.",
+        "no_dreams": "Nessun sogno.",
+        "lucidity_label": "Lucidità",
         "story_label": "Racconto",
         "stats_title": "📊 Statistiche e Stato",
-        "stats_desc": "Monitora la tua attività onirica.",
-        "total_dreams": "Sogni analizzati totali",
-        "status_premium": "⭐ Stato: Abbonamento Illimitato Attivo",
-        "status_free": "🌿 Stato: Account Gratuito",
+        "stats_desc": "Monitora l'attività.",
+        "total_dreams": "Sogni totali",
+        "status_premium": "⭐ Abbonamento Attivo",
+        "status_free": "🌿 Account Gratuito",
+        "account_title": "📝 Gestione Account",
+        "account_desc": "Gestisci il tuo profilo.",
         "terms_title": "📜 Termini e Condizioni",
-        "terms_text": "Termini e condizioni di Aureva Mind.",
-        "member_space": "⚙️ Area Membri",
-        "cancel_sub": "❌ Annulla abbonamento",
-        "manage_account": "📝 Registrati",
+        "terms_text": "Termini di servizio.",
+        "member_space": "⚙️ Area",
+        "cancel_sub": "❌ Annulla",
+        "manage_account": "📝 Account",
         "pack_btn": "✨ Pacchetto 15 Sogni (4,99 €)",
         "unlim_btn": "🚀 Illimitato (12 €/mese)"
     },
     "Português": {
         "welcome": "Bem-vindo",
-        "nav_analyze": "✨ Analisar sonho",
+        "nav_analyze": "✨ Analisar",
         "nav_journal": "📖 Diário",
-        "nav_stats": "📊 Estatísticas",
+        "nav_stats": "📊 Stats",
         "nav_terms": "📜 Termos",
+        "nav_account": "📝 Conta",
         "analysis_title": "✨ Nova Análise Onírica",
         "dream_title": "Título do sonho",
         "dream_emotion": "Emoção principal",
-        "dream_lucidity": "Nível de lucidez (1 a 5)",
-        "dream_desc": "Descreva seu sonho em detalhes...",
-        "btn_analyze": "Analisar meu sonho",
-        "success_msg": "✨ Análise concluída com sucesso!",
-        "interpretation_title": "Interpretação profunda para",
-        "empty_desc_warn": "Insira a descrição do seu sonho.",
+        "dream_lucidity": "Nível de lucidez",
+        "dream_desc": "Descreva seu sonho...",
+        "btn_analyze": "Analisar sonho",
+        "success_msg": "✨ Análise concluída!",
+        "interpretation_title": "Interpretação para",
+        "empty_desc_warn": "Insira a descrição.",
         "journal_title": "📖 Diário de Sonhos",
-        "journal_desc": "Histórico das suas análises.",
-        "no_dreams": "Nenhum sonho registrado.",
-        "lucidity_label": "Nível de lucidez",
+        "journal_desc": "Histórico.",
+        "no_dreams": "Nenhum sonho.",
+        "lucidity_label": "Lucidez",
         "story_label": "Relato",
-        "stats_title": "📊 Estatísticas e Status",
+        "stats_title": "📊 Estatísticas",
         "stats_desc": "Acompanhe sua atividade.",
-        "total_dreams": "Total de sonhos analisados",
-        "status_premium": "⭐ Status: Assinatura Ilimitada Ativa",
-        "status_free": "🌿 Status: Conta Gratuita",
+        "total_dreams": "Total de sonhos",
+        "status_premium": "⭐ Assinatura Ativa",
+        "status_free": "🌿 Conta Gratuita",
+        "account_title": "📝 Gerenciamento de Conta",
+        "account_desc": "Gerencie seus dados.",
         "terms_title": "📜 Termos e Condições",
-        "terms_text": "Termos de uso do Aureva Mind.",
-        "member_space": "⚙️ Área de Membros",
-        "cancel_sub": "❌ Cancelar assinatura",
-        "manage_account": "📝 Cadastrar",
+        "terms_text": "Termos de uso.",
+        "member_space": "⚙️ Membros",
+        "cancel_sub": "❌ Cancelar",
+        "manage_account": "📝 Conta",
         "pack_btn": "✨ Pacote 15 Sonhos (€4,99)",
         "unlim_btn": "🚀 Ilimitado (€12/mês)"
     },
     "Nederlands": {
         "welcome": "Welkom",
-        "nav_analyze": "✨ Droom analyseren",
+        "nav_analyze": "✨ Analyse",
         "nav_journal": "📖 Dagboek",
-        "nav_stats": "📊 Statistieken",
+        "nav_stats": "📊 Stats",
         "nav_terms": "📜 Voorwaarden",
+        "nav_account": "📝 Account",
         "analysis_title": "✨ Nieuwe Droomanalyse",
         "dream_title": "Droomtitel",
         "dream_emotion": "Belangrijkste emotie",
-        "dream_lucidity": "Luciditeit (1-5)",
-        "dream_desc": "Beschrijf je droom in detail...",
-        "btn_analyze": "Analyseer mijn droom",
-        "success_msg": "✨ Droomanalyse succesvol voltooid!",
-        "interpretation_title": "Diepe interpretatie voor",
-        "empty_desc_warn": "Vul de droombeschrijving in.",
+        "dream_lucidity": "Luciditeit",
+        "dream_desc": "Beschrijf je droom...",
+        "btn_analyze": "Analyseer droom",
+        "success_msg": "✨ Analyse voltooid!",
+        "interpretation_title": "Interpretatie voor",
+        "empty_desc_warn": "Vul beschrijving in.",
         "journal_title": "📖 Droomdagboek",
-        "journal_desc": "Bekijk je droomgeschiedenis.",
-        "no_dreams": "Nog geen dromen geregistreerd.",
+        "journal_desc": "Geschiedenis.",
+        "no_dreams": "Geen dromen.",
         "lucidity_label": "Luciditeit",
         "story_label": "Verhaal",
-        "stats_title": "📊 Statistieken & Status",
-        "stats_desc": "Volg je droomactiviteit.",
-        "total_dreams": "Totaal geanalyseerde dromen",
-        "status_premium": "⭐ Status: Onbeperkt Abonnement Actief",
-        "status_free": "🌿 Status: Gratis Account",
+        "stats_title": "📊 Statistieken",
+        "stats_desc": "Volg je activiteit.",
+        "total_dreams": "Totaal dromen",
+        "status_premium": "⭐ Abonnement Actief",
+        "status_free": "🌿 Gratis Account",
+        "account_title": "📝 Accountbeheer",
+        "account_desc": "Beheer je account.",
         "terms_title": "📜 Algemene Voorwaarden",
-        "terms_text": "Algemene voorwaarden van Aureva Mind.",
-        "member_space": "⚙️ Ledenruimte",
-        "cancel_sub": "❌ Abonnement opzeggen",
-        "manage_account": "📝 Registreren",
+        "terms_text": "Voorwaarden.",
+        "member_space": "⚙️ Ruimte",
+        "cancel_sub": "❌ Opzeggen",
+        "manage_account": "📝 Account",
         "pack_btn": "✨ 15 Dromen Pakket (€4,99)",
         "unlim_btn": "🚀 Onbeperkt (€12/maand)"
     },
     "Polski": {
         "welcome": "Witaj",
-        "nav_analyze": "✨ Analizuj sen",
+        "nav_analyze": "✨ Analizuj",
         "nav_journal": "📖 Dziennik",
         "nav_stats": "📊 Statystyki",
         "nav_terms": "📜 Regulamin",
+        "nav_account": "📝 Konto",
         "analysis_title": "✨ Nowa Analiza Snu",
         "dream_title": "Tytuł snu",
         "dream_emotion": "Główna emocja",
-        "dream_lucidity": "Poziom świadomości (1-5)",
-        "dream_desc": "Opisz swój sen...",
-        "btn_analyze": "Analizuj mój sen",
-        "success_msg": "✨ Analiza zakończona sukcesem!",
-        "interpretation_title": "Głęboka interpretacja dla",
-        "empty_desc_warn": "Wpisz opis snu.",
+        "dream_lucidity": "Poziom świadomości",
+        "dream_desc": "Opisz sen...",
+        "btn_analyze": "Analizuj sen",
+        "success_msg": "✨ Analiza zakończona!",
+        "interpretation_title": "Interpretacja dla",
+        "empty_desc_warn": "Wpisz opis.",
         "journal_title": "📖 Dziennik Snów",
-        "journal_desc": "Historia Twoich analiz.",
-        "no_dreams": "Brak zapisanego snu.",
-        "lucidity_label": "Poziom świadomości",
+        "journal_desc": "Historia.",
+        "no_dreams": "Brak snów.",
+        "lucidity_label": "Świadomość",
         "story_label": "Opis",
-        "stats_title": "📊 Statystyki i Status",
-        "stats_desc": "Śledź swoją aktywność.",
-        "total_dreams": "Suma przeanalizowanych snów",
-        "status_premium": "⭐ Status: Subskrypcja aktywna",
-        "status_free": "🌿 Status: Konto darmowe",
+        "stats_title": "📊 Statystyki",
+        "stats_desc": "Śledź aktywność.",
+        "total_dreams": "Suma snów",
+        "status_premium": "⭐ Subskrypcja aktywna",
+        "status_free": "🌿 Konto darmowe",
+        "account_title": "📝 Zarządzanie Kontem",
+        "account_desc": "Zarządzaj swoim profilem.",
         "terms_title": "📜 Regulamin",
-        "terms_text": "Regulamin Aureva Mind.",
-        "member_space": "⚙️ Strefa Członka",
-        "cancel_sub": "❌ Anuluj subskrypcję",
-        "manage_account": "📝 Zarejestruj się",
+        "terms_text": "Regulamin serwisu.",
+        "member_space": "⚙️ Strefa",
+        "cancel_sub": "❌ Anuluj",
+        "manage_account": "📝 Konto",
         "pack_btn": "✨ Pakiet 15 Snów (4,99 €)",
         "unlim_btn": "🚀 Nieograniczony (12 €/miesiąc)"
     },
     "Русский": {
         "welcome": "Добро пожаловать",
-        "nav_analyze": "✨ Анализ сна",
+        "nav_analyze": "✨ Анализ",
         "nav_journal": "📖 Дневник",
         "nav_stats": "📊 Статистика",
         "nav_terms": "📜 Условия",
+        "nav_account": "📝 Аккаунт",
         "analysis_title": "✨ Новый Анализ Сна",
         "dream_title": "Название сна",
         "dream_emotion": "Эмоция",
-        "dream_lucidity": "Уровень осознанности (1-5)",
-        "dream_desc": "Опишите свой сон...",
-        "btn_analyze": "Анализировать мой сон",
-        "success_msg": "✨ Анализ успешно выполнен!",
-        "interpretation_title": "Глубокое толкование для",
-        "empty_desc_warn": "Пожалуйста, введите описание сна.",
+        "dream_lucidity": "Осознанность",
+        "dream_desc": "Опишите сон...",
+        "btn_analyze": "Анализировать сон",
+        "success_msg": "✨ Успешно!",
+        "interpretation_title": "Толкование для",
+        "empty_desc_warn": "Введите описание.",
         "journal_title": "📖 Дневник снов",
-        "journal_desc": "История вашых сновидений.",
-        "no_dreams": "Нет записанных снов.",
+        "journal_desc": "История.",
+        "no_dreams": "Нет снов.",
         "lucidity_label": "Осознанность",
         "story_label": "Сон",
-        "stats_title": "📊 Статистика и Статус",
-        "stats_desc": "Отслеживайте активность.",
-        "total_dreams": "Всего проанализировано снов",
-        "status_premium": "⭐ Статус: Безлимит активен",
-        "status_free": "🌿 Статус: Бесплатный аккаунт",
-        "terms_title": "📜 Условия использования",
-        "terms_text": "Условия сервиса Aureva Mind.",
-        "member_space": "⚙️ Кабинет участника",
-        "cancel_sub": "❌ Отменить подписку",
-        "manage_account": "📝 Регистрация",
+        "stats_title": "📊 Статистика",
+        "stats_desc": "Активность.",
+        "total_dreams": "Всего снов",
+        "status_premium": "⭐ Подписка активна",
+        "status_free": "🌿 Бесплатный аккаунт",
+        "account_title": "📝 Управление Аккаунтом",
+        "account_desc": "Управление профилем.",
+        "terms_title": "📜 Условия",
+        "terms_text": "Условия использования.",
+        "member_space": "⚙️ Кабинет",
+        "cancel_sub": "❌ Отменить",
+        "manage_account": "📝 Аккаунт",
         "pack_btn": "✨ Пакет 15 снов (4,99 €)",
         "unlim_btn": "🚀 Безлимит (12 €/месяц)"
     },
     "日本語": {
         "welcome": "ようこそ",
-        "nav_analyze": "✨ 夢を分析",
+        "nav_analyze": "✨ 分析",
         "nav_journal": "📖 ジャーナル",
         "nav_stats": "📊 統計",
-        "nav_terms": "📜 利用規約",
+        "nav_terms": "📜 規約",
+        "nav_account": "📝 アカウント",
         "analysis_title": "✨ 新しい夢の分析",
         "dream_title": "夢のタイトル",
         "dream_emotion": "主な感情",
-        "dream_lucidity": "明晰性レベル (1-5)",
-        "dream_desc": "夢の詳細を入力してください...",
-        "btn_analyze": "夢を分析する",
-        "success_msg": "✨ 夢の分析が完了しました！",
-        "interpretation_title": "深層心理の解釈",
-        "empty_desc_warn": "夢の説明を入力してください。",
+        "dream_lucidity": "明晰性",
+        "dream_desc": "夢の詳細...",
+        "btn_analyze": "夢を分析",
+        "success_msg": "✨ 分析完了！",
+        "interpretation_title": "解釈",
+        "empty_desc_warn": "説明を入力してください。",
         "journal_title": "📖 夢のジャーナル",
-        "journal_desc": "分析履歴の確認。",
-        "no_dreams": "記録された夢はありません。",
-        "lucidity_label": "明晰性レベル",
+        "journal_desc": "履歴。",
+        "no_dreams": "記録なし。",
+        "lucidity_label": "明晰性",
         "story_label": "内容",
-        "stats_title": "📊 統計とステータス",
+        "stats_title": "📊 統計",
         "stats_desc": "活動の追跡。",
-        "total_dreams": "分析された夢の総数",
-        "status_premium": "⭐ ステータス: プレミアム有効",
-        "status_free": "🌿 ステータス: 無料アカウント",
+        "total_dreams": "夢の総数",
+        "status_premium": "⭐ プレミアム有効",
+        "status_free": "🌿 無料アカウント",
+        "account_title": "📝 アカウント管理",
+        "account_desc": "プロフィールの管理。",
         "terms_title": "📜 利用規約",
-        "terms_text": "Aureva Mindの利用規約です。",
-        "member_space": "⚙️ 会員スペース",
-        "cancel_sub": "❌ 定期購入を解約",
-        "manage_account": "📝 登録",
+        "terms_text": "利用規約。",
+        "member_space": "⚙️ スペース",
+        "cancel_sub": "❌ 解約",
+        "manage_account": "📝 アカウント",
         "pack_btn": "✨ 15夢パック (4.99 €)",
         "unlim_btn": "🚀 無制限 (12 €/月)"
     }
@@ -492,21 +543,21 @@ with st.sidebar:
             db.commit()
             st.rerun()
     else:
-        if st.button(t["manage_account"]):
-            st.info("Mode inscription / connexion actif.")
+        st.info("💡 Mode gratuit actif.")
 
 # --- 5. EN-TÊTE ---
 st.title(f"Aureva Mind — {t['welcome']}, {user.first_name} 🌙")
 
-# --- 6. VRAI MENU HORIZONTAL PAR ONGLETS ---
-tab_analyze, tab_journal, tab_stats, tab_terms = st.tabs([
+# --- 6. VRAI MENU HORIZONTAL PAR ONGLETS (RESPONSIVE & ADAPTÉ MOBILE) ---
+tab_analyze, tab_journal, tab_stats, tab_terms, tab_account = st.tabs([
     t["nav_analyze"], 
     t["nav_journal"], 
     t["nav_stats"], 
-    t["nav_terms"]
+    t["nav_terms"],
+    t["nav_account"]
 ])
 
-# --- 7. CONTENU DE L'ONGLET : ANALYSER (ANALYSE ULTRA-POUSSÉE MOT À MOT) ---
+# --- 7. ONGLET : ANALyser ---
 with tab_analyze:
     st.subheader(t["analysis_title"])
     dream_title = st.text_input(t["dream_title"])
@@ -529,7 +580,6 @@ with tab_analyze:
             st.success(t["success_msg"])
             st.markdown(f"### 🌌 {t['interpretation_title']} {user.first_name}")
             
-            # Analyse ultra-détaillée basée sur l'analyse dynamique du texte saisi
             desc_lower = dream_desc.lower()
             symboles_analyses = []
             
@@ -567,7 +617,7 @@ Accordez-vous un instant de calme pour assimiler ces messages. L'exploration de 
         else:
             st.warning(t["empty_desc_warn"])
 
-# --- 8. CONTENU DE L'ONGLET : JOURNAL ---
+# --- 8. ONGLET : JOURNAL ---
 with tab_journal:
     st.subheader(t["journal_title"])
     st.write(t["journal_desc"])
@@ -582,7 +632,7 @@ with tab_journal:
                 st.write(f"**{t['lucidity_label']} :** {reve.lucidity}/5")
                 st.write(f"**{t['story_label']} :** {reve.description}")
 
-# --- 9. CONTENU DE L'ONGLET : STATISTIQUES ---
+# --- 9. ONGLET : STATISTIQUES ---
 with tab_stats:
     st.subheader(t["stats_title"])
     st.write(t["stats_desc"])
@@ -593,13 +643,40 @@ with tab_stats:
     else:
         st.info(t["status_free"])
 
-# --- 10. CONTENU DE L'ONGLET : CONDITIONS GÉNÉRALES ---
+# --- 10. ONGLET : CONDITIONS GÉNÉRALES ---
 with tab_terms:
     st.subheader(t["terms_title"])
     st.markdown("---")
     st.markdown(t["terms_text"])
 
-# --- 11. BOUTONS STRIPE PERMANENTS EN BAS DE PAGE (CORRIGÉS & VISIBLES) ---
+# --- 11. ONGLET : COMPTE & INSCRIPTION ---
+with tab_account:
+    st.subheader(t["account_title"])
+    st.write(t["account_desc"])
+    st.markdown("---")
+    
+    nouveau_prenom_tab = st.text_input("Modifier votre prénom", value=user.first_name, key="account_name_input")
+    if nouveau_prenom_tab != user.first_name:
+        user.first_name = nouveau_prenom_tab
+        db.commit()
+        st.success("Prénom mis à jour avec succès !")
+
+    st.markdown("---")
+    if user.is_premium:
+        st.success("⭐ Vous bénéficiez actuellement de l'abonnement Illimité.")
+        if st.button("❌ Résilier mon abonnement"):
+            user.is_premium = False
+            db.commit()
+            st.rerun()
+    else:
+        st.info("🌿 Vous utilisez actuellement le compte gratuit.")
+        if st.button("✨ Activer / Passer au compte membre"):
+            user.is_premium = True
+            db.commit()
+            st.success("Compte membre activé avec succès !")
+            st.rerun()
+
+# --- 12. BOUTONS STRIPE PERMANENTS EN BAS DE PAGE ---
 st.markdown("---")
 st.markdown("### 🌙 Aureva Mind Premium")
 st.write(translations[langue]["pack_btn"].split(" (")[0] + " & " + translations[langue]["unlim_btn"].split(" (")[0])
