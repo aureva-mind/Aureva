@@ -95,7 +95,7 @@ def render_lunar_observatory():
 st.markdown("### 🌙 Observatoire de la Synchronodicité Lunaire")
 st.markdown(f"#### 🌙 Cycle Actuel : {phase_nom}")
 st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
-fig = go.Figure(
+ fig = go.Figure(
  go.Indicator(
         mode="gauge+number",
         value=phase_val * 100,
