@@ -5,7 +5,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import datetime
 import plotly.graph_objects as go
-import stripe
 
 # --- 1. CONFIGURATION DE LA PAGE & DESIGN NUIT ÉTOILÉE ---
 st.set_page_config(
@@ -490,7 +489,7 @@ translations = {
         "status_premium": "⭐ ステータス：無制限サブスク有効",
         "status_free": "🌿 ステータス：無料アカウント",
         "account_title": "📝 アカウント管理",
-        "account_desc": "個人情報とプランの管理。",
+        "account_desc": "个人情報とプランの管理。",
         "terms_title": "📜 利用規約",
         "terms_text": "Aureva Mind 利用規約。",
         "member_space": "⚙️ メンバーエリア",
