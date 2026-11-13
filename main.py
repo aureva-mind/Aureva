@@ -11,7 +11,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# Style CSS renforcé pour corriger la lisibilité des boîtes et imposer la nuit étoilée
+# Style CSS : Nuit étoilée pour l'app et texte NOIR dans les boîtes de résultats/alertes
 st.markdown("""
     <style>
     .stApp {
@@ -29,14 +29,14 @@ st.markdown("""
         background-color: #161b22 !important;
         border: 1px solid #30363d !important;
     }
-    /* Correction pour que le texte dans les st.success et st.info soit lisible sur fond sombre */
+    /* Boîtes de succès, infos et alertes avec fond clair et ÉCRITURE NOIRE */
     div[data-baseweb="notification"], .stAlert {
-        background-color: #161b22 !important;
-        color: #f1f5f9 !important;
-        border: 1px solid #30363d !important;
+        background-color: #f8fafc !important;
+        color: #0f111a !important;
+        border: 1px solid #cbd5e1 !important;
     }
-    .stAlert p {
-        color: #f1f5f9 !important;
+    .stAlert p, .stAlert span, .stAlert div, div[data-baseweb="notification"] p {
+        color: #0f111a !important;
     }
     .stButton>button {
         background: linear-gradient(to right, #4f46e5, #9333ea) !important;
@@ -325,7 +325,7 @@ translations = {
     }
 }
 
-# --- 4. BARRE LATÉRALE (PROFIL, 10 LANGUES, NAVIGATION & PAIEMENT) ---
+# --- 4. BARRE LATÉRALE ---
 with st.sidebar:
     st.markdown("### 👤 Mon Profil")
     nouveau_prenom = st.text_input("Votre prénom", value=user.first_name)
@@ -345,7 +345,6 @@ with st.sidebar:
     st.title(t["nav_title"])
     page = st.radio("Aller à", [t["nav_space"], t["nav_analyze"], t["nav_terms"]])
 
-    # Section d'inscription / Gestion abonnement dans la sidebar
     st.markdown("---")
     st.subheader(t["member_space"])
     if user.is_premium:
@@ -357,7 +356,6 @@ with st.sidebar:
         if st.button(t["manage_account"]):
             st.info("Mode inscription / connexion actif.")
 
-    # --- SECTION TOUJOURS VISIBLE EN BAS DE LA BARRE LATÉRALE (STRIPE) ---
     st.markdown("---")
     st.subheader(t["premium_title"])
     st.write(t["premium_desc"])
@@ -369,7 +367,8 @@ with st.sidebar:
 if page == t["nav_space"]:
     st.title(f"Bienvenue, {user.first_name} 🌙")
     
-    tab1, tab2, tab3 = st.tabs(["✨ Analyse IA", "📖 Journal", "📊 Statistiques"])
+    # Onglets renommés proprement (plus de "Analyse IA")
+    tab1, tab2, tab3 = st.tabs(["✨ Analyser", "📖 Journal", "📊 Statistiques"])
     
     with tab1:
         st.subheader(t["analysis_title"])
@@ -390,6 +389,7 @@ if page == t["nav_space"]:
                 user.dreams_count += 1
                 db.commit()
 
+                # Ces blocs s'afficheront désormais avec un fond clair et une écriture noire bien lisible
                 st.success("✨ Analyse onirique réalisée avec succès !")
                 st.markdown(f"### 🌌 Interprétation profonde pour {user.first_name}")
                 
@@ -432,7 +432,7 @@ if page == t["nav_space"]:
 
 elif page == t["nav_analyze"]:
     st.title("Espace d'analyse rapide")
-    st.write("Rendez-vous dans l'onglet 'Mon Espace > Analyse IA' pour soumettre votre rêve.")
+    st.write("Rendez-vous dans l'onglet 'Mon Espace > Analyser' pour soumettre votre rêve.")
 
 elif page == t["nav_terms"]:
     st.title(t["terms_title"])
