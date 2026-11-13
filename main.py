@@ -93,13 +93,13 @@ def get_moon_phase_details(dt=None):.
 def render_lunar_observatory():
   phase_val, phase_nom, signification = get_moon_phase_details()
 
-  st.markdown("### 🌌 Observatoire de la Synchronicité Lunaire")
-st.markdown(f"#### 🌙 Cycle Actuel : {phase_nom}")
-st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
-fig = go.Figure(
-          mode="gauge+number",
-          value=phase_val * 100,
-          
+      st.markdown("### 🌙 Observatoire de la Synchronodicité Lunaire")
+    st.markdown(f"#### 🌙 Cycle Actuel : {phase_nom}")
+    st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
+    fig = go.Figure(
+    go.Indicator(
+        mode="gauge+number",
+        value=phase_val * 100,
           number={
               "suffix": "%",
               "font": {"color": "#818cf8", "size": 28, "weight": "bold"},
