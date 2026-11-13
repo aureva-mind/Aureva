@@ -11,19 +11,24 @@ st.set_page_config(
     layout="wide"
 )
 
-# Style CSS personnalisé (Nuit étoilée & élégance)
+# Style CSS personnalisé (Nuit étoilée & texte parfaitement visible)
 st.markdown("""
     <style>
     .stApp {
         background: linear-gradient(to bottom, #090a0f, #1b1e3b, #090a0f);
-        color: #e2e8f0;
+        color: #f1f5f9;
     }
     .sidebar .stSidebar {
         background-color: #0f111a;
     }
-    h1, h2, h3 {
+    h1, h2, h3, p, label, .streamlit-expanderHeader {
         color: #f1f5f9 !important;
         font-family: 'Helvetica Neue', sans-serif;
+    }
+    .stTextInput input, .stTextArea textarea {
+        color: #ffffff !important;
+        background-color: #161b22 !important;
+        border: 1px solid #30363d !important;
     }
     .stButton>button {
         border-radius: 20px;
@@ -72,10 +77,6 @@ translations = {
         "nav_space": "Mon Espace",
         "nav_analyze": "Analyser un rêve",
         "nav_terms": "Conditions Générales",
-        "profile_title": "👤 Mon Profil",
-        "profile_name": "Votre prénom",
-        "lang_title": "🌍 Langue / Language",
-        "lang_select": "Choisissez votre langue",
         "journal_titre": "📖 Journal de vos Rêves",
         "journal_desc": "Retrouvez l'historique de vos analyses oniriques.",
         "stats_titre": "📊 Statistiques & Statut",
@@ -88,10 +89,6 @@ translations = {
         "nav_space": "My Space",
         "nav_analyze": "Analyze a dream",
         "nav_terms": "Terms & Conditions",
-        "profile_title": "👤 My Profile",
-        "profile_name": "Your first name",
-        "lang_title": "🌍 Language",
-        "lang_select": "Choose your language",
         "journal_titre": "📖 Dream Journal",
         "journal_desc": "Find your dream analysis history.",
         "stats_titre": "📊 Statistics & Status",
