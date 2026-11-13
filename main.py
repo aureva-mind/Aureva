@@ -1,373 +1,211 @@
-import os
 import streamlit as st
-from sqlalchemy import Boolean, Column, DateTime, Integer, String, create_engine
+import sqlalchemy
+from sqlalchemy import create_engine, Column, Integer, String, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# Configuration de la page Streamlit
+# --- 1. CONFIGURATION DE LA PAGE & DESIGN NUIT ÉTOILÉE ---
 st.set_page_config(
-    page_title="Aureva Mind", page_icon="🌙", layout="centered"
+    page_title="Aureva Mind - Analyse de Rêves",
+    page_icon="🌙",
+    layout="wide"
 )
 
-# --- STYLE CSS NUIT ÉTOILÉE & DESIGN CORRIGÉ ---
-st.markdown(
-    """
+# Style CSS personnalisé (Nuit étoilée & élégance)
+st.markdown("""
     <style>
-    /* Fond général de l'application (Nuit étoilée) */
     .stApp {
-        background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #415a77 100%);
-        color: #e0e1dd;
+        background: linear-gradient(to bottom, #090a0f, #1b1e3b, #090a0f);
+        color: #e2e8f0;
     }
-    
-    /* Titres et textes généraux */
-    h1, h2, h3, p, label, .stMarkdown {
-        color: #f8f9fa !important;
+    .sidebar .stSidebar {
+        background-color: #0f111a;
     }
-
-    /* Boutons standards (Orange) */
+    h1, h2, h3 {
+        color: #f1f5f9 !important;
+        font-family: 'Helvetica Neue', sans-serif;
+    }
     .stButton>button {
-        background: linear-gradient(135deg, #f4a261 0%, #e76f51 100%);
-        color: white;
-        font-weight: 600;
-        border: none;
-        border-radius: 12px;
-        padding: 0.6rem 1.2rem;
-        box-shadow: 0 4px 15px rgba(231, 111, 81, 0.4);
-        transition: all 0.3s ease;
-        width: 100%;
-    }
-    .stButton>button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(231, 111, 81, 0.6);
-        background: linear-gradient(135deg, #f5b078 0%, #eb8267 100%);
-    }
-
-    /* Style spécifique pour les boutons d'engagement (Verts en relief) */
-    div.stButton > button[kind="primary"], div.stButton > button.btn-vert {
-        background: linear-gradient(135deg, #2a9d8f 0%, #21867a 100%) !important;
-        box-shadow: 0 4px 15px rgba(42, 157, 143, 0.4) !important;
-    }
-    div.stButton > button[kind="primary"]:hover, div.stButton > button.btn-vert:hover {
-        background: linear-gradient(135deg, #38b000 0%, #2b9348 100%) !important;
-        box-shadow: 0 6px 20px rgba(56, 176, 0, 0.6) !important;
-    }
-
-    /* Champs de saisie et textareas : Fond clair et TEXTE NOIR */
-    .stTextInput input, .stTextArea textarea, .stSelectbox select {
-        background-color: #ffffff !important;
-        color: #000000 !important;
-        font-weight: 600;
-        border: 1px solid #ced4da !important;
-        border-radius: 8px;
-    }
-    
-    /* Couleur du texte indicatif (placeholder) en gris foncé */
-    input::placeholder, textarea::placeholder, 
-    ::-webkit-input-placeholder, :-ms-input-placeholder {
-        color: #6c757d !important;
-        opacity: 1 !important;
-    }
-    
-    /* Cartes d'alerte / info */
-    .stAlert {
-        background-color: rgba(255, 255, 255, 0.1);
-        color: white;
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        font-weight: bold;
     }
     </style>
-    """,
-    unsafe_allow_html=True,
-)
+""", unsafe_allow_html=True)
 
-# Configuration de la base de données SQLite
-DB_FILE = "dreams.db"
-DATABASE_URL = f"sqlite:///{DB_FILE}"
-
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+# --- 2. BASE DE DONNÉES & GESTION UTILISATEUR ---
 Base = declarative_base()
-
+engine = create_engine('sqlite:///dreams.db', connect_args={'check_same_thread': False})
+SessionLocal = sessionmaker(bind=engine)
 
 class User(Base):
-  __tablename__ = "users"
-  id = Column(Integer, primary_key=True, index=True)
-  first_name = Column(String, default="Voyageur")
-  is_premium = Column(Boolean, default=False)
-  dreams_count = Column(Integer, default=0)
-
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True, index=True)
+    first_name = Column(String)
+    is_premium = Column(Boolean, default=False)
+    dreams_count = Column(Integer, default=0)
 
 class DreamRecord(Base):
-  __tablename__ = "dream_records"
-  id = Column(Integer, primary_key=True, index=True)
-  title = Column(String)
-  emotion = Column(String)
-  lucidity = Column(Integer)
-  description = Column(String)
-
+    __tablename__ = 'dream_records'
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String)
+    emotion = Column(String)
+    lucidity = Column(Integer)
+    description = Column(String)
 
 try:
-  Base.metadata.create_all(bind=engine)
-except Exception as e:
-  pass
+    Base.metadata.create_all(bind=engine)
+except Exception:
+    pass
 
 db = SessionLocal()
 user = db.query(User).first()
 if not user:
-  user = User(first_name="Voyageur", is_premium=False, dreams_count=0)
-  db.add(user)
-  db.commit()
-  db.refresh(user)
-
-# --- BARRE LATÉRALE : PRÉNOM & SÉLECTEUR DE LANGUE ---
-with st.sidebar:
-  st.markdown("### 👤 Mon Profil")
-  nouveau_prenom = st.text_input("Votre prénom", value=user.first_name)
-  if nouveau_prenom != user.first_name:
-    user.first_name = nouveau_prenom
+    user = User(first_name="Voyageur", is_premium=False, dreams_count=0)
+    db.add(user)
     db.commit()
+    db.refresh(user)
 
-  st.markdown("---")
-  st.markdown("### 🌐 Langue / Language")
-  langue = st.selectbox(
-      "Choisissez votre langue",
-      ["🇫🇷 Français", "🇬🇧 English", "🇪🇸 Español", "🇩🇪 Deutsch", "🇮🇹 Italiano"],
-  )
-  st.markdown("---")
-  st.write("✨ **Aureva Mind** — Édition Nuit Étoilée")
-
-# Dictionnaires de traduction de l'interface
-textes = {
-    "🇫🇷 Français": {
-        "titre": f"🌙 Bonjour {user.first_name}",
-        "intro": (
-            "Explorez les profondeurs de votre subconscient à travers une"
-            " analyse onirique détaillée et guidée."
-        ),
-        "tab1": "✨ Nouveau Rêve",
-        "tab2": "📜 Journal Intime",
-        "tab3": "📊 Statistiques",
-        "limite": (
-            f"⚠️ {user.first_name}, vous avez atteint votre limite de 3 rêves"
-            " gratuits."
-        ),
-        "choix_offre": (
-            "Choisissez l'une de nos offres ci-dessous pour continuer à"
-            " explorer vos rêves sans limite :"
-        ),
-        "btn_15": "🌿 15 Rêves — 4,99 €",
-        "btn_illimite": "⭐ Illimité (1 an) — 12 €",
-        "input_titre": "Titre du rêve (optionnel)",
-        "emotion": "Émotion dominante au réveil",
-        "lucidite": "Niveau de lucidité",
-        "desc_reve": "Racontez votre rêve en détail...",
-        "btn_analyser": "Analyser mon rêve",
-        "succes_analyse": "Analyse approfondie et détaillée terminée !",
-        "journal_titre": "📜 Votre Journal Intime",
-        "journal_desc": (
-            "Retrouvez ici l'historique de vos rêves enregistrés et analysés."
-        ),
-        "stats_titre": "📊 Statistiques oniriques",
-        "stats_desc": (
-            "Visualisez l'évolution de vos émotions et de votre lucidité."
-        ),
+# --- 3. DICTIONNAIRE DE TRADUCTION ---
+translations = {
+    "Français": {
+        "nav_title": "Navigation",
+        "nav_space": "Mon Espace",
+        "nav_analyze": "Analyser un rêve",
+        "nav_terms": "Conditions Générales",
+        "profile_title": "👤 Mon Profil",
+        "profile_name": "Votre prénom",
+        "lang_title": "🌍 Langue / Language",
+        "lang_select": "Choisissez votre langue",
+        "journal_titre": "📖 Journal de vos Rêves",
+        "journal_desc": "Retrouvez l'historique de vos analyses oniriques.",
+        "stats_titre": "📊 Statistiques & Statut",
+        "stats_desc": "Suivez votre activité onirique.",
+        "analysis_title": "✨ Nouvelle Analyse Onirique",
+        "terms_title": "📜 Conditions Générales d'Utilisation et de Vente",
     },
-    "🇬🇧 English": {
-        "titre": f"🌙 Hello {user.first_name}",
-        "intro": (
-            "Explore the depths of your subconscious through detailed"
-            " AI-guided dream analysis."
-        ),
-        "tab1": "✨ New Dream",
-        "tab2": "📜 Dream Diary",
-        "tab3": "📊 Statistics",
-        "limite": (
-            f"⚠️ {user.first_name}, you have reached your limit of 3 free"
-            " dreams."
-        ),
-        "choix_offre": (
-            "Choose one of our offers below to continue exploring your dreams"
-            " without limits:"
-        ),
-        "btn_15": "🌿 15 Dreams — €4.99",
-        "btn_illimite": "⭐ Unlimited (1 year) — €12",
-        "input_titre": "Dream title (optional)",
-        "emotion": "Dominant emotion upon waking",
-        "lucidite": "Level of lucidity",
-        "desc_reve": "Tell your dream in detail...",
-        "btn_analyser": "Analyze my dream",
-        "succes_analyse": "Detailed analysis completed!",
-        "journal_titre": "📜 Your Dream Diary",
-        "journal_desc": "Find your recorded and analyzed dreams history here.",
-        "stats_titre": "📊 Dream Statistics",
-        "stats_desc": "Visualize the evolution of your emotions and lucidity.",
-    },
+    "English": {
+        "nav_title": "Navigation",
+        "nav_space": "My Space",
+        "nav_analyze": "Analyze a dream",
+        "nav_terms": "Terms & Conditions",
+        "profile_title": "👤 My Profile",
+        "profile_name": "Your first name",
+        "lang_title": "🌍 Language",
+        "lang_select": "Choose your language",
+        "journal_titre": "📖 Dream Journal",
+        "journal_desc": "Find your dream analysis history.",
+        "stats_titre": "📊 Statistics & Status",
+        "stats_desc": "Track your dream activity.",
+        "analysis_title": "✨ New Dream Analysis",
+        "terms_title": "📜 Terms and Conditions of Use and Sale",
+    }
 }
 
-t = textes.get(langue, textes["🇫🇷 Français"])
-
-# --- INTERFACE UTILISATEUR ---
-st.markdown(f"<h1>{t['titre']}</h1>", unsafe_allow_html=True)
-st.write(t["intro"])
-
-# Onglets de navigation
-tab1, tab2, tab3 = st.tabs([t["tab1"], t["tab2"], t["tab3"]])
-
-with tab1:
-  max_gratuits = 3
-  if user.dreams_count >= max_gratuits and not user.is_premium:
-    st.markdown(t["limite"])
-    st.info(t["choix_offre"])
-
-    # Boutons d'engagement en vert
-    col1, col2 = st.columns(2)
-    with col1:
-      if st.button(t["btn_15"], type="primary"):
-        user.dreams_count = max(0, user.dreams_count - 15)
+# --- 4. BARRE LATÉRALE (PROFIL, LANGUE, NAVIGATION & PAIEMENT) ---
+with st.sidebar:
+    st.markdown("### 👤 Mon Profil")
+    nouveau_prenom = st.text_input("Votre prénom", value=user.first_name)
+    if nouveau_prenom != user.first_name:
+        user.first_name = nouveau_prenom
         db.commit()
-        st.success("Pack de 15 rêves activé !")
-        st.rerun()
 
-    with col2:
-      if st.button(t["btn_illimite"], type="primary"):
-        user.is_premium = True
-        db.commit()
-        st.success("Abonnement Annuel Illimité activé !")
-        st.rerun()
+    st.markdown("---")
+    st.markdown("🌍 **Langue / Language**")
+    langue = st.selectbox("Choisissez votre langue", ["Français", "English"])
+    t = translations[langue]
 
-  else:
-    st.write(f"💡 Rêves enregistrés : {user.dreams_count} / {max_gratuits}")
+    st.markdown("---")
+    st.title(t["nav_title"])
+    page = st.radio("Aller à", [t["nav_space"], t["nav_analyze"], t["nav_terms"]])
 
-    titre_reve = st.text_input(t["input_titre"])
-    emotion = st.selectbox(
-        t["emotion"],
-        [
-            "Confus(e)",
-            "Joyeux(se)",
-            "Anxieux(se)",
-            "Neutre",
-            "Fasciné(e)",
-            "Apaisé(e)",
-        ],
-    )
-    lucidite = st.slider(t["lucidite"], 1, 5, 3)
-    description_reve = st.text_area(
-        t["desc_reve"],
-        placeholder="Ex: Je nageais dans la mer la nuit avec un ciel étoilé...",
-    )
+    # Section d'inscription / Gestion abonnement dans la sidebar
+    st.markdown("---")
+    st.subheader("⚙️ Espace Membre")
+    if user.is_premium:
+        if st.button("❌ Résilier l'abonnement"):
+            user.is_premium = False
+            db.commit()
+            st.rerun()
+    else:
+        if st.button("📝 S'inscrire / Gérer mon compte"):
+            st.info("Mode inscription / connexion actif.")
 
-    if st.button(t["btn_analyser"]):
-      if not description_reve.strip():
-        st.warning("Veuillez raconter votre rêve avant de lancer l'analyse.")
-      else:
-        with st.spinner(
-            "Exploration des profondeurs et analyse des mots-clés..."
-        ):
-          st.success(t["succes_analyse"])
+    # --- SECTION TOUJOURS VISIBLE EN BAS DE LA BARRE LATÉRALE (STRIPE) ---
+    st.markdown("---")
+    st.subheader("🌙 Aureva Mind Premium")
+    st.write("Débloquez tout le potentiel de vos rêves :")
 
-          texte_lower = description_reve.lower()
+    st.link_button("✨ Pack 15 rêves (4,99 €)", "https://buy.stripe.com/9B68wQ9el5I21L1djxaIM00", use_container_width=True)
+    st.link_button("🚀 Illimité (12 €/mois)", "https://buy.stripe.com/fZu14o4Y53zUcpFenBaIM01", use_container_width=True)
 
-          # Analyse détaillée avec détection de mots-clés dynamiques
-          st.markdown("### 🔮 Analyse et Interprétation Profonde")
+# --- 5. CORPS PRINCIPAL DE L'APPLICATION ---
+if page == t["nav_space"]:
+    st.title(f"Bienvenue, {user.first_name} 🌙")
+    
+    tab1, tab2, tab3 = st.tabs(["✨ Analyse IA", "📖 Journal", "📊 Statistiques"])
+    
+    with tab1:
+        st.subheader(t["analysis_title"])
+        dream_title = st.text_input("Titre de votre rêve")
+        dream_emotion = st.selectbox("Émotion principale", ["Joie", "Peur", "Tristesse", "Mystère", "Aventure", "Autre"])
+        dream_lucidity = st.slider("Niveau de lucidité (1 à 5)", 1, 5, 2)
+        dream_desc = st.text_area("Racontez votre rêve en détail...")
 
-          st.markdown("#### 1. 🌊 Décodage de la symbolique & Mots-clés")
-          symbolique_mots = []
-          if "mer" in texte_lower or "eau" in texte_lower or "nager" in texte_lower:
-            symbolique_mots.append(
-                "**L'eau / La mer :** Symbolise vos émotions profondes, votre"
-                " inconscient et votre capacité à naviguer à travers des"
-                " périodes de grands changements émotionnels."
-            )
-          if "nuit" in texte_lower or "sombre" in texte_lower:
-            symbolique_mots.append(
-                "**La nuit :** Représente le mystère, l'inconnu et des aspects"
-                " de vous-même encore cachés ou en phase de gestation."
-            )
-          if "ciel" in texte_lower or "étoile" in texte_lower:
-            symbolique_mots.append(
-                "**Le ciel / Les étoiles :** Indiquent une quête de sens,"
-                " d'inspiration spirituelle et une connexion avec vos"
-                " aspirations les plus hautes."
-            )
+        if st.button("Analyser mon rêve avec l'IA"):
+            if dream_desc.strip():
+                nouveau_reve = DreamRecord(
+                    title=dream_title if dream_title else "Rêve sans titre",
+                    emotion=dream_emotion,
+                    lucidity=dream_lucidity,
+                    description=dream_desc
+                )
+                db.add(nouveau_reve)
+                user.dreams_count += 1
+                db.commit()
 
-          if not symbolique_mots:
-            symbolique_mots.append(
-                f"**Éléments clés de votre récit :** Votre description met en"
-                " avant des dynamiques personnelles uniques qui traduisent"
-                " votre état d'esprit actuel."
-            )
+                st.success("✨ Analyse onirique terminée avec succès !")
+                st.markdown(f"### Interprétation pour {user.first_name}")
+                st.info(f"Votre rêve évoque une forte énergie de type **{dream_emotion}**. Avec un niveau de lucidité de {dream_lucidity}/5, votre subconscient explore des pistes fascinantes.")
+            else:
+                st.warning("Veuillez entrer la description de votre rêve avant de lancer l'analyse.")
 
-          for sm in symbolique_mots:
-            st.write(sm)
+    with tab2:
+        st.subheader(t["journal_titre"])
+        st.write(t["journal_desc"])
+        st.markdown("---")
 
-          st.markdown("#### 2. 🧠 Clé psychologique")
-          st.write(
-              f"Associée à l'émotion dominante de **{emotion}** et à un niveau"
-              f" de lucidité de **{lucidite}/5**, cette expérience onirique"
-              " révèle un travail de synthèse de votre esprit. Vous cherchez à"
-              " faire la paix avec vos ressentis tout en gardant le cap sur vos"
-              " objectifs profonds."
-          )
+        tous_les_reves = db.query(DreamRecord).all()
+        if not tous_les_reves:
+            st.info("Aucun rêve enregistré pour le moment. Analysez votre premier rêve !")
+        else:
+            for reve in reversed(tous_les_reves):
+                with st.expander(f"🌙 {reve.title} — ({reve.emotion})"):
+                    st.write(f"**Niveau de lucidité :** {reve.lucidity}/5")
+                    st.write(f"**Récit :** {reve.description}")
 
-          st.markdown("#### 3. 🌱 Conseil de votre subconscient")
-          st.write(
-              "Restez à l'écoute de votre intuition dans les jours à venir."
-              " Votre subconscient vous invite à embrasser votre créativité et"
-              " à accueillir vos émotions avec sérénité."
-          )
+    with tab3:
+        st.subheader(t["stats_titre"])
+        st.write(t["stats_desc"])
+        st.markdown("---")
+        st.metric(label="Total de rêves analysés", value=user.dreams_count)
+        if user.is_premium:
+            st.success("⭐ Statut : Abonnement Illimité Actif")
+        else:
+            st.info("🌿 Statut : Compte Gratuit")
 
-          # Enregistrement dans la base de données (Journal Intime)
-          nouveau_reve = DreamRecord(
-              title=titre_reve if titre_reve else "Rêve sans titre",
-              emotion=emotion,
-              lucidity=lucidite,
-              description=description_reve,
-          )
-          db.add(nouveau_reve)
-          user.dreams_count += 1
-          db.commit()
+elif page == t["nav_analyze"]:
+    st.title("Espace d'analyse rapide")
+    st.write("Rendez-vous dans l'onglet 'Mon Espace > Analyse IA' pour soumettre votre rêve.")
 
-with tab2:
-  st.subheader(t["journal_titre"])
-  st.write(t["journal_desc"])
-  st.markdown("---")
-
-  tous_les_reves = db.query(DreamRecord).all()
-  if not tous_les_reves:
-    st.info("Aucun rêve enregistré pour le moment. Analysez votre premier rêve !")
-  else:
-    for reve in reversed(tous_les_reves):
-      with st.expander(f"🌙 {reve.title} — ({reve.emotion})"):
-        st.write(f"**Niveau de lucidité :** {reve.lucidity}/5")
-        st.write(f"**Récit :** {reve.description}")
-
-with tab3:
-  st.subheader(t["stats_titre"])
-  st.write(t["stats_desc"])
-  st.markdown("---")
-  st.metric(label="Total de rêves analysés", value=user.dreams_count)
-  if user.is_premium:
-    st.success("⭐ Statut : Abonnement Annuel Illimité Actif")
-  else:
-    st.info("🌿 Statut : Compte Gratuit")
-      
-
-# --- NAVIGATION DANS LA BARRE LATÉRALE ---
-st.sidebar.title("Navigation")
-page = st.sidebar.radio("Aller à", ["Mon Espace", "Analyser un rêve"])
-
-if page == "Mon Espace":
-    st.title("Mon Espace Rêves")
-    st.write("Retrouvez l'historique de vos analyses.")
-
-elif page == "Analyser un rêve":
-    st.title("Nouvelle analyse")
-    # ... ton code d'analyse de rêve ...
-
-# --- SECTION TOUJOURS VISIBLE EN BAS DE LA BARRE LATÉRALE ---
-st.sidebar.markdown("---")
-st.sidebar.subheader("🌙 Aureva Mind Premium")
-st.sidebar.write("Débloquez tout le potentiel de vos rêves :")
-
-# Boutons épinglés en bas
-st.sidebar.link_button("✨ Pack 15 rêves (4,99 €)", "https://buy.stripe.com/9B68wQ9el5I21L1djxaIM00", use_container_width=True)
-st.sidebar.link_button("🚀 Illimité (12 €/mois)", "https://buy.stripe.com/fZu14o4Y53zUcpFenBaIM01", use_container_width=True)
+elif page == t["nav_terms"]:
+    st.title(t["terms_title"])
+    st.markdown("---")
+    st.info("🚧 Section en cours de rédaction. Les mentions légales et conditions d'utilisation complètes seront ajoutées prochainement.")
+    st.markdown("""
+    ### 1. Objet
+    Les présentes conditions générales régissent l'utilisation du service **Aureva Mind**.
+    
+    ### 2. Services et Tarifs
+    * **Pack 15 rêves** : 4,99 € (paiement unique)
+    * **Abonnement Illimité** : 12,00 € / mois (résiliable à tout moment depuis l'espace membre)
+    """)
