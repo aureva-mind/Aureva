@@ -349,3 +349,25 @@ with tab3:
     st.success("⭐ Statut : Abonnement Annuel Illimité Actif")
   else:
     st.info("🌿 Statut : Compte Gratuit")
+      import streamlit as st
+
+# --- NAVIGATION DANS LA BARRE LATÉRALE ---
+st.sidebar.title("Navigation")
+page = st.sidebar.radio("Aller à", ["Mon Espace", "Analyser un rêve"])
+
+if page == "Mon Espace":
+    st.title("Mon Espace Rêves")
+    st.write("Retrouvez l'historique de vos analyses.")
+
+elif page == "Analyser un rêve":
+    st.title("Nouvelle analyse")
+    # ... ton code d'analyse de rêve ...
+
+# --- SECTION TOUJOURS VISIBLE EN BAS DE LA BARRE LATÉRALE ---
+st.sidebar.markdown("---")
+st.sidebar.subheader("🌙 Aureva Mind Premium")
+st.sidebar.write("Débloquez tout le potentiel de vos rêves :")
+
+# Boutons épinglés en bas
+st.sidebar.link_button("✨ Pack 15 rêves (4,99 €)", "https://buy.stripe.com/9B68wQ9el5I21L1djxaIM00", use_container_width=True)
+st.sidebar.link_button("🚀 Illimité (12 €/mois)", "https://buy.stripe.com/fZu14o4Y53zUcpFenBaIM01", use_container_width=True)
