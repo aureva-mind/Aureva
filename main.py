@@ -112,7 +112,7 @@ else:
     # Pense à lier chaque rêve enregistré à st.session_state.user_id 
     # pour cloisonner les données de chaque utilisateur !
     # ==========================================================
-    st.title("✨ Bienvenue dans l'Observatoire Onirique")
+    st.
     st.title("🌙 Bienvenue dans l'Observatoire Onirique")
     st.write("Votre espace est désormais sécurisé et privé.")
 
