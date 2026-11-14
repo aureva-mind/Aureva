@@ -234,6 +234,23 @@ h1, h2, h3, label, span, div {
 }
 div[data-testid="stTextArea"] {
     background-color: transparent !important;
+/* Neutraliser tous les fonds de conteneurs et cartes Streamlit */
+div[data-testid="stVerticalBlock"], 
+div[data-testid="stElementContainer"], 
+div.element-container, 
+div[data-testid="stText"] {
+    background-color: transparent !important;
+}
+
+/* Forcer le conteneur de la zone de saisie et la zone de texte en mode sombre harmonieux */
+.stTextArea, 
+div[data-testid="stTextArea"], 
+div[data-baseweb="base-input"], 
+.stTextArea textarea {
+    background-color: #161b22 !important;
+    color: #ffffff !important;
+    border-color: #30363d !important;
+}
 }
 .stSelectbox [data-baseweb="select"] {
     background-color: #161b22 !important;
