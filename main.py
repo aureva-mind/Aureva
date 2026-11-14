@@ -611,17 +611,17 @@ else:
                 except AttributeError:
                     st.experimental_rerun()
 elif menu == t["nav_stats"]:
-    st.markdown(f"### {t['stats_title']}")
-    st.markdown(t["stats_desc"])
-    st.metric(t["total_dreams"], user.dreams_count)
+            st.markdown(f"### {t['stats_title']}")
+            st.markdown(t["stats_desc"])
+            st.metric(t["total_dreams"], user.dreams_count)
     if user.is_premium:
         st.success(t["status_premium"])
     else:
         st.info(t["status_free"])
 
 elif menu == t["nav_terms"]:
-    st.markdown(f"### {t['terms_title']}")
-    st.markdown(f"<div style='background: #161b22; padding: 20px; border-radius: 10px; border: 1px solid #30363d;'>{t['terms_text']}</div>", unsafe_allow_html=True)
+            st.markdown(f"### {t['terms_title']}")
+            st.markdown(f"<div style='background: #161b22; padding: 20px; border-radius: 10px; border: 1px solid #30363d;'>{t['terms_text']}</div>", unsafe_allow_html=True)
 
 elif menu == t["nav_account"]:
     st.markdown(f"### {t['account_title']}")
