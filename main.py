@@ -4,7 +4,8 @@ from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime
 from sqlalchemy.orm import declarative_base, sessionmaker
 import datetime
 import plotly.graph_objects as go
-
+import plotly.graph_objects as go
+from streamlit_mic_recorder import mic_recorder  # <--- Ajoute cette ligne ici
 try:
     import stripe
 except ImportError:
@@ -502,7 +503,14 @@ if menu == t["nav_analyze"]:
     emotion = st.selectbox(t["dream_emotion"], ["Joie", "Peur", "Tristesse", "Sérénité", "Mystère", "Autre"])
     lucidity = st.slider(t["dream_lucidity"], 1, 5, 3)
     description = st.text_area(t["dream_desc"])
+    # Widget micro pour dicter le rêve
+    st.markdown("🎙️ **Dicter le rêve à l'oral**")
+    audio = mic_recorder(start_prompt="Parler", stop_prompt="Arrêter", key='mic_dream')
+    if audio:
+        st.audio(audio['bytes'])
+        st.success("Audio enregistré avec succès !")
 
+    description = st.text_area(t["dream_desc"])
     if st.button(t["btn_analyze"]):
         if description.strip():
             user.dreams_count += 1
