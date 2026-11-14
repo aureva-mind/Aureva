@@ -535,7 +535,17 @@ elif menu == t["nav_journal"]:
                 st.write(f"**{t['story_label']} :** {d.description}")
                 if d.interpretation:
                     st.markdown(d.interpretation, unsafe_allow_html=True)
-
+            st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
+            if st.button(f"🗑️ Supprimer ce rêve", key=f"delete_{d.id}"):
+                db.delete(d)
+                db.commit()
+                user.dreams_count = max(0, user.dreams_count - 1)
+                db.commit()
+                st.success("Le rêve a été effacé de votre observatoire.")
+                try:
+                    st.rerun()
+                except AttributeError:
+                    st.experimental_rerun()
 elif menu == t["nav_stats"]:
     st.markdown(f"### {t['stats_title']}")
     st.markdown(t["stats_desc"])
