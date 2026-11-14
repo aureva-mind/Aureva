@@ -96,14 +96,10 @@ h1, h2, h3, label, span, div {
     font-weight: bold !important;
     border: none !important;
 }
-/* Personnalisation spécifique du bouton du micro */
 iframe[title="streamlit_mic_recorder.mic_recorder"] {
-    border-radius: 20px !important;
-}
-
-div[data-testid="stVerticalBlock"] iframe {
     background: linear-gradient(135deg, #4f46e5, #9333ea) !important;
     border-radius: 20px !important;
+    padding: 2px !important;
 }
 </style>
 """, unsafe_allow_html=True)
