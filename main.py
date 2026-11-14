@@ -113,7 +113,7 @@ else:
     # pour cloisonner les données de chaque utilisateur !
     # ==========================================================
     st.title("✨ Bienvenue dans l'Observatoire Onirique")
-        st.title("🌙 Bienvenue dans l'Observatoire Onirique")
+    st.title("🌙 Bienvenue dans l'Observatoire Onirique")
     st.write("Votre espace est désormais sécurisé et privé.")
 
     # Dictée vocale unique
