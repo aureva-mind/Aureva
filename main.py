@@ -502,7 +502,7 @@ if menu == t["nav_analyze"]:
     title = st.text_input(t["dream_title"])
     emotion = st.selectbox(t["dream_emotion"], ["Joie", "Peur", "Tristesse", "Sérénité", "Mystère", "Autre"])
     lucidity = st.slider(t["dream_lucidity"], 1, 5, 3)
-    description = st.text_area(t["dream_desc"])
+    
     # Widget micro pour dicter le rêve
     st.markdown("🎙️ **Dicter le rêve à l'oral**")
     audio = mic_recorder(start_prompt="Parler", stop_prompt="Arrêter", key='mic_dream')
