@@ -1,17 +1,16 @@
 import streamlit as st
+
 # --- 1. CONFIGURATION DE LA PAGE & DESIGN NUIT ÉTOILÉE ---
 st.set_page_config(
     page_title="Aureva Mind - Observatoire & Analyse Onirique",
     page_icon="🌙",
     layout="wide"
-from streamlit_mic_recorder import mic_recorder
 )
-import plotly.graph_objects as go
-import streamlit as st
+
 import bcrypt
 import datetime
-from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime, select
-import bcrypt
+import plotly.graph_objects as go
+from streamlit_mic_recorder import mic_recorder
 from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime, select
 from sqlalchemy.orm import declarative_base, sessionmaker
 
