@@ -100,13 +100,28 @@ else:
     # ==========================================================
     st.title("✨ Bienvenue dans l'Observatoire Onirique")
     st.write("Votre espace est désormais sécurisé et privé.")
-import streamlit as st
-import sqlalchemy
-from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime, select
-from sqlalchemy.orm import declarative_base, sessionmaker
-import datetime
-import plotly.graph_objects as go
-from streamlit_mic_recorder import mic_recorder
+    # Composant micro et champ de texte unifiés
+    from streamlit_mic_recorder import mic_recorder
+    
+    audio_data = mic_recorder(start_prompt="Parler", stop_prompt="Arrêter", key='mic_dream')
+    
+    dream_text = st.text_area(
+        "Raconter votre rêve en détail (mots-clés, décors, actions)",
+        placeholder="Écrivez votre rêve ici ou utilisez l'enregistrement vocal ci-dessus..."
+    )
+
+    if st.button("Lancer l'analyse"):
+        if not dream_text and not audio_data:
+            st.warning("⚠️ Veuillez entrer une description écrite ou enregistrer un vocal pour analyser le rêve.")
+        else:
+            with st.status("🌙 Analyse onirique en cours...", expanded=True) as status:
+                if audio_data:
+                    st.write("Traitement de l'enregistrement vocal...")
+                    # audio_data['bytes'] contient ton fichier audio si tu souhaites l'envoyer à Gemini
+                else:
+                    st.write("Analyse du récit textuel...")
+                
+                status.update(label="✨ Analyse terminée !", state="complete", expanded=False)
 
 # Gestion sécurisée de Stripe
 try:
