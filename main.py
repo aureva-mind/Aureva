@@ -668,7 +668,7 @@ menu = st.sidebar.radio("Navigation", [
     t["nav_terms"],
     t["nav_account"]
 ])
-    # --- EN-TÊTE SCINTILLANT ---
+# --- EN-TÊTE SCINTILLANT ---
     st.markdown("""
         <style>
         @keyframes superTwinkle {
