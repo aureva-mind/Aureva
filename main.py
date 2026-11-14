@@ -6,7 +6,7 @@ st.set_page_config(
     layout="wide"
 )
 import bcrypt
-from sqlalchemy import create_engine, Column, Integer, String, Boolean, select
+from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime, select
 from sqlalchemy.orm import declarative_base, sessionmaker
 
 # --- 1. CONFIGURATION DE LA BASE DE DONNÉES SQLALCHEMY ---
