@@ -1,4 +1,106 @@
 import streamlit as st
+import bcrypt
+from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy.orm import declarative_base, sessionmaker
+
+# --- 1. CONFIGURATION DE LA BASE DE DONNÉES SQLALCHEMY ---
+# (Si tu as déjà un moteur de base de données configuré plus bas, tu peux adapter cette partie)
+DATABASE_URL = "sqlite:///aureva_mind.db"
+engine = create_engine(DATABASE_URL)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
+
+class User(Base):
+    __tablename__ = 'users'
+    
+    id = Column(Integer, primary_key=True)
+    username = Column(String, unique=True, nullable=False)
+    password_hash = Column(String, nullable=False)
+    
+    def set_password(self, password):
+        # Hachage sécurisé du mot de passe avec bcrypt
+        self.password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+        
+    def check_password(self, password):
+        # Vérification du mot de passe
+        return bcrypt.checkpw(password.encode('utf-8'), self.password_hash.encode('utf-8'))
+
+# Création de la table des utilisateurs si elle n'existe pas
+Base.metadata.create_all(bind=engine)
+
+# --- 2. GESTION DE LA SESSION UTILISATEUR ---
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = False
+    st.session_state.username = None
+    st.session_state.user_id = None
+
+# --- 3. ÉCRAN DE CONNEXION / INSCRIPTION ---
+if not st.session_state.logged_in:
+    st.title("🌙 Aureva Mind - Authentification")
+    st.markdown("Connectez-vous ou créez un compte pour accéder à votre observatoire onirique privé.")
+    
+    tab_login, tab_signup = st.tabs(["Se connecter", "Créer un compte"])
+    
+    with tab_login:
+        login_user = st.text_input("Nom d'utilisateur", key="login_user")
+        login_pass = st.text_input("Mot de passe", type="password", key="login_pass")
+        
+        if st.button("Connexion"):
+            if not login_user or not login_pass:
+                st.warning("⚠️ Veuillez remplir tous les champs.")
+            else:
+                db = SessionLocal()
+                user = db.query(User).filter(User.username == login_user).first()
+                db.close()
+                
+                if user and user.check_password(login_pass):
+                    st.session_state.logged_in = True
+                    st.session_state.username = user.username
+                    st.session_state.user_id = user.id
+                    st.success("Connexion réussie !")
+                    st.rerun()
+                else:
+                    st.error("❌ Nom d'utilisateur ou mot de passe incorrect.")
+            
+    with tab_signup:
+        new_user = st.text_input("Choisir un nom d'utilisateur", key="new_user")
+        new_pass = st.text_input("Choisir un mot de passe", type="password", key="new_pass")
+        
+        if st.button("S'inscrire"):
+            if not new_user or not new_pass:
+                st.warning("⚠️ Veuillez remplir tous les champs.")
+            else:
+                db = SessionLocal()
+                existing_user = db.query(User).filter(User.username == new_user).first()
+                
+                if existing_user:
+                    st.error("❌ Ce nom d'utilisateur est déjà pris.")
+                    db.close()
+                else:
+                    new_user_obj = User(username=new_user)
+                    new_user_obj.set_password(new_pass)
+                    db.add(new_user_obj)
+                    db.commit()
+                    db.close()
+                    st.success("✨ Compte créé avec succès ! Vous pouvez maintenant vous connecter dans l'onglet 'Se connecter'.")
+
+# --- 4. APPLICATION PRINCIPALE (Affichée uniquement si connecté) ---
+else:
+    st.sidebar.markdown(f"👤 Connecté : **{st.session_state.username}**")
+    if st.sidebar.button("Se déconnecter"):
+        st.session_state.logged_in = False
+        st.session_state.username = None
+        st.session_state.user_id = None
+        st.rerun()
+
+    # ==========================================================
+    # C'EST ICI QUE TU AJOUTES LE RESTE DE TON CODE (800 LIGNES)
+    # Pense à lier chaque rêve enregistré à st.session_state.user_id 
+    # pour cloisonner les données de chaque utilisateur !
+    # ==========================================================
+    st.title("✨ Bienvenue dans l'Observatoire Onirique")
+    st.write("Votre espace est désormais sécurisé et privé.")
+import streamlit as st
 import sqlalchemy
 from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime, select
 from sqlalchemy.orm import declarative_base, sessionmaker
