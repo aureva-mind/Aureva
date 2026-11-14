@@ -5,6 +5,7 @@ st.set_page_config(
     page_icon="🌙",
     layout="wide"
 )
+import plotly.graph_objects as go
 import streamlit as st
 import bcrypt
 import datetime
