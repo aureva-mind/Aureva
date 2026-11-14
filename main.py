@@ -221,7 +221,17 @@ h1, h2, h3, label, span, div {
     color: white !important;
     border-color: rgba(255, 255, 255, 0.2) !important;
 }
+/* Forcer tout le bloc stTextArea et ses conteneurs en fond sombre */
+.stTextArea, div[data-testid="stTextArea"], div[data-testid="stTextArea"] > div, div[data-baseweb="base-input"] {
+    background-color: #161b22 !important;
+    color: #ffffff !important;
+    border-color: #30363d !important;
+}
 
+.stTextArea textarea {
+    background-color: #161b22 !important;
+    color: #ffffff !important;
+}
 div[data-testid="stTextArea"] {
     background-color: transparent !important;
 }
