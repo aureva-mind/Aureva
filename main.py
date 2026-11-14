@@ -113,45 +113,37 @@ else:
     # pour cloisonner les données de chaque utilisateur !
     # ==========================================================
     st.title("✨ Bienvenue dans l'Observatoire Onirique")
+        st.title("🌙 Bienvenue dans l'Observatoire Onirique")
     st.write("Votre espace est désormais sécurisé et privé.")
-    # Composant micro et champ de texte unifiés
-    from streamlit_mic_recorder import mic_recorder
-    
-    audio_data = mic_recorder(start_prompt="Parler", stop_prompt="Arrêter", key='mic_dream')
-    # Appel de la fonction de transcription automatique en français
-transcribed_text = speech_to_text(
-    language="fr", 
-    start_prompt="Parler", 
-    stop_prompt="Arrêter", 
-    just_once=True, 
-    key="oral_dream"
-)
 
-# Si du texte est reconnu, on l'injecte dans la session pour remplir la zone de texte
-if transcribed_text:
-    st.session_state.dream_description_input = transcribed_text
-    st.rerun()
+    # Dictée vocale unique
+    transcribed_text = speech_to_text(
+        language="fr",
+        start_prompt="Parler",
+        stop_prompt="Arrêter",
+        just_once=True,
+        key="oral_dream"
+    )
 
-# Zone de texte liée au session_state
+    if transcribed_text:
+        st.session_state.dream_description_input = transcribed_text
+        st.rerun()
 
-dream_text = st.text_area(
+    # Zone de texte unique liée au session_state
+    dream_text = st.text_area(
         "Raconter votre rêve en détail (mots-clés, décors, actions)",
+        value=st.session_state.get("dream_description_input", ""),
+        key="text_area_dream",
         placeholder="Écrivez votre rêve ici ou utilisez l'enregistrement vocal ci-dessus..."
     )
 
     if st.button("Lancer l'analyse"):
-        if not dream_text and not audio_data:
+        if not dream_text and not transcribed_text:
             st.warning("⚠️ Veuillez entrer une description écrite ou enregistrer un vocal pour analyser le rêve.")
         else:
             with st.status("🌙 Analyse onirique en cours...", expanded=True) as status:
-                if audio_data:
-                    st.write("Traitement de l'enregistrement vocal...")
-                    # audio_data['bytes'] contient ton fichier audio si tu souhaites l'envoyer à Gemini
-                else:
-                    st.write("Analyse du récit textuel...")
-                
+                st.write("Analyse du récit...")
                 status.update(label="✨ Analyse terminée !", state="complete", expanded=False)
-
 # Gestion sécurisée de Stripe
 try:
     import stripe
