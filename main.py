@@ -518,28 +518,25 @@ if menu == t["nav_analyze"]:
         st.success("Audio enregistré avec succès !")
 
     description = st.text_area(t["dream_desc"])
+    # --- CONTRÔLE DU QUOTA GRATUIT (4 RÊVES) ---
+MAX_FREE_DREAMS = 4
+if not user.is_subscriber and user.dreams_count >= MAX_FREE_DREAMS:
+    # Phrase discrète et élégante
+    st.markdown("<p style='color: #94a3b8; font-style: italic; margin-bottom: 10px;'>✨ Vous avez atteint votre limite de 4 rêves gratuits. Passez à l'abonnement pour profiter d'un accès illimité.</p>", unsafe_allow_html=True)
+    
+    # Bouton de redirection Stripe discret
+    st.link_button("💳 S'abonner à Aureva Mind", "https://buy.stripe.com/TON_LIEN_STRIPE")
+else:
     if st.button(t["btn_analyze"]):
         if description.strip():
-
-            
-            # --- CONTRÔLE DU QUOTA GRATUIT (4 RÊVES) ---
-            MAX_FREE_DREAMS = 4
-            if not user.is_subscriber and user.dreams_count >= MAX_FREE_DREAMS:
-                st.warning("🔒 **Vous avez atteint la limite de vos 4 rêves gratuits.**")
-                st.markdown("Passez à l'abonnement **Aureva Mind** pour profiter d'un accès illimité et de toutes les fonctionnalités avancées.")
-                st.stop()
-            # ---------------------------------
-
-            
             user.dreams_count += 1
             db.commit()
-            
             ai_interpretation = generate_ai_interpretation(title, emotion, lucidity, description)
             new_dream = DreamRecord(
-                title=title, 
-                emotion=emotion, 
-                lucidity=lucidity, 
-                description=description, 
+                title=title,
+                emotion=emotion,
+                lucidity=lucidity,
+                description=description,
                 interpretation=ai_interpretation
             )
             db.add(new_dream)
@@ -548,6 +545,7 @@ if menu == t["nav_analyze"]:
             st.markdown(ai_interpretation, unsafe_allow_html=True)
         else:
             st.warning(t["empty_desc_warn"])
+            
     # --- ANALYSE CIBLÉE DES SCHÉMAS INCONSCIENTS ---
     st.markdown("<div style='height: 15px;'></div>", unsafe_allow_html=True)
     st.markdown("---")
