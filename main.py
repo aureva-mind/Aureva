@@ -133,12 +133,8 @@ if transcribed_text:
     st.rerun()
 
 # Zone de texte liée au session_state
-dream_desc = st.text_area(
-    "Raconter votre rêve en détail (mots-clés, décors, actions)",
-    value=st.session_state.get("dream_description_input", ""),
-    key="text_area_dream"
-)
-    dream_text = st.text_area(
+
+dream_text = st.text_area(
         "Raconter votre rêve en détail (mots-clés, décors, actions)",
         placeholder="Écrivez votre rêve ici ou utilisez l'enregistrement vocal ci-dessus..."
     )
