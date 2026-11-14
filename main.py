@@ -11,7 +11,37 @@ try:
     import stripe
 except ImportError:
     stripe = None
+from google import genai
 
+def analyze_dream_with_gemini(title, description, emotion, lucidity, moon_phase):
+    client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
+    
+    prompt = f"""
+    Tu es un guide onirique bienveillant, poétique et expert en symbolisme psychologique et lunaire pour l'application 'Aureva Mind'.
+    Analyse le rêve suivant avec profondeur, douceur et nuance :
+    
+    - **Titre du songe** : {title}
+    - **Récit** : {description}
+    - **Émotion dominante** : {emotion}
+    - **Niveau de lucidité** : {lucidity}/5
+    - **Phase lunaire actuelle** : {moon_phase}
+    
+    Structure impérativement ta réponse en Markdown avec ces trois sections :
+    ### 🌙 Résonance Lunaire
+    (Explique comment l'énergie de la phase lunaire actuelle influence ou éclaire ce rêve).
+    
+    ### 🔮 Décryptage du Songe
+    (Analyse les symboles clés, l'émotion ressentie et le niveau de conscience).
+    
+    ### 💡 Piste d'Évolution
+    (Propose un conseil concret, bienveillant et inspirant pour la vie éveillée du rêveur).
+    """
+    
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=prompt,
+    )
+    return response.text
 # --- 1. CONFIGURATION DE LA PAGE & DESIGN NUIT ÉTOILÉE ---
 st.set_page_config(
     page_title="Aureva Mind - Observatoire & Analyse Onirique",
