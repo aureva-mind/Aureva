@@ -586,12 +586,12 @@ else:
             st.markdown(trend_summary, unsafe_allow_html=True)
         else:
             st.warning("Veuillez sélectionner une période ou un nombre de rêves contenant au moins 2 entrées pour lancer l'analyse.")
-    if menu==t["nav_journal"]:
-            st.markdown(f"### {t['journal_title']}")
-            st.markdown(t["journal_desc"])
-            dreams = db.scalars(select(DreamRecord)).all()
+if menu == t["nav_journal"]:
+    st.markdown(f"### 🗂️ {t['journal_title']}")
+    st.markdown(t["journal_desc"])
+    dreams = db.scalars(select(DreamRecord)).all()
     if not dreams:
-            st.info(t["no_dreams"])
+        st.info(t["no_dreams"])
     else:
         for d in reversed(dreams):
             with st.expander(f"✨ {d.title or 'Rêve sans titre'} ({d.emotion}) - {d.created_at.strftime('%d/%m/%Y') if d.created_at else ''}"):
@@ -610,21 +610,22 @@ else:
                     st.rerun()
                 except AttributeError:
                     st.experimental_rerun()
-if menu == t["nav_stats"]:
-            st.markdown(f"### {t['stats_title']}")
-            st.markdown(t["stats_desc"])
-            st.metric(t["total_dreams"], user.dreams_count)
-if user.is_premium:
+
+elif menu == t["nav_stats"]:
+    st.markdown(f"### 📊 {t['stats_title']}")
+    st.markdown(t["stats_desc"])
+    st.metric(t["total_dreams"], user.dreams_count)
+    if user.is_premium:
         st.success(t["status_premium"])
-else:
+    else:
         st.info(t["status_free"])
 
 elif menu == t["nav_terms"]:
-            st.markdown(f"### {t['terms_title']}")
-            st.markdown(f"<div style='background: #161b22; padding: 20px; border-radius: 10px; border: 1px solid #30363d;'>{t['terms_text']}</div>", unsafe_allow_html=True)
+    st.markdown(f"### 📜 {t['terms_title']}")
+    st.markdown(f"<div style='background: #161b22; padding: 20px; border-radius: 10px; border: 1px solid #30363d;'>{t['terms_text']}</div>", unsafe_allow_html=True)
 
 elif menu == t["nav_account"]:
-    st.markdown(f"### {t['account_title']}")
+    st.markdown(f"### ⚙️ {t['account_title']}")
     st.markdown(t['account_desc'])
     
     with st.form("profile_form"):
@@ -650,7 +651,7 @@ elif menu == t["nav_account"]:
         if st.button(t["unlim_btn"]):
             user.is_premium = True
             db.commit()
-            st.success("Paiement validé ! Abonnement Illimité activé avec succès.")
+            st.success("Paiement validé ! Abonnement illimité activé avec succès.")
 
     st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
     
