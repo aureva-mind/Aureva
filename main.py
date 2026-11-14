@@ -609,8 +609,8 @@ else:
                 try:
                     st.rerun()
                 except AttributeError:
-                    st.experimental_rerun()
- elif menu == t["nav_stats"]:
+                    st.experimental_rerun()             
+elif menu == t["nav_stats"]:
             st.markdown(f"### {t['stats_title']}")
             st.markdown(t["stats_desc"])
             st.metric(t["total_dreams"], user.dreams_count)
