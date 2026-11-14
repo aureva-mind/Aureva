@@ -668,7 +668,43 @@ menu = st.sidebar.radio("Navigation", [
     t["nav_terms"],
     t["nav_account"]
 ])
-
+    # --- EN-TÊTE SCINTILLANT ---
+    st.markdown("""
+        <style>
+        @keyframes superTwinkle {
+            0% { 
+                opacity: 0.75; 
+                text-shadow: 0 0 10px rgba(129,236,248,0.5), 0 0 20px rgba(255,215,0,0.2);
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 1; 
+                text-shadow: 0 0 30px rgba(129,236,248,0.9), 0 0 50px rgba(255,215,0,0.7), 0 0 70px rgba(255,255,255,0.5);
+                transform: scale(1.02);
+            }
+            100% { 
+                opacity: 0.75; 
+                text-shadow: 0 0 10px rgba(129,236,248,0.5), 0 0 20px rgba(255,215,0,0.2);
+                transform: scale(1);
+            }
+        }
+        .scintillant-title-forte {
+            animation: superTwinkle 2s infinite ease-in-out;
+            font-family: 'Cinzel', serif;
+            font-size: 2.6rem;
+            color: #81ECF8;
+            text-align: center;
+            margin-bottom: 0;
+            letter-spacing: 2px;
+        }
+        </style>
+        
+        <div style="text-align: center; padding: 15px 0 20px 0;">
+            <h1 class="scintillant-title-forte">
+                ✨ 🌙 Aureva Mind 🌟
+            </h1>
+        </div>
+    """, unsafe_allow_html=True)
 MAX_FREE_DREAMS = 4
 
 # --- 6. GESTION DES ONGLETS & ACTIONS ---
