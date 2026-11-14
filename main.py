@@ -498,7 +498,7 @@ if menu == t["nav_analyze"]:
             {t['intro_desc']}
         </div>
     """, unsafe_allow_html=True)
-    """
+    
     , unsafe_allow_html=True)
 
     # --- AJOUTE CETTE LIGNE ICI ---
