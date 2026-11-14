@@ -499,7 +499,7 @@ if menu == t["nav_analyze"]:
         </div>
     """, unsafe_allow_html=True)
     
-    , unsafe_allow_html=True)
+    
 
     # --- AJOUTE CETTE LIGNE ICI ---
     user = db.scalar(select(User).where(User.id == st.session_state.user_id))
