@@ -10,7 +10,30 @@ st.set_page_config(
 import bcrypt
 import datetime
 import plotly.graph_objects as go
-from streamlit_mic_recorder import mic_recorder
+from streamlit_mic_recorder import speech_to_text
+
+st.markdown("🎙️ **Dicter le rêve à l'oral**")
+
+# Appel de la fonction de transcription automatique en français
+transcribed_text = speech_to_text(
+    language="fr", 
+    start_prompt="Parler", 
+    stop_prompt="Arrêter", 
+    just_once=True, 
+    key="oral_dream"
+)
+
+# Si du texte est reconnu, on l'injecte dans la session pour remplir la zone de texte
+if transcribed_text:
+    st.session_state.dream_description_input = transcribed_text
+    st.rerun()
+
+# Zone de texte liée au session_state
+dream_desc = st.text_area(
+    "Raconter votre rêve en détail (mots-clés, décors, actions)",
+    value=st.session_state.get("dream_description_input", ""),
+    key="text_area_dream"
+)
 from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime, select
 from sqlalchemy.orm import declarative_base, sessionmaker
 
