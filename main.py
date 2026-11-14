@@ -614,7 +614,7 @@ if menu == t["nav_stats"]:
             st.markdown(f"### {t['stats_title']}")
             st.markdown(t["stats_desc"])
             st.metric(t["total_dreams"], user.dreams_count)
-    if user.is_premium:
+if user.is_premium:
         st.success(t["status_premium"])
     else:
         st.info(t["status_free"])
