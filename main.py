@@ -1,4 +1,10 @@
 import streamlit as st
+# --- 1. CONFIGURATION DE LA PAGE & DESIGN NUIT ÉTOILÉE ---
+st.set_page_config(
+    page_title="Aureva Mind - Observatoire & Analyse Onirique",
+    page_icon="🌙",
+    layout="wide"
+)
 import bcrypt
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.orm import declarative_base, sessionmaker
@@ -159,12 +165,7 @@ def analyze_dream_with_gemini(title, description, emotion, lucidity, moon_phase)
         contents=prompt,
     )
     return response.text
-# --- 1. CONFIGURATION DE LA PAGE & DESIGN NUIT ÉTOILÉE ---
-st.set_page_config(
-    page_title="Aureva Mind - Observatoire & Analyse Onirique",
-    page_icon="🌙",
-    layout="wide"
-)
+
 
 st.markdown("""
 <style>
