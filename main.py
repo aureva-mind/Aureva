@@ -4,6 +4,7 @@ st.set_page_config(
     page_title="Aureva Mind - Observatoire & Analyse Onirique",
     page_icon="🌙",
     layout="wide"
+from streamlit_mic_recorder import mic_recorder
 )
 import plotly.graph_objects as go
 import streamlit as st
