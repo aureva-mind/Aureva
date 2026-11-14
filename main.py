@@ -531,7 +531,7 @@ if menu == t["nav_analyze"]:
             # ---------------------------------
 
             
-                        user.dreams_count += 1
+            user.dreams_count += 1
             db.commit()
             
             ai_interpretation = generate_ai_interpretation(title, emotion, lucidity, description)
