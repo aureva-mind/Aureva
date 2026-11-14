@@ -586,12 +586,12 @@ else:
             st.markdown(trend_summary, unsafe_allow_html=True)
         else:
             st.warning("Veuillez sélectionner une période ou un nombre de rêves contenant au moins 2 entrées pour lancer l'analyse.")
-    if menu ==t["nav_journal"]:
-    st.markdown(f"### {t['journal_title']}")
-    st.markdown(t["journal_desc"])
-    dreams = db.scalars(select(DreamRecord)).all()
+    if menu==t["nav_journal"]:
+            st.markdown(f"### {t['journal_title']}")
+            st.markdown(t["journal_desc"])
+            dreams = db.scalars(select(DreamRecord)).all()
     if not dreams:
-        st.info(t["no_dreams"])
+            st.info(t["no_dreams"])
     else:
         for d in reversed(dreams):
             with st.expander(f"✨ {d.title or 'Rêve sans titre'} ({d.emotion}) - {d.created_at.strftime('%d/%m/%Y') if d.created_at else ''}"):
