@@ -521,7 +521,46 @@ if menu == t["nav_analyze"]:
             st.markdown(ai_interpretation, unsafe_allow_html=True)
         else:
             st.warning(t["empty_desc_warn"])
+    # --- ANALYSE CIBLÉE DES SCHÉMAS INCONSCIENTS ---
+    st.markdown("<div style='height: 15px;'></div>", unsafe_allow_html=True)
+    st.markdown("---")
+    st.markdown("### 🔍 Analyse ciblée des schémas inconscients")
+    
+    filter_option = st.radio(
+        "Méthode de sélection pour l'analyse :", 
+        ["Tous les rêves enregistrés", "Par nombre de rêves récents", "Par plage de dates (Du... au...)"]
+    )
+    
+    selected_dreams = []
+    all_dreams = db.scalars(select(DreamRecord).order_by(DreamRecord.created_at.desc())).all()
+    
+    if filter_option == "Tous les rêves enregistrés":
+        selected_dreams = all_dreams
+        
+    elif filter_option == "Par nombre de rêves récents":
+        limit_count = st.slider("Nombre de rêves à analyser :", min_value=2, max_value=max(2, len(all_dreams)), value=min(5, len(all_dreams)))
+        selected_dreams = all_dreams[:limit_count]
+        
+    elif filter_option == "Par plage de dates (Du... au...)":
+        col_d1, col_d2 = st.columns(2)
+        with col_d1:
+            start_date = st.date_input("Date de début")
+        with col_d2:
+            end_date = st.date_input("Date de fin")
+        
+        selected_dreams = [
+            d for d in all_dreams 
+            if d.created_at and start_date <= d.created_at.date() <= end_date
+        ]
 
+    if st.button("🔄 Lancer l'analyse croisée de la sélection"):
+        if len(selected_dreams) >= 2:
+            trend_summary = f"### 📊 Synthèse croisée de {len(selected_dreams)} rêves sélectionnés\n" + \
+                            "\n".join([f"- **{d.title}** ({d.emotion}) : {d.description[:60]}..." for d in selected_dreams])
+            st.markdown(f"*Analyse basée sur {len(selected_dreams)} rêves sélectionnés.*")
+            st.markdown(trend_summary, unsafe_allow_html=True)
+        else:
+            st.warning("Veuillez sélectionner une période ou un nombre de rêves contenant au moins 2 entrées pour lancer l'analyse.")
 elif menu == t["nav_journal"]:
     st.markdown(f"### {t['journal_title']}")
     st.markdown(t["journal_desc"])
