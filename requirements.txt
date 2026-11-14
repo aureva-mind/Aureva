@@ -3,3 +3,4 @@ sqlalchemy
 pandas
 plotly
 streamlit-mic-recorder
+google-genai
