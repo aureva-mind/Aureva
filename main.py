@@ -181,9 +181,18 @@ def analyze_dream_with_gemini(title, description, emotion, lucidity, moon_phase)
 
 
 st.markdown("""
+st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap');
 
+/* 1. Forcer les couleurs globales de Streamlit pour éliminer le rose à la source */
+:root {
+    --background-color: #05070f !important;
+    --secondary-background-color: #161b22 !important;
+    --text-color: #ffffff !important;
+}
+
+/* 2. Ton fond de nuit étoilée */
 .stApp {
     background: 
         radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
@@ -192,8 +201,8 @@ st.markdown("""
         radial-gradient(2px 2px at 160px 120px, #ffd700, rgba(0,0,0,0)),
         radial-gradient(1px 1px at 200px 200px, #ffffff, rgba(0,0,0,0)),
         radial-gradient(2px 2px at 300px 60px, #ffd700, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 450px 150px, #ffd700, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 500px 300px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 450px 150px, #ffd700, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 500px 300px, #ffd700, rgba(0,0,0,0)),
         radial-gradient(2px 2px at 650px 70px, #ffffff, rgba(0,0,0,0)),
         radial-gradient(1.5px 1.5px at 750px 220px, #ffd700, rgba(0,0,0,0)),
         radial-gradient(2px 2px at 850px 120px, #ffffff, rgba(0,0,0,0)),
@@ -204,59 +213,41 @@ st.markdown("""
     color: #f1f5f9 !important;
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
+
+/* 3. Sidebar et éléments de base */
 section[data-testid="stSidebar"] {
     background-color: #0f172a !important;
 }
-h1, h2, h3, label, span, div {
-    color: #f1f5f9 !important;
+
+/* Titres brillants avec effet lumineux pro (façon néon stellaire) */
+h1, h2, h3 {
+    background: linear-gradient(135deg, #ffffff 40%, #c7d2fe 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    text-shadow: 0 0 25px rgba(199, 210, 254, 0.4) !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
 }
+
+/* Textes courants nets et bien détachés */
+p, label, span {
+    color: #e2e8f0 !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* 4. Champs de saisie, selectbox et boutons */
 .stTextInput input, .stTextArea textarea {
     color: #ffffff !important;
     background-color: #161b22 !important;
     border: 1px solid #30363d !important;
 }
-/* Rendre la zone de texte sombre et transparente pour supprimer le bloc rose tout en gardant l'écriture lisible */
-.stTextArea textarea {
-    background-color: rgba(15, 22, 41, 0.9) !important;
-    color: white !important;
-    border-color: rgba(255, 255, 255, 0.2) !important;
-}
-/* Forcer tout le bloc stTextArea et ses conteneurs en fond sombre */
-.stTextArea, div[data-testid="stTextArea"], div[data-testid="stTextArea"] > div, div[data-baseweb="base-input"] {
-    background-color: #161b22 !important;
-    color: #ffffff !important;
-    border-color: #30363d !important;
-}
 
-.stTextArea textarea {
-    background-color: #161b22 !important;
-    color: #ffffff !important;
-}
-div[data-testid="stTextArea"] {
-    background-color: transparent !important;
-/* Neutraliser tous les fonds de conteneurs et cartes Streamlit */
-div[data-testid="stVerticalBlock"], 
-div[data-testid="stElementContainer"], 
-div.element-container, 
-div[data-testid="stText"] {
-    background-color: transparent !important;
-}
-
-/* Forcer le conteneur de la zone de saisie et la zone de texte en mode sombre harmonieux */
-.stTextArea, 
-div[data-testid="stTextArea"], 
-div[data-baseweb="base-input"], 
-.stTextArea textarea {
-    background-color: #161b22 !important;
-    color: #ffffff !important;
-    border-color: #30363d !important;
-}
-}
 .stSelectbox [data-baseweb="select"] {
     background-color: #161b22 !important;
     color: #ffffff !important;
     border: 1px solid #30363d !important;
 }
+
 .stButton>button {
     background: linear-gradient(to right, #4f46e5, #9333ea) !important;
     color: white !important;
@@ -264,12 +255,14 @@ div[data-baseweb="base-input"],
     font-weight: bold !important;
     border: none !important;
 }
+
 iframe[title="streamlit_mic_recorder.mic_recorder"] {
     background: linear-gradient(135deg, #4f46e5, #9333ea) !important;
     border-radius: 20px !important;
     padding: 2px !important;
 }
 </style>
+""", unsafe_allow_html=True)
 """, unsafe_allow_html=True)
 
 # --- 2. BASE DE DONNÉES SQLITE ---
