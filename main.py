@@ -586,7 +586,7 @@ else:
             st.markdown(trend_summary, unsafe_allow_html=True)
         else:
             st.warning("Veuillez sélectionner une période ou un nombre de rêves contenant au moins 2 entrées pour lancer l'analyse.")
-   if menu == t["nav_journal"]:
+    if menu == t["nav_journal"]:
     st.markdown(f"### {t['journal_title']}")
     st.markdown(t["journal_desc"])
     dreams = db.scalars(select(DreamRecord)).all()
