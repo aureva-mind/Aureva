@@ -12,8 +12,6 @@ import datetime
 import plotly.graph_objects as go
 from streamlit_mic_recorder import speech_to_text
 
-st.markdown("🎙️ **Dicter le rêve à l'oral**")
-
 from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime, select
 from sqlalchemy.orm import declarative_base, sessionmaker
 
