@@ -111,7 +111,7 @@ else:
     # pour cloisonner les données de chaque utilisateur !
     # ==========================================================
 
-    st.title("🌙 Bienvenue dans l'Observatoire Onirique")
+    
     st.write("Votre espace est désormais sécurisé et privé.")
 
     # Dictée vocale unique
@@ -214,6 +214,16 @@ h1, h2, h3, label, span, div {
     color: #ffffff !important;
     background-color: #161b22 !important;
     border: 1px solid #30363d !important;
+}
+/* Rendre la zone de texte sombre et transparente pour supprimer le bloc rose tout en gardant l'écriture lisible */
+.stTextArea textarea {
+    background-color: rgba(15, 22, 41, 0.9) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+div[data-testid="stTextArea"] {
+    background-color: transparent !important;
 }
 .stSelectbox [data-baseweb="select"] {
     background-color: #161b22 !important;
