@@ -709,6 +709,39 @@ MAX_FREE_DREAMS = 4
 
 # --- 6. GESTION DES ONGLETS & ACTIONS ---
 if menu == t["nav_analyse"]:
+        # --- SOUS-TITRE SCINTILLANT ---
+    st.markdown("""
+        <style>
+        @keyframes softTwinkle {
+            0% { 
+                opacity: 0.7; 
+                text-shadow: 0 0 8px rgba(129,236,248,0.3); 
+            }
+            50% { 
+                opacity: 1; 
+                text-shadow: 0 0 20px rgba(129,236,248,0.7), 0 0 30px rgba(255,215,0,0.4); 
+            }
+            100% { 
+                opacity: 0.7; 
+                text-shadow: 0 0 8px rgba(129,236,248,0.3); 
+            }
+        }
+        .scintillant-subtitle {
+            animation: softTwinkle 2.5s infinite ease-in-out;
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: #e0e7ff;
+            text-align: center;
+            margin-top: -5px;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+        </style>
+        
+        <h2 class="scintillant-subtitle">
+            ✨ Analyse tes rêves au rythme des cycles lunaires ✨
+        </h2>
+    """, unsafe_allow_html=True)
     render_lunar_observatory()
     st.markdown(f"### {t['analysis_title']}")
     st.markdown(f"""
