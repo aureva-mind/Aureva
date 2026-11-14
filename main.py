@@ -498,9 +498,16 @@ if menu == t["nav_analyze"]:
             {t['intro_desc']}
         </div>
     """, unsafe_allow_html=True)
+    """
+    , unsafe_allow_html=True)
+
+    # --- AJOUTE CETTE LIGNE ICI ---
+    user = db.scalar(select(User).where(User.id == st.session_state.user_id))
 
     title = st.text_input(t["dream_title"])
     emotion = st.selectbox(t["dream_emotion"], ["Joie", "Peur", "Tristesse", "Sérénité", "Mystère", "Autre"])
+    
+
     lucidity = st.slider(t["dream_lucidity"], 1, 5, 3)
     
     # Widget micro pour dicter le rêve
@@ -513,8 +520,20 @@ if menu == t["nav_analyze"]:
     description = st.text_area(t["dream_desc"])
     if st.button(t["btn_analyze"]):
         if description.strip():
-            user.dreams_count += 1
+
+            
+            # --- CONTRÔLE DU QUOTA GRATUIT (4 RÊVES) ---
+            MAX_FREE_DREAMS = 4
+            if not user.is_subscriber and user.dreams_count >= MAX_FREE_DREAMS:
+                st.warning("🔒 **Vous avez atteint la limite de vos 4 rêves gratuits.**")
+                st.markdown("Passez à l'abonnement **Aureva Mind** pour profiter d'un accès illimité et de toutes les fonctionnalités avancées.")
+                st.stop()
+            # ---------------------------------
+
+            
+                        user.dreams_count += 1
             db.commit()
+            
             ai_interpretation = generate_ai_interpretation(title, emotion, lucidity, description)
             new_dream = DreamRecord(
                 title=title, 
