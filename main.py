@@ -616,7 +616,7 @@ if menu == t["nav_stats"]:
             st.metric(t["total_dreams"], user.dreams_count)
 if user.is_premium:
         st.success(t["status_premium"])
-    else:
+else:
         st.info(t["status_free"])
 
 elif menu == t["nav_terms"]:
