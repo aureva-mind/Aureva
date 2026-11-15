@@ -188,12 +188,26 @@ def analyze_dream_with_gemini(title, emotion, lucidity, description):
     )
 
     if st.button("Lancer l'analyse"):
-        if not dream_text and not transcribed_text:
-            st.warning("⚠️ Veuillez entrer une description écrite ou enregistrer un vocal pour analyser le rêve.")
-        else:
-            with st.status("🌙 Analyse onirique en cours...", expanded=True) as status:
-                st.write("Analyse du récit...")
-                status.update(label="✨ Analyse terminée !", state="complete", expanded=False)
+    if not dream_text and not transcribed_text:
+        st.warning("⚠️ Veuillez entrer une description écrite ou enregistrer un vocal pour analyser le rêve.")
+    else:
+        with st.status("🔍 Analyse onirique en cours...", expanded=True) as status:
+            st.write("Analyse du récit...")
+            
+            # Appel de la fonction d'analyse définie plus bas
+            resultat_analyse = analyze_dream_with_gemini(
+                title=st.session_state.get("dream_title", "Mon Rêve"),
+                description=dream_text if dream_text else transcribed_text,
+                emotion=st.session_state.get("dream_emotion", "Neutre"),
+                lucidity=st.session_state.get("dream_lucidity", 3),
+                moon_phase="Phase courante"
+            )
+            
+            status.update(label="✅ Analyse terminée !", state="complete", expanded=False)
+        
+        # Affichage indispensable du résultat à l'écran
+        st.markdown("### Résultat de l'analyse")
+        st.markdown(resultat_analyse)
 # Gestion sécurisée de Stripe
 try:
     import stripe
