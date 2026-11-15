@@ -16,10 +16,11 @@ from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime
 from sqlalchemy.orm import declarative_base, sessionmaker
 from google import genai
 from google.genai import types
-st.markdown(""")
+st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
 
+    /* Fond global de l'application */
     .stApp {
         background: linear-gradient(135deg, #030712 0%, #0f172a 50%, #030712 100%) !important;
         color: #f1f5f9 !important;
@@ -99,12 +100,8 @@ st.markdown(""")
         box-shadow: 0 0 12px rgba(129, 140, 248, 0.4), inset 0 2px 4px rgba(0, 0, 0, 0.4) !important;
     }
 
-    /* Boutons et micro harmonisés */
-    .stButton button, 
-    button, 
-    [data-testid="stAudioInput"] button, 
-    [data-testid="baseButton-secondary"], 
-    [data-testid="baseButton-primary"] {
+    /* Boutons Streamlit harmonisés (sécurisés) */
+    .stButton > button, [data-testid="stAudioInput"] button {
         background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
         color: #ffffff !important;
         border: 1px solid rgba(255, 255, 255, 0.15) !important;
@@ -116,13 +113,16 @@ st.markdown(""")
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
         width: 100%;
     }
-    .stButton button:hover, 
-    button:hover, 
-    [data-testid="stAudioInput"] button:hover {
+    .stButton > button:hover, [data-testid="stAudioInput"] button:hover {
         transform: translateY(-2px);
         background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
         box-shadow: 0 6px 25px rgba(99, 102, 241, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
     }
+</style>
+""", unsafe_allow_html=True)
+
+# Affichage de la lune magique
+st.markdown('<div class="moon-wrapper"><div class="realistic-moon"></div></div>', unsafe_allow_html=True)
 </style>
 """, unsafe_allow_html=True)
 
