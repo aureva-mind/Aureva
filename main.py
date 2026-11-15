@@ -16,7 +16,8 @@ from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime
 from sqlalchemy.orm import declarative_base, sessionmaker
 from google import genai
 from google.genai import types
-
+with open("style.css", "r", encoding="utf-8") as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 """, unsafe_allow_html=True)
 
 # Affichage de la lune magique
