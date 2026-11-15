@@ -1029,7 +1029,7 @@ else:
             if d.created_at and start_date <= d.created_at.date() <= end_date
         ]
 
-    if st.button("🚀 Lancer l'analyse croisée de la sélection"):
+        if st.button("🚀 Lancer l'analyse croisée de la sélection"):
         if len(selected_dreams) >= 2:
             trend_summary = f"### 📊 Synthèse croisée de {len(selected_dreams)} rêves :\n" + "\n".join([f"- **{d.title}** ({d.emotion}) : {d.description[:60]}..." for d in selected_dreams])
             st.markdown(f"**Analyse basée sur {len(selected_dreams)} rêves sélectionnés.**")
@@ -1037,7 +1037,7 @@ else:
         else:
             st.warning("Veuillez sélectionner une période ou un nombre de rêves suffisant (au moins 2).")
 
-elif menu == t["nav_journal"]:
+    elif menu == t["nav_journal"]:
     st.markdown(f"### 🗂️ {t['journal_title']}")
     st.markdown(t["journal_desc"])
     dreams = db.scalars(select(DreamRecord)).all()
@@ -1060,7 +1060,6 @@ elif menu == t["nav_journal"]:
                         st.rerun()
                     except AttributeError:
                         st.experimental_rerun()
-
 elif menu == t["nav_stats"]:
     st.markdown(f"### 📊 {t['stats_title']}")
     st.markdown(t["stats_desc"])
