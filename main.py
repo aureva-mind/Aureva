@@ -15,7 +15,7 @@ from streamlit_mic_recorder import mic_recorder as st_mic_recorder
 from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime, select
 from sqlalchemy.orm import declarative_base, sessionmaker
 from google import genai
-
+from google.genai import types
 # Initialisation du client Gemini (cherche automatiquement dans st.secrets ou l'environnement)
 client = genai.Client(api_key=st.secrets.get("GEMINI_API_KEY"))
 # --- 1. CONFIGURATION DE LA BASE DE DONNÉES SQLALCHEMY ---
@@ -938,7 +938,7 @@ if menu == t["nav_analyse"]:
     emotion = st.selectbox(t["dream_emotion"], ["Joie", "Peur", "Tristesse", "Sérénité", "Colère", "Mystère", "Amour"])
     lucidity = st.slider(t["lucidity_label"], 1, 5, 3)
 
-    # Initialisation de l'état pour la zone de texte et l'audio
+# Initialisation de l'état pour la zone de texte et l'audio
 if "dream_desc_input" not in st.session_state:
     st.session_state.dream_desc_input = ""
 
@@ -956,7 +956,10 @@ if audio and isinstance(audio, dict) and "bytes" in audio:
                 response_audio = client.models.generate_content(
                     model="gemini-2.5-flash",
                     contents=[
-                        {"mime_type": "audio/wav", "data": audio_bytes},
+                        types.Part.from_bytes(
+                            data=audio_bytes,
+                            mime_type="audio/wav",
+                        ),
                         "Transcris cet audio en français pour un journal de rêves. Donne uniquement le texte transcrit."
                     ]
                 )
