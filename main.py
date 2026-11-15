@@ -151,8 +151,8 @@ def analyze_dream_with_gemini(title, emotion, lucidity, description):
     2. Symboles clés
     3. Piste de réflexion pour le consultant.
     """
-    try:
-        response = client.models.generate_content(
+           try:
+        response_stream = client.models.generate_content_stream(
             model="gemini-3.8-flash",
             contents=prompt,
             config=types.GenerateContentConfig(
@@ -160,10 +160,9 @@ def analyze_dream_with_gemini(title, emotion, lucidity, description):
                 temperature=0.4
             )
         )
-        return response.text
+        return response_stream
     except Exception as e:
-        return f"Erreur lors de l'analyse : {e}"
-    
+        return f"Erreur lors de l'analyse : {e}" 
     st.write("Votre espace est désormais sécurisé et privé.")
 
     # Dictée vocale unique
@@ -204,7 +203,7 @@ if st.button("Lancer l'analyse"):
             status.update(label="✅ Analyse terminée !", state="complete", expanded=False)
         
         st.markdown("### Résultat de l'analyse")
-        st.markdown(resultat_analyse)  
+        st.write_stream(resultat_analyse)  
 try:
     import stripe
 except ImportError:
@@ -212,34 +211,7 @@ except ImportError:
 from google import genai
 
 def analyze_dream_with_gemini(title, description, emotion, lucidity, moon_phase):
-    client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
-    
-    prompt = f"""
-    Tu es un guide onirique bienveillant, poétique et expert en symbolisme psychologique et lunaire pour l'application 'Aureva Mind'.
-    Analyse le rêve suivant avec profondeur, douceur et nuance :
-    
-    - **Titre du songe** : {title}
-    - **Récit** : {description}
-    - **Émotion dominante** : {emotion}
-    - **Niveau de lucidité** : {lucidity}/5
-    - **Phase lunaire actuelle** : {moon_phase}
-    
-    Structure impérativement ta réponse en Markdown avec ces trois sections :
-    ### 🌙 Résonance Lunaire
-    (Explique comment l'énergie de la phase lunaire actuelle influence ou éclaire ce rêve).
-    
-    ### 🔮 Décryptage du Songe
-    (Analyse tos les symboles clés, l'émotion ressentie et le niveau de conscience).
-    
-    ### 💡 Piste d'Évolution
-    (Propose un conseil concret, bienveillant et inspirant pour la vie éveillée du rêveur).
-    """
-    
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt,
-    )
-    return response.text
+
 st.markdown("""
 <style>
 /* 1. Couleurs globales pour éliminer le rose à la source */
