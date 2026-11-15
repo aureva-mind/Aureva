@@ -937,38 +937,46 @@ if menu == t["nav_analyse"]:
 
     # Initialisation de l'état pour la zone de texte et l'audio
 if "dream_desc_input" not in st.session_state:
+    if "dream_desc_input" not in st.session_state:
     st.session_state.dream_desc_input = ""
 
 st.markdown("🎙️ Dicter le rêve à l'oral")
-audio = mic_recorder(start_prompt="Parler", stop_prompt="Arrêter", key="mic_dream")
+audio = st_mic_recorder(start_prompt="Parler", stop_prompt="Arrêter", key="mic_dreax")
 
-if audio:
-    try:
-        response_audio = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=[
-                {"mime_type": "audio/wav", "data": audio['bytes']},
-                "Transcris cet audio en français pour un journal de rêves."
-            ]
-        )
-        st.session_state.dream_desc_input = response_audio.text.strip()
-        st.session_state.audio_bytes = audio['bytes']
-    except Exception as e:
-        st.error(f"Erreur de transcription : {e}")
-    st.rerun()
+if audio and isinstance(audio, dict) and "bytes" in audio:
+    audio_bytes = audio["bytes"]
+    audio_id = hash(audio_bytes)
+    
+    # Évite de relancer la transcription en boucle sur le même audio
+    if st.session_state.get("last_audio_id") != audio_id:
+        try:
+            with st.spinner("Transcription de votre voix en cours..."):
+                response_audio = client.models.generate_content(
+                    model="gemini-2.5-flash",
+                    contents=[
+                        {"mime_type": "audio/wav", "data": audio_bytes},
+                        "Transcris cet audio en français pour un journal de rêves. Donne uniquement le texte transcrit."
+                    ]
+                )
+                # Injection directe dans la session du champ de texte
+                st.session_state.dream_desc_input = response_audio.text.strip()
+                st.session_state.last_audio_id = audio_id
+                st.rerun()
+        except Exception as e:
+            st.error(f"Erreur de transcription : {e}")
 
+# Optionnel : bouton pour effacer l'audio si besoin
 if "audio_bytes" in st.session_state and st.session_state.audio_bytes:
-    st.audio(st.session_state.audio_bytes, format="audio/wav")
     if st.button("🗑️ Supprimer l'audio", key="btn_del_audio"):
         st.session_state.audio_bytes = None
         st.session_state.dream_desc_input = ""
+        st.session_state.last_audio_id = None
         st.rerun()
 
 description = st.text_area(
     t["dream_desc"],
     key="dream_desc_input"
 )
-
     # Vérification du quota gratuit
 if not user.is_premium and user.dreams_count >= MAX_FREE_DREAMS:
     st.markdown(
