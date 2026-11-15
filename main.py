@@ -6,7 +6,7 @@ st.set_page_config(
     page_icon="🌙",
     layout="wide"
 )
-
+from streamlit_mic_recorder import mic_recorder
 import bcrypt
 import datetime
 import plotly.graph_objects as go
