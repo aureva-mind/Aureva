@@ -138,7 +138,31 @@ else:
     # Pense à lier chaque rêve enregistré à st.session_state.user_id 
     # pour cloisonner les données de chaque utilisateur !
     # ==========================================================
+def analyze_dream_with_gemini(title, emotion, lucidity, description):
+    prompt = f"""
+    Analyse ce rêve en français pour un journal onirique.
+    - Titre : {title}
+    - Émotion : {emotion}
+    - Lucidité : {lucidity}/5
+    - Description : {description}
 
+    Donne une analyse concise, structurée et bienveillante en 3 parties :
+    1. Signification principale
+    2. Symboles clés
+    3. Piste de réflexion pour le consultant.
+    """
+    try:
+        response = client.models.generate_content(
+            model="gemini-3.8-flash",
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                max_output_tokens=600,  # Force la concision et la vitesse
+                temperature=0.4
+            )
+        )
+        return response.text
+    except Exception as e:
+        return f"Erreur lors de l'analyse : {e}"
     
     st.write("Votre espace est désormais sécurisé et privé.")
 
