@@ -998,7 +998,7 @@ else:
             st.markdown(ai_interpretation, unsafe_allow_html=True)
         else:
             st.warning(t("empty_desc_warn"))
-                st.warning(t("empty_desc_warn"))
+                
     # --- ANALYSE CIBLÉE DES SCHÉMAS INCONSCIENTS (Retrouvée depuis la capture 7) ---
     st.markdown("<div style='height: 15px;'></div>", unsafe_allow_html=True)
     st.markdown("---")
