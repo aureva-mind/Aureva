@@ -16,6 +16,96 @@ from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime
 from sqlalchemy.orm import declarative_base, sessionmaker
 from google import genai
 from google.genai import types
+st.markdown("""
+<style>
+/* 1. Importation de la police moderne */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+html, body, [class*="css"] {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+/* 2. Fond de nuit étoilée scintillante */
+.stApp {
+    background: linear-gradient(135deg, #030712, #0f172a, #030712) !important;
+    color: #ffffff !important;
+    position: relative;
+}
+
+/* Couche d'étoiles scintillantes en arrière-plan */
+.stApp::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 40px 70px, #c7d2fe, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 160px 120px, #a855f7, rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 230px 180px, #ffffff, rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 300px 300px;
+    animation: twinkle 4s ease-in-out infinite;
+    z-index: 0;
+    pointer-events: none;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(0.98); }
+    50% { opacity: 0.9; transform: scale(1.02); }
+}
+
+/* 3. Sidebar élégante */
+section[data-testid="stSidebar"] {
+    background-color: #0f172a !important;
+}
+
+/* 4. Titres lumineux et brillants */
+h1, h2, h3 {
+    background: linear-gradient(135deg, #ffffff 40%, #c7d2fe 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(199, 210, 254, 0.4);
+    font-weight: 600 !important;
+}
+
+/* 5. Textes courants lisibles */
+p, label, span {
+    color: #e2e8f0 !important;
+}
+
+/* 6. Champs de saisie (texte et zones de texte) */
+.stTextInput input, .stTextArea textarea {
+    color: #ffffff !important;
+    background-color: #161b22 !important;
+    border: 1px solid #30363d !important;
+    border-radius: 8px !important;
+}
+
+/* 7. Correction des blocs d'alerte / erreurs (fond sombre harmonieux, plus de flash rose/beige) */
+.stAlert, div[data-baseweb="notification"] {
+    background-color: #161b22 !important;
+    color: #e2e8f0 !important;
+    border: 1px solid #30363d !important;
+    border-radius: 8px !important;
+}
+.stAlert p, .stAlert div, div[data-baseweb="notification"] p {
+    color: #e2e8f0 !important;
+}
+
+/* 8. Boutons et micro harmonisés au thème violet/nuit */
+.stButton button, button[kind="secondary"], .stAudioInput button {
+    background: linear-gradient(135deg, #6366f1, #a855f7) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+}
+.stButton button:hover {
+    opacity: 0.9;
+}
+</style>
+""", unsafe_allow_html=True)
 # Initialisation du client Gemini (cherche automatiquement dans st.secrets ou l'environnement)
 client = genai.Client(api_key=st.secrets.get("GEMINI_API_KEY"))
 def generate_ai_interpretation(title, emotion, lucidity, description):
