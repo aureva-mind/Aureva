@@ -16,8 +16,8 @@ from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime
 from sqlalchemy.orm import declarative_base, sessionmaker
 from google import genai
 from google.genai import types
-st.markdown("""
-<style>
+st.markdown(r"""
+</style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
 
     /* Fond global de l'application */
@@ -118,7 +118,8 @@ st.markdown("""
         background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
         box-shadow: 0 6px 25px rgba(99, 102, 241, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
     }
-
+</style>
+""", unsafe_allow_html=True)
 
 # Affichage de la lune magique
 st.markdown('<div class="moon-wrapper"><div class="realistic-moon"></div></div>', unsafe_allow_html=True)
