@@ -1036,6 +1036,11 @@ else:
         st.markdown(trend_summary, unsafe_allow_html=True)
     else:
         st.warning("Veuillez sélectionner une période ou un nombre de rêves suffisant (au moins 2).")
+
+elif menu == t["nav_journal"]:
+    st.markdown(f"### 📖 {t['journal_title']}")
+    st.markdown(f"*** {t['journal_desc']} ***")
+    dreams = db.scalars(select(DreamRecord)).all()
     if not dreams:
         st.info(t["no_dreams"])
     else:
