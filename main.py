@@ -980,7 +980,7 @@ if not user.is_premium and user.dreams_count >= MAX_FREE_DREAMS:
     if stripe:
         st.link_button("✨ S'abonner à Aureva Mind", "https://buy.stripe.com/TON_LIEN_STRIPE")
 else:
-    if st.button(t("btn_analyser")):
+    if st.button(t["btn_analyser"]):
         if description.strip():
             user.dreams_count += 1
             db.commit()
