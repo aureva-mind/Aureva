@@ -1079,7 +1079,7 @@ elif menu == t["nav_terms"]:
 
 elif menu == t["nav_account"]:
     st.markdown(f"### ⚙️ {t['account_title']}")
-    st.markdown(t["account_desc"])
+    st.markdownt["account_desc"]
 
     with st.form("profile_form"):
         name_input = st.text_input("Prénom", value=user.first_name)
