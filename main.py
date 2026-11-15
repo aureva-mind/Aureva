@@ -104,6 +104,7 @@ p, label, span {
 }
 </style>
 """, unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
 # Initialisation du client Gemini (cherche automatiquement dans st.secrets ou l'environnement)
 client = genai.Client(api_key=st.secrets.get("GEMINI_API_KEY"))
