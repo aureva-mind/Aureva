@@ -332,7 +332,7 @@ st.markdown("""
 
 /* 2. Fond de nuit étoilée */
 .stApp {
-    background: linear-gradient(135deg, #05070f, #1b1e3b, #05070f) !important;
+    background: linear-gradient(135deg, rgb(5, 7, 15), rgb(27, 30, 59), rgb(5, 7, 15)) !important;
     color: #f1f5f9 !important;
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
