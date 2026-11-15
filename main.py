@@ -965,7 +965,7 @@ if "audio_bytes" in st.session_state and st.session_state.audio_bytes:
         st.rerun()
 
 description = st.text_area(
-    t("dream_desc"),
+    t["dream_desc"],
     key="dream_desc_input"
 )
 
