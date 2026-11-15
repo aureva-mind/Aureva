@@ -178,10 +178,6 @@ def analyze_dream_with_gemini(title, description, emotion, lucidity, moon_phase)
         contents=prompt,
     )
     return response.text
-
-
-st.markdown("""
-st.markdown("""
 st.markdown("""
 <style>
 /* 1. Couleurs globales pour éliminer le rose à la source */
@@ -245,9 +241,6 @@ iframe[title="streamlit_mic_recorder.mic_recorder"] {
 }
 </style>
 """, unsafe_allow_html=True)
-""", unsafe_allow_html=True)
-""", unsafe_allow_html=True)
-
 # --- 2. BASE DE DONNÉES SQLITE ---
 Base = declarative_base()
 engine = create_engine("sqlite:///dreams.db", connect_args={"check_same_thread": False})
