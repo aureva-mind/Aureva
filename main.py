@@ -1031,10 +1031,10 @@ else:
 
 if st.button("🚀 Lancer l'analyse croisée de la sélection"):
             if len(selected_dreams) >= 2:
-            trend_summary = f"### 📊 Synthèse croisée de {len(selected_dreams)} rêves"
-            st.markdown(f"**Analyse basée sur {len(selected_dreams)} rêves**")
-            st.markdown(trend_summary, unsafe_allow_html=True)
-else:
+                    trend_summary = f"### 📊 Synthèse croisée de {len(selected_dreams)} rêves"
+                    st.markdown(f"**Analyse basée sur {len(selected_dreams)} rêves**")
+                    st.markdown(trend_summary, unsafe_allow_html=True)
+            else:
             st.warning("Veuillez sélectionner une période ou un nombre de rêves suffisant (au moins 2).")
 
 elif menu == t["nav_journal"]:
