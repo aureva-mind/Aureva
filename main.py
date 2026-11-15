@@ -256,11 +256,12 @@ def analyze_dream_with_gemini(title, emotion, lucidity, description):
     - Lucidité : {lucidity}/5
     - Description : {description}
 
-    Donne une analyse concise, structurée et bienveillante en 3 parties :
-    1. Signification principale
-    2. Symboles clés
-    3. Piste de réflexion pour le consultant.
-    """
+    prompt = """
+Donne une analyse concise, structurée et bienveillante en 3 parties :
+1. Signification principale
+2. Symboles clés
+3. Piste de réflexion pour le consultant.
+"""
     try:
         response_stream = client.models.generate_content_stream(
             model="gemini-3.8-flash",
