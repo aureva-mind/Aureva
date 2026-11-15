@@ -211,46 +211,7 @@ if st.button("Lancer l'analyse"):
 
 st.markdown(r"""<style>
 /* 1. Couleurs globales pour éliminer le rose à la source */
-:root {
-    --background-color: #05070f !important;
-    --secondary-background-color: #161b22 !important;
-    --text-color: #ffffff !important;
-}
 
-/* 2. Fond de nuit étoilée */
-.stApp {
-    background: linear-gradient(135deg, rgb(5, 7, 15), rgb(27, 30, 59), rgb(5, 7, 15)) !important;
-    color: #f1f5f9 !important;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-}
-
-/* 3. Sidebar */
-section[data-testid="stSidebar"] {
-    background-color: #0f172a !important;
-}
-
-/* Titres lumineux et brillants */
-h1, h2, h3 {
-    background: linear-gradient(135deg, #ffffff 40%, #c7d2fe 100%) !important;
-    -webkit-background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-    text-shadow: 0 0 20px rgba(199, 210, 254, 0.4) !important;
-    font-weight: 600 !important;
-}
-
-/* Textes courants */
-p, label, span {
-    color: #e2e8f0 !important;
-}
-
-/* 4. Champs de saisie et boutons */
-.stTextInput input, .stTextArea textarea {
-    color: #ffffff !important;
-    background-color: #161b22 !important;
-    border: 1px solid #30363d !important;
-}
-
-.stSelectbox [data-baseweb="select"] {
     background-color: #161b22 !important;
     color: #ffffff !important;
     border: 1px solid #30363d !important;
