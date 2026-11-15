@@ -16,7 +16,7 @@ from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime
 from sqlalchemy.orm import declarative_base, sessionmaker
 from google import genai
 from google.genai import types
-st.markdown("""
+st.markdown(""")
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
 
