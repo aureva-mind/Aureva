@@ -32,7 +32,6 @@ html, body, [class*="css"] {
     position: relative;
 }
 
-/* Couche d'étoiles scintillantes en arrière-plan */
 .stApp::before {
     content: "";
     position: fixed;
@@ -41,8 +40,7 @@ html, body, [class*="css"] {
         radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
         radial-gradient(2px 2px at 40px 70px, #c7d2fe, rgba(0,0,0,0)),
         radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 160px 120px, #a855f7, rgba(0,0,0,0)),
-        radial-gradient(1.5px 1.5px at 230px 180px, #ffffff, rgba(0,0,0,0));
+        radial-gradient(2px 2px at 160px 120px, #a855f7, rgba(0,0,0,0));
     background-repeat: repeat;
     background-size: 300px 300px;
     animation: twinkle 4s ease-in-out infinite;
@@ -74,7 +72,7 @@ p, label, span {
     color: #e2e8f0 !important;
 }
 
-/* 6. Champs de saisie (texte et zones de texte) */
+/* 6. Champs de saisie */
 .stTextInput input, .stTextArea textarea {
     color: #ffffff !important;
     background-color: #161b22 !important;
@@ -82,7 +80,7 @@ p, label, span {
     border-radius: 8px !important;
 }
 
-/* 7. Correction des blocs d'alerte / erreurs (fond sombre harmonieux, plus de flash rose/beige) */
+/* 7. Blocs d'alerte sombres */
 .stAlert, div[data-baseweb="notification"] {
     background-color: #161b22 !important;
     color: #e2e8f0 !important;
@@ -93,7 +91,7 @@ p, label, span {
     color: #e2e8f0 !important;
 }
 
-/* 8. Boutons et micro harmonisés au thème violet/nuit */
+/* 8. Boutons et micro harmonisés */
 .stButton button, button[kind="secondary"], .stAudioInput button {
     background: linear-gradient(135deg, #6366f1, #a855f7) !important;
     color: white !important;
@@ -105,6 +103,7 @@ p, label, span {
     opacity: 0.9;
 }
 </style>
+""", unsafe_allow_html=True)
 """, unsafe_allow_html=True)
 # Initialisation du client Gemini (cherche automatiquement dans st.secrets ou l'environnement)
 client = genai.Client(api_key=st.secrets.get("GEMINI_API_KEY"))
