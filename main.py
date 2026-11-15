@@ -18,6 +18,31 @@ from google import genai
 from google.genai import types
 # Initialisation du client Gemini (cherche automatiquement dans st.secrets ou l'environnement)
 client = genai.Client(api_key=st.secrets.get("GEMINI_API_KEY"))
+def generate_ai_interpretation(title, emotion, lucidity, description):
+    prompt = f"""
+    Analyse ce rêve en français pour un journal onirique.
+    - Titre : {title}
+    - Émotion : {emotion}
+    - Lucidité : {lucidity}/5
+    - Description : {description}
+
+    Donne une analyse concise, structurée et bienveillante en 3 parties :
+    1. Signification principale
+    2. Symboles clés
+    3. Piste de réflexion pour le consultant.
+    """
+    try:
+        response = client.models.generate_content(
+            model="gemini-3.8-flash",
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                max_output_tokens=600,  # Limite la longueur pour forcer la rapidité
+                temperature=0.4         # Équilibre entre créativité et vitesse
+            )
+        )
+        return response.text
+    except Exception as e:
+        return f"Erreur lors de l'analyse : {e}"
 # --- 1. CONFIGURATION DE LA BASE DE DONNÉES SQLALCHEMY ---
 # (Si tu as déjà un moteur de base de données configuré plus bas, tu peux adapter cette partie)
 DATABASE_URL = "sqlite:///aureva_mind.db"
