@@ -104,11 +104,11 @@ p, label, span {
 }
 </style>
 """, unsafe_allow_html=True)
-""", unsafe_allow_html=True)
+
 # Initialisation du client Gemini (cherche automatiquement dans st.secrets ou l'environnement)
 client = genai.Client(api_key=st.secrets.get("GEMINI_API_KEY"))
 def generate_ai_interpretation(title, emotion, lucidity, description):
-    prompt = f"""
+prompt = f"""
    Analyse ce rêve en français pour un journal onirique.
     - Titre : {title}
     - Émotion : {emotion}
