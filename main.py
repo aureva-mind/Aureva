@@ -312,8 +312,7 @@ if st.button("Lancer l'analyse"):
         st.write_stream(resultat_analyse)  
 
 
-st.markdown(r"""
-<style>
+st.markdown(r"""<style>
 /* 1. Couleurs globales pour éliminer le rose à la source */
 :root {
     --background-color: #05070f !important;
