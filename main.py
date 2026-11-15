@@ -18,96 +18,116 @@ from google import genai
 from google.genai import types
 st.markdown("""
 <style>
-/* 1. Importation de la police moderne */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
 
-html, body, [class*="css"] {
-    font-family: 'Plus Jakarta Sans', sans-serif !important;
-}
+    .stApp {
+        background: linear-gradient(135deg, #030712 0%, #0f172a 50%, #030712 100%) !important;
+        color: #f1f5f9 !important;
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+        position: relative;
+    }
 
-/* 2. Fond de nuit étoilée scintillante */
-.stApp {
-    background: linear-gradient(135deg, #030712, #0f172a, #030712) !important;
-    color: #ffffff !important;
-    position: relative;
-}
+    /* Fond étoilé scintillant */
+    .stApp::before {
+        content: "";
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background-image: 
+            radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+            radial-gradient(2px 2px at 40px 70px, #c7d2fe, rgba(0,0,0,0)),
+            radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0,0,0,0)),
+            radial-gradient(2px 2px at 160px 120px, #818cf8, rgba(0,0,0,0));
+        background-repeat: repeat;
+        background-size: 200px 200px;
+        animation: twinkle 4s ease-in-out infinite;
+        z-index: 0;
+        pointer-events: none;
+    }
 
-.stApp::before {
-    content: "";
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-image: 
-        radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 40px 70px, #c7d2fe, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 160px 120px, #a855f7, rgba(0,0,0,0));
-    background-repeat: repeat;
-    background-size: 300px 300px;
-    animation: twinkle 4s ease-in-out infinite;
-    z-index: 0;
-    pointer-events: none;
-}
+    @keyframes twinkle {
+        0%, 100% { opacity: 0.3; transform: scale(0.98); }
+        50% { opacity: 0.9; transform: scale(1.02); }
+    }
 
-@keyframes twinkle {
-    0%, 100% { opacity: 0.3; transform: scale(0.98); }
-    50% { opacity: 0.9; transform: scale(1.02); }
-}
+    /* Titres avec typographie royale et relief */
+    h1, h2, h3 {
+        font-family: 'Playfair Display', serif !important;
+        color: #f8fafc !important;
+        text-shadow: 0 2px 15px rgba(129, 140, 248, 0.4), 0 0 30px rgba(99, 102, 241, 0.2);
+        letter-spacing: 0.8px;
+    }
 
-/* 3. Sidebar élégante */
-section[data-testid="stSidebar"] {
-    background-color: #0f172a !important;
-}
+    h1 {
+        font-size: 2.5rem !important;
+        text-align: center;
+        margin-bottom: 0.5rem !important;
+    }
 
-/* 4. Titres lumineux et brillants */
-h1, h2, h3 {
-    background: linear-gradient(135deg, #ffffff 40%, #c7d2fe 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 20px rgba(199, 210, 254, 0.4);
-    font-weight: 600 !important;
-}
+    /* Lune Réaliste en relief et en pur CSS */
+    .moon-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 1.5rem 0;
+        position: relative;
+        z-index: 1;
+    }
+    .realistic-moon {
+        width: 75px;
+        height: 75px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 30% 30%, #fffbeb 0%, #fde047 40%, #ca8a04 75%, #713f12 100%);
+        box-shadow: 0 0 35px rgba(253, 224, 71, 0.4), inset -12px -12px 22px rgba(0, 0, 0, 0.7);
+        animation: pulse-moon 5s ease-in-out infinite alternate;
+    }
+    @keyframes pulse-moon {
+        0% { box-shadow: 0 0 25px rgba(253, 224, 71, 0.3), inset -10px -10px 18px rgba(0, 0, 0, 0.7); transform: scale(1); }
+        100% { box-shadow: 0 0 45px rgba(253, 224, 71, 0.6), inset -14px -14px 25px rgba(0, 0, 0, 0.7); transform: scale(1.03); }
+    }
 
-/* 5. Textes courants lisibles */
-p, label, span {
-    color: #e2e8f0 !important;
-}
+    /* Champs de saisie en verre givré */
+    .stTextInput input, .stTextArea textarea, div[data-baseweb="select"] {
+        background-color: rgba(30, 41, 59, 0.6) !important;
+        border: 1px solid rgba(129, 140, 248, 0.25) !important;
+        color: #f8fafc !important;
+        border-radius: 14px !important;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .stTextInput input:focus, .stTextArea textarea:focus {
+        border-color: #818cf8 !important;
+        box-shadow: 0 0 12px rgba(129, 140, 248, 0.4), inset 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+    }
 
-/* 6. Champs de saisie */
-.stTextInput input, .stTextArea textarea {
-    color: #ffffff !important;
-    background-color: #161b22 !important;
-    border: 1px solid #30363d !important;
-    border-radius: 8px !important;
-}
-
-/* 7. Blocs d'alerte sombres */
-.stAlert, div[data-baseweb="notification"] {
-    background-color: #161b22 !important;
-    color: #e2e8f0 !important;
-    border: 1px solid #30363d !important;
-    border-radius: 8px !important;
-}
-.stAlert p, .stAlert div, div[data-baseweb="notification"] p {
-    color: #e2e8f0 !important;
-}
-
-/* 8. Boutons et micro harmonisés */
-.stButton button, button[kind="secondary"], .stAudioInput button {
-    background: linear-gradient(135deg, #6366f1, #a855f7) !important;
-    color: white !important;
-    border: none !important;
-    border-radius: 8px !important;
-    font-weight: 600 !important;
-}
-.stButton button:hover {
-    opacity: 0.9;
-}
+    /* Boutons et micro harmonisés */
+    .stButton button, 
+    button, 
+    [data-testid="stAudioInput"] button, 
+    [data-testid="baseButton-secondary"], 
+    [data-testid="baseButton-primary"] {
+        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        border-radius: 14px !important;
+        padding: 0.65rem 1.8rem !important;
+        font-weight: 600 !important;
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+        box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        width: 100%;
+    }
+    .stButton button:hover, 
+    button:hover, 
+    [data-testid="stAudioInput"] button:hover {
+        transform: translateY(-2px);
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+        box-shadow: 0 6px 25px rgba(99, 102, 241, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
-
-# Initialisation du client Gemini (cherche automatiquement dans st.secrets ou l'environnement)
-client = genai.Client(api_key=st.secrets.get("GEMINI_API_KEY"))
+# Affichage de la lune magique
+st.markdown('<div class="moon-wrapper"><div class="realistic-moon"></div></div>', unsafe_allow_html=True)
 def generate_ai_interpretation(title, emotion, lucidity, description):
     prompt = f"""
     Analyse ce rêve en français pour un journal onirique.
