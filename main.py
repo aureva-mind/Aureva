@@ -194,7 +194,6 @@ def analyze_dream_with_gemini(title, emotion, lucidity, description):
         with st.status("🔍 Analyse onirique en cours...", expanded=True) as status:
             st.write("Analyse du récit...")
             
-            # Appel de la fonction d'analyse définie plus bas
             resultat_analyse = analyze_dream_with_gemini(
                 title=st.session_state.get("dream_title", "Mon Rêve"),
                 description=dream_text if dream_text else transcribed_text,
@@ -205,7 +204,6 @@ def analyze_dream_with_gemini(title, emotion, lucidity, description):
             
             status.update(label="✅ Analyse terminée !", state="complete", expanded=False)
         
-        # Affichage indispensable du résultat à l'écran
         st.markdown("### Résultat de l'analyse")
         st.markdown(resultat_analyse)
 # Gestion sécurisée de Stripe
