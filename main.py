@@ -210,7 +210,6 @@ except ImportError:
     stripe = None
 from google import genai
 
-def analyze_dream_with_gemini(title, description, emotion, lucidity, moon_phase):
 
 st.markdown("""
 <style>
