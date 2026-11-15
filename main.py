@@ -109,7 +109,7 @@ p, label, span {
 client = genai.Client(api_key=st.secrets.get("GEMINI_API_KEY"))
 def generate_ai_interpretation(title, emotion, lucidity, description):
     prompt = f"""
-    Analyse ce rêve en français pour un journal onirique.
+   Analyse ce rêve en français pour un journal onirique.
     - Titre : {title}
     - Émotion : {emotion}
     - Lucidité : {lucidity}/5
