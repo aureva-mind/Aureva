@@ -167,7 +167,7 @@ def analyze_dream_with_gemini(title, description, emotion, lucidity, moon_phase)
     (Explique comment l'énergie de la phase lunaire actuelle influence ou éclaire ce rêve).
     
     ### 🔮 Décryptage du Songe
-    (Analyse les symboles clés, l'émotion ressentie et le niveau de conscience).
+    (Analyse tos les symboles clés, l'émotion ressentie et le niveau de conscience).
     
     ### 💡 Piste d'Évolution
     (Propose un conseil concret, bienveillant et inspirant pour la vie éveillée du rêveur).
@@ -942,14 +942,39 @@ if menu == t["nav_analyse"]:
     emotion = st.selectbox(t["dream_emotion"], ["Joie", "Peur", "Tristesse", "Sérénité", "Colère", "Mystère", "Amour"])
     lucidity = st.slider(t["lucidity_label"], 1, 5, 3)
 
-    st.markdown("🎙️ Dicter le rêve à l'oral")
-    audio = mic_recorder(start_prompt="Parler", stop_prompt="Arrêter", key="mic_dream")
-    if audio:
-        st.audio(audio['bytes'])
-        st.success("Audio enregistré avec succès !")
+    # Initialisation de l'état pour la zone de texte et l'audio
+if "dream_desc_input" not in st.session_state:
+    st.session_state.dream_desc_input = ""
 
-    description = st.text_area(t["dream_desc"])
+st.markdown("🎙️ Dicter le rêve à l'oral")
+audio = mic_recorder(start_prompt="Parler", stop_prompt="Arrêter", key="mic_dream")
 
+if audio:
+    try:
+        response_audio = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=[
+                {"mime_type": "audio/wav", "data": audio['bytes']},
+                "Transcris cet audio en français pour un journal de rêves."
+            ]
+        )
+        st.session_state.dream_desc_input = response_audio.text.strip()
+        st.session_state.audio_bytes = audio['bytes']
+    except Exception as e:
+        st.error(f"Erreur de transcription : {e}")
+    st.rerun()
+
+if "audio_bytes" in st.session_state and st.session_state.audio_bytes:
+    st.audio(st.session_state.audio_bytes, format="audio/wav")
+    if st.button("🗑️ Supprimer l'audio", key="btn_del_audio"):
+        st.session_state.audio_bytes = None
+        st.session_state.dream_desc_input = ""
+        st.rerun()
+
+description = st.text_area(
+    t("dream_desc"),
+    key="dream_desc_input"
+)
     # Vérification du quota gratuit avec is_premium corrigé
     if not user.is_premium and user.dreams_count >= MAX_FREE_DREAMS:
         st.markdown(
