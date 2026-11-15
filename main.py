@@ -18,8 +18,6 @@ from google import genai
 from google.genai import types
 with open("style.css", "r", encoding="utf-8") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-""", unsafe_allow_html=True)
-
 # Affichage de la lune magique
 st.markdown('<div class="moon-wrapper"><div class="realistic-moon"></div></div>', unsafe_allow_html=True)
 def generate_ai_interpretation(title, emotion, lucidity, description):
