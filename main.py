@@ -813,23 +813,19 @@ def render_lunar_observatory():
     st.plotly_chart(fig, use_container_width=True)
 
 def generate_ai_interpretation(title, emotion, lucidity, description):
-    return f"""### ✨ Analyse & Étape d'Interprétation Profonde
-* **Résonance Émotionnelle :** L'émotion dominante de **{emotion}** associée à ce rêve indique un besoin de libération ou d'intégration psychique.
-* **Indice de Lucidité ({lucidity}/5) :** Votre degré de conscience onirique montre une perméabilité intéressante entre le conscient et l'inconscient.
-
-def generate_ai_interpretation(title, emotion, lucidity, description):
     prompt = f"""
-    En tant qu'expert en analyse des rêves, rédige une interprétation approfondie et personnalisée pour ce rêve :
-    - Titre : {title}
-    - Émotion principale : {emotion}
+    En tant qu'expert en onirologie et en symbolisme psychologique, réalise une analyse de rêve hyper détaillée et sur-mesure basée exclusivement sur les éléments fournis ci-dessous :
+    - Titre du rêve : {title}
+    - Émotion dominante : {emotion}
     - Niveau de lucidité : {lucidity} / 3
-    - Récit du rêve : {description}
+    - Récit complet : {description}
 
-    Structure ta réponse de manière élégante avec :
-    1. Une résonance émotionnelle liée à l'émotion choisie.
-    2. Une analyse de l'indice de lucidité.
-    3. Une analyse détaillée et approfondie de chaque mots-clés et symboles spécifiques qui apparaissent *réellement* dans le récit du rêve.
-    4. Une piste d'évolution détaillée et un conseil pour le rêveur.
+    Structure ta réponse avec les sections suivantes :
+
+    1. **Résonance Émotionnelle** : Analyse l'impact de l'émotion "{emotion}" combinée au titre et au niveau de lucidité ({lucidity}/3) sur l'état psychologique actuel du rêveur.
+    2. **Inventaire et Analyse de CHAQUE Mot-Clé** : Identifie et isole méthodiquement *tous* les mots-clés, objets, décors, personnages ou actions significatifs présents dans le récit du rêve (fais une liste à puces où chaque mot-clé important possède sa propre mini-analyse symbolique sur-mesure).
+    3. **Interprétation Profonde & Inconscient** : Fais le lien global entre tous ces symboles pour révéler le message caché ou la thématique centrale du rêve.
+    4. **Piste d'Évolution & Conseil** : Donne une clé de lecture pratique ou un conseil constructif pour accompagner le rêveur au quotidien.
     """
     
     try:
@@ -840,9 +836,6 @@ def generate_ai_interpretation(title, emotion, lucidity, description):
         return response.text
     except Exception as e:
         return f"Erreur lors de la génération de l'interprétation : {e}"
----
-💡 **Piste d'Évolution :** Observez comment ce songe fait écho à vos aspirations actuelles. Tenez un journal régulier pour ancrer ces messages.
-"""
 
 # --- 5. NAVIGATION & BARRE LATÉRALE ---
 st.sidebar.title("Aureva Mind")
