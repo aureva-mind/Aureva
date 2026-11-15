@@ -969,7 +969,7 @@ description = st.text_area(
     key="dream_desc_input"
 )
     # Vérification du quota gratuit avec is_premium corrigé
-    if not user.is_premium and user.dreams_count >= MAX_FREE_DREAMS:
+      if not user.is_premium and user.dreams_count >= MAX_FREE_DREAMS:
         st.markdown(
             "<p style='color: #8b949e; font-style: italic; margin-top: 10px;'>"
             "Vous avez exploré vos premiers rêves gratuitement. Pour aller plus loin et déverrouiller l'accès illimité ou le pack découverte, rendez-vous dans l'onglet <strong>Mon Compte</strong>."
