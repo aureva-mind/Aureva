@@ -314,14 +314,9 @@ if st.button("Lancer l'analyse"):
         
         st.markdown("### Résultat de l'analyse")
         st.write_stream(resultat_analyse)  
-try:
-    import stripe
-except ImportError:
-    stripe = None
-from google import genai
 
 
-st.markdown("""
+st.markdown(r"""
 <style>
 /* 1. Couleurs globales pour éliminer le rose à la source */
 :root {
