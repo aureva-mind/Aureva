@@ -968,19 +968,20 @@ description = st.text_area(
     t("dream_desc"),
     key="dream_desc_input"
 )
-    # Vérification du quota gratuit avec is_premium corrigé
-if not user.is_premium and user.dreams_count >= MAX_FREE_DREAMS:
+
+    # Vérification du quota gratuit
+    if not user.is_premium and user.dreams_count >= MAX_FREE_DREAMS:
         st.markdown(
             "<p style='color: #8b949e; font-style: italic; margin-top: 10px;'>"
-            "Vous avez exploré vos premiers rêves gratuitement. Pour aller plus loin et déverrouiller l'accès illimité ou le pack découverte, rendez-vous dans l'onglet <strong>Mon Compte</strong>."
-            "</p>", 
+            "Vous avez exploré vos premiers rêves gratuitement. Pour aller plus loin et déverrouiller l'accès illimité."
+            "</p>",
             unsafe_allow_html=True
         )
         if stripe:
             st.link_button("✨ S'abonner à Aureva Mind", "https://buy.stripe.com/TON_LIEN_STRIPE")
-else:
-if st.button(t["btn_analyser"]):
-if description.strip():
+    else:
+        if st.button(t("btn_analyser")):
+            if description.strip():
                 user.dreams_count += 1
                 db.commit()
                 ai_interpretation = generate_ai_interpretation(title, emotion, lucidity, description)
@@ -996,8 +997,7 @@ if description.strip():
                 st.success("✨ Analyse générée avec succès !")
                 st.markdown(ai_interpretation, unsafe_allow_html=True)
             else:
-                st.warning(t["empty_desc_warn"])
-
+                st.warning(t("empty_desc_warn"))
     # --- ANALYSE CIBLÉE DES SCHÉMAS INCONSCIENTS (Retrouvée depuis la capture 7) ---
     st.markdown("<div style='height: 15px;'></div>", unsafe_allow_html=True)
     st.markdown("---")
