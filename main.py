@@ -817,13 +817,29 @@ def generate_ai_interpretation(title, emotion, lucidity, description):
 * **Résonance Émotionnelle :** L'émotion dominante de **{emotion}** associée à ce rêve indique un besoin de libération ou d'intégration psychique.
 * **Indice de Lucidité ({lucidity}/5) :** Votre degré de conscience onirique montre une perméabilité intéressante entre le conscient et l'inconscient.
 
-#### 🔍 Analyse Détaillée des Mots & Symboles Clés
-* **L'immersion / Baignade :** Symbolise le plongeon dans l'inconscient, les émotions refoulées ou le besoin de lâcher-prise.
-* **L'obscurité / Nuit :** Représente le domaine de l'inconnu, du repos mental ou des peurs latentes à explorer.
-* **Les Étoiles & La Lune :** Les étoiles signalent des repères et une espérance, tandis que la lune gouverne les cycles psychiques.
-* **L'Eau / Mer Chaude :** La matrice affective. Une eau chaude indique un climat émotionnel rassurant ou une guérison en cours.
-* **La Prière / Élévation :** Traduit une recherche d'alignement, de gratitude ou de quête de sens spirituel supérieur.
+def generate_ai_interpretation(title, emotion, lucidity, description):
+    prompt = f"""
+    En tant qu'expert en analyse des rêves, rédige une interprétation approfondie et personnalisée pour ce rêve :
+    - Titre : {title}
+    - Émotion principale : {emotion}
+    - Niveau de lucidité : {lucidity} / 3
+    - Récit du rêve : {description}
 
+    Structure ta réponse de manière élégante avec :
+    1. Une résonance émotionnelle liée à l'émotion choisie.
+    2. Une analyse de l'indice de lucidité.
+    3. Une analyse détaillée et approfondie de chaque mots-clés et symboles spécifiques qui apparaissent *réellement* dans le récit du rêve.
+    4. Une piste d'évolution détaillée et un conseil pour le rêveur.
+    """
+    
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt
+        )
+        return response.text
+    except Exception as e:
+        return f"Erreur lors de la génération de l'interprétation : {e}"
 ---
 💡 **Piste d'Évolution :** Observez comment ce songe fait écho à vos aspirations actuelles. Tenez un journal régulier pour ancrer ces messages.
 """
