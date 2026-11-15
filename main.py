@@ -10,11 +10,14 @@ from streamlit_mic_recorder import mic_recorder as st_mic_recorder
 import bcrypt
 import datetime
 import plotly.graph_objects as go
-from streamlit_mic_recorder import speech_to_text
+from streamlit_mic_recorder import mic_recorder as st_mic_recorder
 
 from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime, select
 from sqlalchemy.orm import declarative_base, sessionmaker
+from google import genai
 
+# Initialisation du client Gemini (cherche automatiquement dans st.secrets ou l'environnement)
+client = genai.Client(api_key=st.secrets.get("GEMINI_API_KEY"))
 # --- 1. CONFIGURATION DE LA BASE DE DONNÉES SQLALCHEMY ---
 # (Si tu as déjà un moteur de base de données configuré plus bas, tu peux adapter cette partie)
 DATABASE_URL = "sqlite:///aureva_mind.db"
