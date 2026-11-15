@@ -118,8 +118,7 @@ st.markdown(r"""
         background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
         box-shadow: 0 6px 25px rgba(99, 102, 241, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
     }
-</style>
-""", unsafe_allow_html=True)
+
 
 # Affichage de la lune magique
 st.markdown('<div class="moon-wrapper"><div class="realistic-moon"></div></div>', unsafe_allow_html=True)
