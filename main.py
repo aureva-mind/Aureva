@@ -1029,14 +1029,10 @@ else:
             if d.created_at and start_date <= d.created_at.date() <= end_date
         ]
 
-        if st.button("🚀 Lancer l'analyse croisée de la sélection"):
-        if len(selected_dreams) >= 2:
-            trend_summary = f"### 📊 Synthèse croisée de {len(selected_dreams)} rêves :\n" + "\n".join([f"- **{d.title}** ({d.emotion}) : {d.description[:60]}..." for d in selected_dreams])
-            st.markdown(f"**Analyse basée sur {len(selected_dreams)} rêves sélectionnés.**")
-            st.markdown(trend_summary, unsafe_allow_html=True)
-        else:
-            st.warning("Veuillez sélectionner une période ou un nombre de rêves suffisant (au moins 2).")
-
+        File "/mount/src/aureva/main.py", line 1033
+          if len(selected_dreams) >= 2:
+          ^
+IndentationError: expected an indented block after 'if' statement on line 1032
     elif menu == t["nav_journal"]:
     st.markdown(f"### 🗂️ {t['journal_title']}")
     st.markdown(t["journal_desc"])
