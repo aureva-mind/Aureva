@@ -151,7 +151,7 @@ def analyze_dream_with_gemini(title, emotion, lucidity, description):
     2. Symboles clés
     3. Piste de réflexion pour le consultant.
     """
-           try:
+    try:
         response_stream = client.models.generate_content_stream(
             model="gemini-3.8-flash",
             contents=prompt,
