@@ -937,7 +937,6 @@ if menu == t["nav_analyse"]:
 
     # Initialisation de l'état pour la zone de texte et l'audio
 if "dream_desc_input" not in st.session_state:
-    if "dream_desc_input" not in st.session_state:
     st.session_state.dream_desc_input = ""
 
 st.markdown("🎙️ Dicter le rêve à l'oral")
