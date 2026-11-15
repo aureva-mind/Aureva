@@ -954,7 +954,7 @@ if audio and isinstance(audio, dict) and "bytes" in audio:
         try:
             with st.spinner("Transcription de votre voix en cours..."):
                 response_audio = client.models.generate_content(
-                    model="gemini-2.5-flash",
+                    model="gemini-3.8-flash",
                     contents=[
                         types.Part.from_bytes(
                             data=audio_bytes,
